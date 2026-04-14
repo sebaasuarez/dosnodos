@@ -6,20 +6,20 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "DosNodos - Asistentes Virtuales Inteligentes para tu Empresa",
+  title: "Dos Nodos - Asistentes Virtuales Inteligentes para tu Empresa",
   description:
-    "Potencia tu negocio con asistentes virtuales inteligentes. En DosNodos conectamos tecnología con personas, automatizamos tu atención al cliente 24/7 y generamos valor real y medible.",
+    "Potencia tu negocio con asistentes virtuales inteligentes. En Dos Nodos conectamos tecnología con personas, automatizamos tu atención al cliente 24/7 y generamos valor real y medible.",
   keywords:
-    "DosNodos, asistentes virtuales, chatbots, inteligencia artificial, automatización, atención al cliente, desarrollo web, marketing digital, Colombia, Medellín",
-  authors: [{ name: "DosNodos" }],
-  creator: "DosNodos",
-  publisher: "DosNodos",
+    "Dos Nodos, asistentes virtuales, chatbots, inteligencia artificial, automatización, atención al cliente, desarrollo web, marketing digital, Colombia, Medellín",
+  authors: [{ name: "Dos Nodos" }],
+  creator: "Dos Nodos",
+  publisher: "Dos Nodos",
   robots: "index, follow",
   openGraph: {
-    title: "DosNodos - Asistentes Virtuales Inteligentes",
+    title: "Dos Nodos - Asistentes Virtuales Inteligentes",
     description: "Conectamos tecnología con personas. Automatiza tu negocio con IA.",
     url: "https://dosnodos.com.co",
-    siteName: "DosNodos",
+    siteName: "Dos Nodos",
     locale: "es_CO",
     type: "website",
   },
@@ -27,8 +27,7 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
     apple: "/favicon.ico",
-  },
-    generator: 'v0.app'
+  }
 }
 
 export default function RootLayout({
@@ -37,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
         {/* Google Tag Manager */}
         <script

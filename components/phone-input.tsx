@@ -44,11 +44,12 @@ const countries: Country[] = [
 interface PhoneInputProps {
   value: string
   onChange: (value: string) => void
-  onBlur: () => void
+  onBlur?: () => void
   placeholder: string
   disabled?: boolean
   error?: boolean
   className?: string
+  language?: "es" | "en" | "pt"
 }
 
 export default function PhoneInput({
@@ -59,8 +60,14 @@ export default function PhoneInput({
   disabled = false,
   error = false,
   className = "",
+  language = "es",
 }: PhoneInputProps) {
-  const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]) // Colombia por defecto
+  // Inicializamos el país basado en el idioma o por defecto Colombia
+  const [selectedCountry, setSelectedCountry] = useState<Country>(() => {
+    if (language === "en") return countries.find(c => c.code === "US") || countries[0];
+    if (language === "pt") return countries.find(c => c.code === "BR") || countries[0];
+    return countries[0];
+  })
   const [isOpen, setIsOpen] = useState(false)
 
   // Extraer el número sin el código de país

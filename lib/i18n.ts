@@ -235,7 +235,7 @@ export const translations: Record<Language, Translation> = {
       title: "Potencia tu negocio con",
       titleHighlight: "asistentes virtuales",
       subtitle:
-        "En DosNodos automatizamos tu atención al cliente con IA, conectamos tu marca con tecnología funcional y generamos valor real y medible para tu empresa.",
+        "En Dos Nodos automatizamos tu atención al cliente con IA, conectamos tu marca con tecnología funcional y generamos valor real y medible para tu empresa.",
       ctaPrimary: "Solicita tu Demo",
       ctaSecondary: "Habla con nuestro bot ahora",
       features: {
@@ -245,7 +245,7 @@ export const translations: Record<Language, Translation> = {
       },
     },
     services: {
-      title: "¿Qué hacemos en DosNodos?",
+      title: "¿Qué hacemos en Dos Nodos?",
       subtitle:
         "Ofrecemos soluciones digitales integrales para empresas de todos los sectores, conectando marcas con tecnología funcional e inteligente.",
       items: {
@@ -275,9 +275,9 @@ export const translations: Record<Language, Translation> = {
             "Branding, identidad visual y logos que conectan emocionalmente con tu audiencia y fortalecen tu marca.",
         },
         integration: {
-          title: "Integración Omnicanal",
+          title: "Media Buyer & Paid Media",
           description:
-            "Conectamos todos tus canales de comunicación en una sola plataforma para una experiencia unificada.",
+            "Ayudo a empresas a generar mejores leads, mejorar la eficiencia de adquisición y construir sistemas comerciales más sólidos mediante paid media orientado a performance.",
         },
       },
     },
@@ -355,20 +355,20 @@ export const translations: Record<Language, Translation> = {
     },
     testimonials: {
       title: "Resultados que generan impacto",
-      subtitle: "Empresas que ya transformaron su atención al cliente con DosNodos",
+      subtitle: "Empresas que ya transformaron su atención al cliente con Dos Nodos",
       items: {
         laura: {
-          text: "El equipo de DosNodos transformó completamente nuestra atención al cliente. Nuestro asistente virtual responde al instante y los clientes están más satisfechos que nunca.",
+          text: "El equipo de Dos Nodos transformó completamente nuestra atención al cliente. Nuestro asistente virtual responde al instante y los clientes están más satisfechos que nunca.",
           name: "Laura Martínez",
           position: "Gerente, TiendaOnline.co",
         },
         roberto: {
-          text: "Implementamos su chatbot en nuestra universidad y ahora atendemos consultas estudiantiles 24/7. La cercanía y profesionalismo de DosNodos fue clave para el éxito.",
+          text: "Implementamos su chatbot en nuestra universidad y ahora atendemos consultas estudiantiles 24/7. La cercanía y profesionalismo de Dos Nodos fue clave para el éxito.",
           name: "Dr. Roberto Sánchez",
           position: "Director, Universidad Innovación",
         },
         camila: {
-          text: "La automatización que desarrolló DosNodos nos permitió escalar sin aumentar personal. Su enfoque tecnológico pero humano marca la diferencia.",
+          text: "La automatización que desarrolló Dos Nodos nos permitió escalar sin aumentar personal. Su enfoque tecnológico pero humano marca la diferencia.",
           name: "Camila Pérez",
           position: "CEO, HealthTech Solutions",
         },
@@ -383,7 +383,7 @@ export const translations: Record<Language, Translation> = {
     cta: {
       title: "Tu negocio está a un clic de volverse inteligente",
       subtitle:
-        "Únete a las empresas que ya están transformando su atención al cliente con DosNodos. Agenda tu demo gratuita y descubre cómo podemos potenciar tu negocio.",
+        "Únete a las empresas que ya están transformando su atención al cliente con Dos Nodos. Agenda tu demo gratuita y descubre cómo podemos potenciar tu negocio.",
       form: {
         name: "Nombre completo",
         email: "Email empresarial",
@@ -395,7 +395,7 @@ export const translations: Record<Language, Translation> = {
         success: {
           title: "¡Mensaje enviado con éxito!",
           message:
-            "Gracias por tu interés en DosNodos. Nos pondremos en contacto contigo muy pronto para agendar tu demo gratuita.",
+            "Gracias por tu interés en Dos Nodos. Nos pondremos en contacto contigo muy pronto para agendar tu demo gratuita.",
           button: "Enviar otro mensaje",
         },
         progress: "Progreso del formulario",
@@ -436,9 +436,9 @@ export const translations: Record<Language, Translation> = {
       rights: "Todos los derechos reservados. Conectamos tecnología con personas.",
     },
     chat: {
-      assistant: "Asistente DosNodos",
+      assistant: "Asistente Dos Nodos",
       online: "Siempre disponible",
-      greeting: "¡Hola! Soy el asistente de DosNodos. ¿Cómo puedo ayudarte?",
+      greeting: "¡Hola! Soy el asistente de Dos Nodos. ¿Cómo puedo ayudarte?",
       userMessage: "Necesito automatizar mi atención al cliente",
       response: "Perfecto! Nuestros asistentes virtuales pueden integrarse con WhatsApp, tu web, CRM y más...",
     },
@@ -456,7 +456,7 @@ export const translations: Record<Language, Translation> = {
       title: "Power your business with",
       titleHighlight: "intelligent virtual assistants",
       subtitle:
-        "At DosNodos we automate your customer service with AI, connect your brand with functional technology and generate real, measurable value for your company.",
+        "At Dos Nodos we automate your customer service with AI, connect your brand with functional technology and generate real, measurable value for your company.",
       ctaPrimary: "Request Demo",
       ctaSecondary: "Talk to our bot now",
       features: {
@@ -466,7 +466,7 @@ export const translations: Record<Language, Translation> = {
       },
     },
     services: {
-      title: "What do we do at DosNodos?",
+      title: "What do we do at Dos Nodos?",
       subtitle:
         "We offer comprehensive digital solutions for companies in all sectors, connecting brands with functional and intelligent technology.",
       items: {
@@ -495,7 +495,7 @@ export const translations: Record<Language, Translation> = {
             "Branding, visual identity and logos that emotionally connect with your audience and strengthen your brand.",
         },
         integration: {
-          title: "Omnichannel Integration",
+          title: "Media Buyer & Paid Media",
           description: "We connect all your communication channels in a single platform for a unified experience.",
         },
       },
@@ -569,20 +569,20 @@ export const translations: Record<Language, Translation> = {
     },
     testimonials: {
       title: "Results that generate impact",
-      subtitle: "Companies that have already transformed their customer service with DosNodos",
+      subtitle: "Companies that have already transformed their customer service with Dos Nodos",
       items: {
         laura: {
-          text: "The DosNodos team completely transformed our customer service. Our virtual assistant responds instantly and customers are more satisfied than ever.",
+          text: "The Dos Nodos team completely transformed our customer service. Our virtual assistant responds instantly and customers are more satisfied than ever.",
           name: "Laura Martinez",
           position: "Manager, TiendaOnline.co",
         },
         roberto: {
-          text: "We implemented their chatbot at our university and now we handle student queries 24/7. DosNodos' closeness and professionalism was key to success.",
+          text: "We implemented their chatbot at our university and now we handle student queries 24/7. Dos Nodos' closeness and professionalism was key to success.",
           name: "Dr. Roberto Sanchez",
           position: "Director, Innovation University",
         },
         camila: {
-          text: "The automation developed by DosNodos allowed us to scale without increasing staff. Their technological but human approach makes the difference.",
+          text: "The automation developed by Dos Nodos allowed us to scale without increasing staff. Their technological but human approach makes the difference.",
           name: "Camila Perez",
           position: "CEO, HealthTech Solutions",
         },
@@ -597,7 +597,7 @@ export const translations: Record<Language, Translation> = {
     cta: {
       title: "Your business is one click away from becoming intelligent",
       subtitle:
-        "Join the companies that are already transforming their customer service with DosNodos. Schedule your free demo and discover how we can boost your business.",
+        "Join the companies that are already transforming their customer service with Dos Nodos. Schedule your free demo and discover how we can boost your business.",
       form: {
         name: "Full name",
         email: "Business email",
@@ -608,7 +608,7 @@ export const translations: Record<Language, Translation> = {
         submitting: "Sending...",
         success: {
           title: "Message sent successfully!",
-          message: "Thank you for your interest in DosNodos. We will contact you very soon to schedule your free demo.",
+          message: "Thank you for your interest in Dos Nodos. We will contact you very soon to schedule your free demo.",
           button: "Send another message",
         },
         progress: "Form progress",
@@ -669,7 +669,7 @@ export const translations: Record<Language, Translation> = {
       title: "Potencialize seu negócio com",
       titleHighlight: "assistentes virtuais",
       subtitle:
-        "Na DosNodos automatizamos seu atendimento ao cliente com IA, conectamos sua marca com tecnologia funcional e geramos valor real e mensurável para sua empresa.",
+        "Na Dos Nodos automatizamos seu atendimento ao cliente com IA, conectamos sua marca com tecnologia funcional e geramos valor real e mensurável para sua empresa.",
       ctaPrimary: "Solicitar Demo",
       ctaSecondary: "Fale com nosso bot agora",
       features: {
@@ -679,7 +679,7 @@ export const translations: Record<Language, Translation> = {
       },
     },
     services: {
-      title: "O que fazemos na DosNodos?",
+      title: "O que fazemos na Dos Nodos?",
       subtitle:
         "Oferecemos soluções digitais integrais para empresas de todos os setores, conectando marcas com tecnologia funcional e inteligente.",
       items: {
@@ -709,7 +709,7 @@ export const translations: Record<Language, Translation> = {
             "Branding, identidade visual e logos que conectam emocionalmente com seu público e fortalecem sua marca.",
         },
         integration: {
-          title: "Integração Omnicanal",
+          title: "Media Buyer & Paid Media",
           description:
             "Conectamos todos seus canais de comunicação em uma única plataforma para uma experiência unificada.",
         },
@@ -789,20 +789,20 @@ export const translations: Record<Language, Translation> = {
     },
     testimonials: {
       title: "Resultados que geram impacto",
-      subtitle: "Empresas que já transformaram seu atendimento ao cliente com DosNodos",
+      subtitle: "Empresas que já transformaram seu atendimento ao cliente com Dos Nodos",
       items: {
         laura: {
-          text: "A equipe da DosNodos transformou completamente nosso atendimento ao cliente. Nosso assistente virtual responde instantaneamente e os clientes estão mais satisfeitos que nunca.",
+          text: "A equipe da Dos Nodos transformou completamente nosso atendimento ao cliente. Nosso assistente virtual responde instantaneamente e os clientes estão mais satisfeitos que nunca.",
           name: "Laura Martinez",
           position: "Gerente, TiendaOnline.co",
         },
         roberto: {
-          text: "Implementamos seu chatbot em nossa universidade e agora atendemos consultas estudantis 24/7. A proximidade e profissionalismo da DosNodos foi chave para o sucesso.",
+          text: "Implementamos seu chatbot em nossa universidade e agora atendemos consultas estudantis 24/7. A proximidade e profissionalismo da Dos Nodos foi chave para o sucesso.",
           name: "Dr. Roberto Sanchez",
           position: "Diretor, Universidade Inovação",
         },
         camila: {
-          text: "A automação desenvolvida pela DosNodos nos permitiu escalar sem aumentar pessoal. Sua abordagem tecnológica mas humana faz a diferença.",
+          text: "A automação desenvolvida pela Dos Nodos nos permitiu escalar sem aumentar pessoal. Sua abordagem tecnológica mas humana faz a diferença.",
           name: "Camila Perez",
           position: "CEO, HealthTech Solutions",
         },
@@ -817,7 +817,7 @@ export const translations: Record<Language, Translation> = {
     cta: {
       title: "Seu negócio está a um clique de se tornar inteligente",
       subtitle:
-        "Junte-se às empresas que já estão transformando seu atendimento ao cliente com DosNodos. Agende sua demo gratuita e descubra como podemos potencializar seu negócio.",
+        "Junte-se às empresas que já estão transformando seu atendimento ao cliente com Dos Nodos. Agende sua demo gratuita e descubra como podemos potencializar seu negócio.",
       form: {
         name: "Nome completo",
         email: "Email empresarial",
@@ -829,7 +829,7 @@ export const translations: Record<Language, Translation> = {
         success: {
           title: "Mensagem enviada com sucesso!",
           message:
-            "Obrigado pelo seu interesse na DosNodos. Entraremos em contato muito em breve para agendar sua demo gratuita.",
+            "Obrigado pelo seu interesse na Dos Nodos. Entraremos em contato muito em breve para agendar sua demo gratuita.",
           button: "Enviar outra mensagem",
         },
         progress: "Progresso do formulário",
@@ -870,9 +870,9 @@ export const translations: Record<Language, Translation> = {
       rights: "Todos os direitos reservados. Conectamos tecnologia com pessoas.",
     },
     chat: {
-      assistant: "Assistente DosNodos",
+      assistant: "Assistente Dos Nodos",
       online: "Sempre disponível",
-      greeting: "Olá! Sou o assistente da DosNodos. Como posso ajudá-lo?",
+      greeting: "Olá! Sou o assistente da Dos Nodos. Como posso ajudá-lo?",
       userMessage: "Preciso automatizar meu atendimento ao cliente",
       response: "Perfeito! Nossos assistentes virtuais podem se integrar com WhatsApp, seu site, CRM e mais...",
     },
