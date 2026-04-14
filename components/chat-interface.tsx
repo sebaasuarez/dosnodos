@@ -22,10 +22,14 @@ export function ChatInterface({ t, currentLanguage }: ChatInterfaceProps) {
   ])
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-
+  const chatContainerRef = useRef<HTMLDivElement>(null)
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth"
+      })
+    }
   }
 
   useEffect(() => {
@@ -77,7 +81,7 @@ export function ChatInterface({ t, currentLanguage }: ChatInterfaceProps) {
 
   return (
     <div className="w-full flex flex-col h-[400px]">
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
         <AnimatePresence>
           {messages.map((message) => (
             <motion.div
@@ -119,7 +123,6 @@ export function ChatInterface({ t, currentLanguage }: ChatInterfaceProps) {
             </motion.div>
           )}
         </AnimatePresence>
-        <div ref={messagesEndRef} />
       </div>
 
       <div className="p-4 bg-gray-50 rounded-b-xl border-t border-gray-100">
