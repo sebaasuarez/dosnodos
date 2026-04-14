@@ -61,7 +61,7 @@ export const trackWhatsAppClick = () => {
     event_category: "engagement",
     event_label: "whatsapp_contact",
     contact_method: "whatsapp",
-    phone_number: "+573505260427",
+    phone_number: "+573127344026",
   })
 }
 

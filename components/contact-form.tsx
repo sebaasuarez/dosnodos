@@ -3,6 +3,9 @@
 import type React from "react"
 import { useState } from "react"
 import { ArrowRight, CheckCircle, AlertCircle } from "lucide-react"
+import { useForm, Controller } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -11,130 +14,81 @@ import PhoneInput from "@/components/phone-input"
 import { type Language, translations } from "@/lib/i18n"
 import { trackFormSubmit } from "@/lib/gtm"
 
-interface FormData {
-  name: string
-  email: string
-  company: string
-  phone: string
-  message: string
-}
-
-interface FormErrors {
-  name?: string
-  email?: string
-  company?: string
-  phone?: string
-  message?: string
-}
-
 interface ContactFormProps {
   language: Language
 }
 
+// Validación de teléfono
+const phoneRegex = /^\+[1-9]\d{1,14}$/
+
 export default function ContactForm({ language }: ContactFormProps) {
   const t = translations[language]
 
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    company: "",
-    phone: "+57 ", // Inicializar con Colombia
-    message: "",
+  // Esquema reactivo a las traducciones
+  const formSchema = z.object({
+    name: z.string().min(2, { message: t.cta.form.validation.nameMin }),
+    email: z
+      .string()
+      .min(1, { message: t.cta.form.validation.emailRequired })
+      .email({ message: t.cta.form.validation.emailInvalid }),
+    company: z.string().min(1, { message: t.cta.form.validation.companyRequired }),
+    phone: z.string().refine(
+      (val) => {
+        const cleanPhone = val.replace(/\s/g, "")
+        return phoneRegex.test(cleanPhone) && cleanPhone.length >= 8
+      },
+      { message: t.cta.form.validation.phoneInvalid },
+    ),
+    message: z.string().min(10, { message: t.cta.form.validation.messageMin }),
   })
 
-  const [errors, setErrors] = useState<FormErrors>({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  type FormData = z.infer<typeof formSchema>
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    reset,
+    formState: { errors, touchedFields, isSubmitting, isValid },
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    mode: "onBlur",
+    defaultValues: {
+      name: "",
+      email: "",
+      company: "",
+      phone: "",
+      message: "",
+    },
+  })
+
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [submitError, setSubmitError] = useState<string>("")
 
-  const validateField = (name: string, value: string): string | undefined => {
-    switch (name) {
-      case "name":
-        if (!value.trim()) return t.cta.form.validation.nameRequired
-        if (value.trim().length < 2) return t.cta.form.validation.nameMin
-        return undefined
+  const values = watch()
 
-      case "email":
-        if (!value.trim()) return t.cta.form.validation.emailRequired
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailRegex.test(value)) return t.cta.form.validation.emailInvalid
-        return undefined
+  const calculateProgress = () => {
+    let filledValidFields = 0
+    const totalFields = 5
 
-      case "company":
-        if (!value.trim()) return t.cta.form.validation.companyRequired
-        return undefined
+    if (values.name?.length >= 2 && !errors.name) filledValidFields++
+    if (values.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email) && !errors.email) filledValidFields++
+    if (values.company?.length > 0 && !errors.company) filledValidFields++
+    
+    // Custom phone check for progress
+    const cleanPhone = (values.phone || "").replace(/\s/g, "")
+    if (phoneRegex.test(cleanPhone) && cleanPhone.length >= 8 && !errors.phone) filledValidFields++
+    
+    if (values.message?.length >= 10 && !errors.message) filledValidFields++
 
-      case "phone":
-        if (!value.trim()) return t.cta.form.validation.phoneRequired
-        // Validación mejorada para teléfonos internacionales
-        const phoneRegex = /^\+[1-9]\d{1,14}$/
-        const cleanPhone = value.replace(/\s/g, "")
-        if (!phoneRegex.test(cleanPhone) || cleanPhone.length < 8) {
-          return t.cta.form.validation.phoneInvalid
-        }
-        return undefined
-
-      case "message":
-        if (!value.trim()) return t.cta.form.validation.messageRequired
-        if (value.trim().length < 10) return t.cta.form.validation.messageMin
-        return undefined
-
-      default:
-        return undefined
-    }
+    return Math.round((filledValidFields / totalFields) * 100)
   }
 
-  const handleInputChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    setSubmitError("") // Limpiar error de envío
+  const progress = calculateProgress()
 
-    if (touched[name]) {
-      const error = validateField(name, value)
-      setErrors((prev) => ({ ...prev, [name]: error }))
-    }
-  }
-
-  const handleBlur = (name: string) => {
-    setTouched((prev) => ({ ...prev, [name]: true }))
-    const error = validateField(name, formData[name as keyof FormData])
-    setErrors((prev) => ({ ...prev, [name]: error }))
-  }
-
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {}
-    let isValid = true
-
-    Object.keys(formData).forEach((key) => {
-      const error = validateField(key, formData[key as keyof FormData])
-      if (error) {
-        newErrors[key as keyof FormErrors] = error
-        isValid = false
-      }
-    })
-
-    setErrors(newErrors)
-    return isValid
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const onSubmit = async (data: FormData) => {
     setSubmitError("")
-
-    const allTouched = Object.keys(formData).reduce(
-      (acc, key) => {
-        acc[key] = true
-        return acc
-      },
-      {} as Record<string, boolean>,
-    )
-    setTouched(allTouched)
-
-    if (!validateForm()) {
-      return
-    }
-
-    setIsSubmitting(true)
 
     try {
       const response = await fetch("/api/contact", {
@@ -143,7 +97,7 @@ export default function ContactForm({ language }: ContactFormProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...formData,
+          ...data,
           language: language,
         }),
       })
@@ -155,23 +109,13 @@ export default function ContactForm({ language }: ContactFormProps) {
       }
 
       setIsSubmitted(true)
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        phone: "+57 ",
-        message: "",
-      })
-      setTouched({})
-      setErrors({})
-
+      reset() // Limpiamos formulario
+      
       // Track form submission
-      trackFormSubmit(language, formData.company)
+      trackFormSubmit(language, data.company)
     } catch (error) {
       console.error("Error al enviar formulario:", error)
       setSubmitError(t.cta.form.errors.submitError)
-    } finally {
-      setIsSubmitting(false)
     }
   }
 
@@ -202,7 +146,7 @@ export default function ContactForm({ language }: ContactFormProps) {
   return (
     <Card className="bg-white/10 backdrop-blur-sm border-white/20">
       <CardContent className="p-8">
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {submitError && (
             <div className="bg-red-500/20 border border-red-400/30 rounded-lg p-4 text-red-200 text-sm">
               <div className="flex items-center space-x-2">
@@ -216,14 +160,12 @@ export default function ContactForm({ language }: ContactFormProps) {
             <div className="space-y-2">
               <Input
                 placeholder={t.cta.form.name}
-                value={formData.name}
-                onChange={(e) => handleInputChange("name", e.target.value)}
-                onBlur={() => handleBlur("name")}
+                {...register("name")}
                 disabled={isSubmitting}
                 className={`bg-white/20 border-white/30 text-white placeholder:text-white/70 transition-all duration-200 ${
                   errors.name
                     ? "border-red-400 focus:border-red-400 focus:ring-red-400/20"
-                    : touched.name && !errors.name
+                    : touchedFields.name && !errors.name
                       ? "border-green-400 focus:border-green-400 focus:ring-green-400/20"
                       : "focus:border-white/50 focus:ring-white/20"
                 }`}
@@ -231,10 +173,10 @@ export default function ContactForm({ language }: ContactFormProps) {
               {errors.name && (
                 <div className="flex items-center space-x-1 text-red-300 text-sm">
                   <AlertCircle className="h-4 w-4" />
-                  <span>{errors.name}</span>
+                  <span>{errors.name.message as string}</span>
                 </div>
               )}
-              {touched.name && !errors.name && formData.name && (
+              {touchedFields.name && !errors.name && values.name && (
                 <div className="flex items-center space-x-1 text-green-300 text-sm">
                   <CheckCircle className="h-4 w-4" />
                   <span>{t.cta.form.validation.perfect}</span>
@@ -246,14 +188,12 @@ export default function ContactForm({ language }: ContactFormProps) {
               <Input
                 placeholder={t.cta.form.email}
                 type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
-                onBlur={() => handleBlur("email")}
+                {...register("email")}
                 disabled={isSubmitting}
                 className={`bg-white/20 border-white/30 text-white placeholder:text-white/70 transition-all duration-200 ${
                   errors.email
                     ? "border-red-400 focus:border-red-400 focus:ring-red-400/20"
-                    : touched.email && !errors.email
+                    : touchedFields.email && !errors.email
                       ? "border-green-400 focus:border-green-400 focus:ring-green-400/20"
                       : "focus:border-white/50 focus:ring-white/20"
                 }`}
@@ -261,10 +201,10 @@ export default function ContactForm({ language }: ContactFormProps) {
               {errors.email && (
                 <div className="flex items-center space-x-1 text-red-300 text-sm">
                   <AlertCircle className="h-4 w-4" />
-                  <span>{errors.email}</span>
+                  <span>{errors.email.message as string}</span>
                 </div>
               )}
-              {touched.email && !errors.email && formData.email && (
+              {touchedFields.email && !errors.email && values.email && (
                 <div className="flex items-center space-x-1 text-green-300 text-sm">
                   <CheckCircle className="h-4 w-4" />
                   <span>{t.cta.form.validation.validEmail}</span>
@@ -277,14 +217,12 @@ export default function ContactForm({ language }: ContactFormProps) {
             <div className="space-y-2">
               <Input
                 placeholder={t.cta.form.company}
-                value={formData.company}
-                onChange={(e) => handleInputChange("company", e.target.value)}
-                onBlur={() => handleBlur("company")}
+                {...register("company")}
                 disabled={isSubmitting}
                 className={`bg-white/20 border-white/30 text-white placeholder:text-white/70 transition-all duration-200 ${
                   errors.company
                     ? "border-red-400 focus:border-red-400 focus:ring-red-400/20"
-                    : touched.company && !errors.company
+                    : touchedFields.company && !errors.company
                       ? "border-green-400 focus:border-green-400 focus:ring-green-400/20"
                       : "focus:border-white/50 focus:ring-white/20"
                 }`}
@@ -292,10 +230,10 @@ export default function ContactForm({ language }: ContactFormProps) {
               {errors.company && (
                 <div className="flex items-center space-x-1 text-red-300 text-sm">
                   <AlertCircle className="h-4 w-4" />
-                  <span>{errors.company}</span>
+                  <span>{errors.company.message as string}</span>
                 </div>
               )}
-              {touched.company && !errors.company && formData.company && (
+              {touchedFields.company && !errors.company && values.company && (
                 <div className="flex items-center space-x-1 text-green-300 text-sm">
                   <CheckCircle className="h-4 w-4" />
                   <span>{t.cta.form.validation.excellent}</span>
@@ -304,24 +242,32 @@ export default function ContactForm({ language }: ContactFormProps) {
             </div>
 
             <div className="space-y-2">
-              <PhoneInput
-                value={formData.phone}
-                onChange={(value) => handleInputChange("phone", value)}
-                onBlur={() => handleBlur("phone")}
-                placeholder={
-                  language === "es" ? "Número de teléfono" : language === "en" ? "Phone number" : "Número de telefone"
-                }
-                disabled={isSubmitting}
-                error={!!errors.phone}
-                className="w-full"
+              <Controller
+                name="phone"
+                control={control}
+                render={({ field }) => (
+                  <PhoneInput
+                    language={language}
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    placeholder={
+                      language === "es" ? "Número de teléfono" : language === "en" ? "Phone number" : "Número de telefone"
+                    }
+                    disabled={isSubmitting}
+                    error={!!errors.phone}
+                    className="w-full"
+                  />
+                )}
               />
+              
               {errors.phone && (
                 <div className="flex items-center space-x-1 text-red-300 text-sm">
                   <AlertCircle className="h-4 w-4" />
-                  <span>{errors.phone}</span>
+                  <span>{errors.phone.message as string}</span>
                 </div>
               )}
-              {touched.phone && !errors.phone && formData.phone && (
+              {touchedFields.phone && !errors.phone && values.phone && (
                 <div className="flex items-center space-x-1 text-green-300 text-sm">
                   <CheckCircle className="h-4 w-4" />
                   <span>{t.cta.form.validation.validPhone}</span>
@@ -333,14 +279,12 @@ export default function ContactForm({ language }: ContactFormProps) {
           <div className="space-y-2">
             <Textarea
               placeholder={t.cta.form.message}
-              value={formData.message}
-              onChange={(e) => handleInputChange("message", e.target.value)}
-              onBlur={() => handleBlur("message")}
+              {...register("message")}
               disabled={isSubmitting}
               className={`bg-white/20 border-white/30 text-white placeholder:text-white/70 min-h-[100px] transition-all duration-200 resize-none ${
                 errors.message
                   ? "border-red-400 focus:border-red-400 focus:ring-red-400/20"
-                  : touched.message && !errors.message
+                  : touchedFields.message && !errors.message
                     ? "border-green-400 focus:border-green-400 focus:ring-green-400/20"
                     : "focus:border-white/50 focus:ring-white/20"
               }`}
@@ -350,18 +294,18 @@ export default function ContactForm({ language }: ContactFormProps) {
                 {errors.message && (
                   <div className="flex items-center space-x-1 text-red-300 text-sm">
                     <AlertCircle className="h-4 w-4" />
-                    <span>{errors.message}</span>
+                    <span>{errors.message.message as string}</span>
                   </div>
                 )}
-                {touched.message && !errors.message && formData.message && (
+                {touchedFields.message && !errors.message && values.message && (
                   <div className="flex items-center space-x-1 text-green-300 text-sm">
                     <CheckCircle className="h-4 w-4" />
                     <span>{t.cta.form.validation.complete}</span>
                   </div>
                 )}
               </div>
-              <span className={`text-sm ${formData.message.length < 10 ? "text-white/50" : "text-green-300"}`}>
-                {formData.message.length}/10 min
+              <span className={`text-sm ${values.message?.length < 10 ? "text-white/50" : "text-green-300"}`}>
+                {values.message?.length || 0}/10 min
               </span>
             </div>
           </div>
@@ -369,7 +313,7 @@ export default function ContactForm({ language }: ContactFormProps) {
           <Button
             type="submit"
             size="lg"
-            disabled={isSubmitting || Object.keys(errors).some((key) => errors[key as keyof FormErrors])}
+            disabled={isSubmitting || !isValid}
             className={`w-full text-lg py-3 transition-all duration-200 ${
               isSubmitting
                 ? "bg-gray-400 text-gray-600 cursor-not-allowed"
@@ -392,31 +336,12 @@ export default function ContactForm({ language }: ContactFormProps) {
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-blue-100">
               <span>{t.cta.form.progress}</span>
-              <span>
-                {Math.round(
-                  (Object.keys(formData).filter((key) => {
-                    const value = formData[key as keyof FormData].trim()
-                    return key === "phone" ? value.length > 4 : value !== "" // Para teléfono, considerar válido si tiene más de 4 caracteres
-                  }).length /
-                    Object.keys(formData).length) *
-                    100,
-                )}
-                %
-              </span>
+              <span>{progress}%</span>
             </div>
             <div className="w-full bg-white/20 rounded-full h-2">
               <div
                 className="bg-gradient-to-r from-green-400 to-blue-400 h-2 rounded-full transition-all duration-300 ease-out"
-                style={{
-                  width: `${
-                    (Object.keys(formData).filter((key) => {
-                      const value = formData[key as keyof FormData].trim()
-                      return key === "phone" ? value.length > 4 : value !== ""
-                    }).length /
-                      Object.keys(formData).length) *
-                    100
-                  }%`,
-                }}
+                style={{ width: `${progress}%` }}
               />
             </div>
           </div>
