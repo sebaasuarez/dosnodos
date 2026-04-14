@@ -91,24 +91,26 @@ export function Hero({ t, currentLanguage }: HeroProps) {
                 <Button
                   size="lg"
                   className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-3"
+                  aria-label={t.hero.ctaPrimary}
                   onClick={() => {
                     trackCTAClick("primary", "hero")
                     document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })
                   }}
                 >
                   {t.hero.ctaPrimary}
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
                   className="text-lg px-8 py-3 bg-transparent"
+                  aria-label={t.hero.ctaSecondary}
                   onClick={() => {
                     trackCTAClick("secondary", "hero")
                     document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })
                   }}
                 >
-                  <MessageSquare className="mr-2 h-5 w-5" />
+                  <MessageSquare className="mr-2 h-5 w-5" aria-hidden="true" />
                   {t.hero.ctaSecondary}
                 </Button>
               </div>
@@ -191,6 +193,7 @@ export function Hero({ t, currentLanguage }: HeroProps) {
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                       placeholder={t.chat.greeting}
+                      aria-label="Mensaje para el asistente"
                       className="flex-1 bg-white border-gray-200 h-9 text-xs focus-visible:ring-blue-500"
                     />
                     <Button

@@ -6,27 +6,88 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Dos Nodos - Asistentes Virtuales Inteligentes para tu Empresa",
+  metadataBase: new URL("https://dosnodos.com.co"),
+  title: {
+    default: "Dos Nodos - Agencia de Desarrollo y Transformación Digital | Fundada por desarrolladores",
+    template: "%s | Dos Nodos"
+  },
   description:
-    "Potencia tu negocio con asistentes virtuales inteligentes. En Dos Nodos conectamos tecnología con personas, automatizamos tu atención al cliente 24/7 y generamos valor real y medible.",
-  keywords:
-    "Dos Nodos, asistentes virtuales, chatbots, inteligencia artificial, automatización, atención al cliente, desarrollo web, marketing digital, Colombia, Medellín",
-  authors: [{ name: "Dos Nodos" }],
+    "Dos Nodos es una agencia de desarrollo y transformación digital creada por desarrolladores para empresas que buscan soluciones tecnológicas robustas. Conectamos tecnología con personas para generar impacto real en Medellín, Colombia.",
+  keywords: [
+    "Dos Nodos",
+    "desarrollo de software",
+    "transformación digital",
+    "agencia digital",
+    "creada por desarrolladores",
+    "Medellín",
+    "Colombia",
+    "inteligencia artificial",
+    "Media Buyer",
+    "performance marketing"
+  ],
+  authors: [{ name: "Dos Nodos", url: "https://dosnodos.com.co" }],
   creator: "Dos Nodos",
   publisher: "Dos Nodos",
-  robots: "index, follow",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "/",
+    languages: {
+      "es-CO": "/es",
+      "en-US": "/en",
+      "pt-BR": "/pt",
+    },
+  },
   openGraph: {
-    title: "Dos Nodos - Asistentes Virtuales Inteligentes",
-    description: "Conectamos tecnología con personas. Automatiza tu negocio con IA.",
+    title: "Dos Nodos - Transformación Digital con Propósito",
+    description: "Agencia de desarrollo y transformación digital. Conectamos tecnología con personas.",
     url: "https://dosnodos.com.co",
     siteName: "Dos Nodos",
     locale: "es_CO",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Dos Nodos - Agencia de Desarrollo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dos Nodos - Agencia de Desarrollo y Transformación Digital",
+    description: "Conectamos tecnología con personas. Soluciones tecnológicas robustas.",
+    images: ["/og-image.png"],
+    creator: "@dosnodos",
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.json",
+  verification: {
+    google: "google-site-verification-token",
+  },
+  other: {
+    "geo.region": "CO-ANT",
+    "geo.placename": "Medellín",
+    "geo.position": "6.2442;-75.5812",
+    "ICBM": "6.2442, -75.5812",
   }
 }
 
