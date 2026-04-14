@@ -183,3 +183,66 @@ export function getInternalNotificationTemplate(formData: ContactFormData): stri
     </html>
   `
 }
+
+export interface OutreachData {
+  clientName: string
+  clientEmail: string
+  company: string
+  subject: string
+  message: string
+  type: "cold" | "followup"
+  sellerName?: string
+}
+
+export function getOutreachTemplate(data: OutreachData): string {
+  const ctaText = data.type === "cold" ? "Agendar una llamada corta" : "Continuar conversación"
+  const waLink = "https://wa.me/573127344026?text=Hola%2C%20quiero%20saber%20más%20sobre%20Dos%20Nodos"
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #1a1a1a; margin: 0; padding: 0; background-color: #f4f7f6; }
+        .container { max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
+        .header { background: #111827; padding: 30px; text-align: center; }
+        .content { padding: 40px 30px; }
+        .message-box { font-size: 16px; color: #374151; line-height: 1.8; }
+        .cta-container { text-align: center; margin: 40px 0 20px 0; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #2563eb, #7c3aed); color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; letter-spacing: 0.5px; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2); }
+        .footer { background: #f8f9fa; text-align: center; padding: 30px; color: #6b7280; font-size: 13px; border-top: 1px solid #f3f4f6; }
+        .logo-img { max-width: 160px; height: auto; }
+        .signature { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+        .sig-name { font-weight: bold; color: #111827; font-size: 16px; margin: 0; }
+        .sig-title { color: #6b7280; font-size: 14px; margin: 2px 0 0 0; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <a href="https://dosnodos.com.co" style="display:inline-block;">
+            <img src="https://dosnodos.com.co/logo-dosnodos.png" alt="Dos Nodos" class="logo-img" style="filter: brightness(0) invert(1); max-width:160px; height:auto;" />
+          </a>
+        </div>
+        <div class="content">
+          <div class="message-box">
+            <p>Hola <strong>${data.clientName}</strong>,</p>
+            ${data.message.replace(/\n/g, '<br/>')}
+          </div>
+          
+          <div class="cta-container">
+            <a href="${waLink}" class="cta-button">${ctaText}</a>
+          </div>
+        </div>
+        <div class="footer">
+          <p style="margin:0 0 8px 0; font-weight:700; color:#374151;">Dos Nodos</p>
+          <p style="margin:0 0 10px 0; font-style:italic; color:#6b7280;">Conectamos tecnología con personas</p>
+          <p style="margin:0;">Medellín, Colombia | <a href="https://dosnodos.com.co" style="color:#2563eb;">dosnodos.com.co</a></p>
+          <p style="margin:15px 0 0 0; font-size: 11px; color:#9ca3af;">Estás recibiendo este correo porque hemos identificado que <strong>${data.company}</strong> puede beneficiarse de nuestras soluciones.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `
+}
