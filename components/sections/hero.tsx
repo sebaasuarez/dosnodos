@@ -2,6 +2,7 @@
 
 import AnimatedSection from "@/components/animated-section"
 import { FlowDiagram } from "@/components/brand/flow-diagram"
+import { DottedSurface } from "@/components/ui/dotted-surface"
 import { trackCTAClick } from "@/lib/gtm"
 import { type Translation } from "@/lib/i18n"
 
@@ -19,7 +20,8 @@ export function Hero({ t }: HeroProps) {
           "radial-gradient(680px 340px at 15% 0%, rgba(147,51,234,.13), transparent 66%), radial-gradient(720px 360px at 88% 6%, rgba(37,99,235,.13), transparent 68%)",
       }}
     >
-      <div className="mx-auto flex max-w-[1180px] flex-col items-center gap-[clamp(18px,3vw,26px)] px-[clamp(20px,5vw,40px)] py-[clamp(48px,8vw,92px)] text-center">
+      <DottedSurface className="opacity-60 [mask-image:linear-gradient(to_bottom,black_5%,black_68%,transparent_96%)]" />
+      <div className="relative z-10 mx-auto flex max-w-[1180px] flex-col items-center gap-[clamp(18px,3vw,26px)] px-[clamp(20px,5vw,40px)] py-[clamp(48px,8vw,92px)] text-center">
         <AnimatedSection animation="fadeInUp">
           <span className="inline-flex items-center gap-2.5 font-mono text-[12px] uppercase tracking-[.16em] text-brand-cta">
             <span className="h-2 w-2 rounded-full bg-gradient-to-r from-brand-purple to-brand-blue" />

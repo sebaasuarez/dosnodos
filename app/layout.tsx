@@ -57,9 +57,14 @@ export async function generateMetadata(): Promise<Metadata> {
       images: seo?.og_image ? [{ url: seo.og_image }] : undefined,
     },
     icons: {
-      icon: [{ url: "/dosnodos-mark.png", type: "image/png" }, { url: "/favicon.ico" }],
-      shortcut: "/dosnodos-mark.png",
-      apple: "/dosnodos-mark.png",
+      icon: [
+        { url: "/icon-16.png", sizes: "16x16", type: "image/png" },
+        { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
+        { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+        { url: "/favicon.ico", sizes: "256x256" },
+      ],
+      shortcut: "/favicon.ico",
+      apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
     },
   }
 }

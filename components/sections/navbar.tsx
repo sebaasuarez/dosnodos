@@ -19,9 +19,9 @@ export function Navbar({ t, currentLanguage, onLanguageChange }: NavbarProps) {
             src="/dosnodos-logo.png"
             alt="Dos Nodos"
             width={170}
-            height={34}
+            height={86}
             priority
-            className="h-[34px] w-auto"
+            className="h-auto w-[132px] object-contain sm:w-[150px]"
           />
         </a>
         <nav className="flex flex-wrap items-center justify-end gap-x-[clamp(10px,2.4vw,28px)] gap-y-2 text-[15px] text-[#3A3550]">

@@ -2,6 +2,15 @@
 
 import AnimatedSection from "@/components/animated-section"
 import { type Translation } from "@/lib/i18n"
+import {
+  AppWindow,
+  Blocks,
+  CodeXml,
+  LayoutTemplate,
+  PanelsTopLeft,
+  ShoppingBag,
+  Smartphone,
+} from "lucide-react"
 
 interface ServicesProps {
   t: Translation
@@ -39,6 +48,8 @@ const IconAI = (
     <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" />
   </svg>
 )
+
+const webIcons = [ShoppingBag, LayoutTemplate, PanelsTopLeft, Smartphone, AppWindow, CodeXml, Blocks]
 
 export function Services({ t }: ServicesProps) {
   return (
@@ -115,6 +126,46 @@ export function Services({ t }: ServicesProps) {
               </div>
             </article>
           </AnimatedSection>
+        </div>
+
+        <div className="mt-[clamp(24px,5vw,52px)] rounded-[28px] bg-ink-2 px-[clamp(20px,4vw,44px)] py-[clamp(30px,5vw,52px)] text-white">
+          <AnimatedSection animation="fadeInUp">
+            <div className="mx-auto flex max-w-[760px] flex-col items-center gap-3 text-center">
+              <span className="font-mono text-[12px] uppercase tracking-[.14em] text-[#B88AF0]">
+                {t.services.webDevelopment.eyebrow}
+              </span>
+              <h3 className="text-[clamp(27px,4vw,42px)] font-semibold leading-[1.1] tracking-[-0.03em]">
+                {t.services.webDevelopment.title}
+              </h3>
+              <p className="max-w-[62ch] text-[16px] leading-[1.6] text-[#A29FBE]">
+                {t.services.webDevelopment.subtitle}
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {t.services.webDevelopment.items.map((service, index) => {
+              const Icon = webIcons[index]
+              return (
+                <AnimatedSection
+                  key={service.title}
+                  animation="fadeInUp"
+                  delay={Math.min(index * 45, 270)}
+                  className={index === 6 ? "sm:col-span-2 lg:col-span-3" : ""}
+                >
+                  <article className="group flex h-full gap-3.5 rounded-[16px] border border-white/10 bg-white/[0.045] p-5 transition-colors hover:border-brand-purple/60 hover:bg-white/[0.07]">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-purple/25 to-brand-blue/25 text-[#CBA8F3]">
+                      <Icon className="h-5 w-5" strokeWidth={1.8} />
+                    </span>
+                    <div>
+                      <h4 className="text-[16px] font-semibold leading-snug text-[#F5F3FC]">{service.title}</h4>
+                      <p className="mt-1.5 text-[13.5px] leading-[1.5] text-[#A29FBE]">{service.description}</p>
+                    </div>
+                  </article>
+                </AnimatedSection>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>
