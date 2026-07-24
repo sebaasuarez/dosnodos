@@ -1,165 +1,104 @@
 export type Language = "es" | "en" | "pt"
 
+interface DiagramCopy {
+  people: string
+  results: string
+  whatsapp: string
+  email: string
+  site: string
+  node: string
+  result1: string
+  result2: string
+  result3: string
+  aria: string
+}
+
+interface Metric {
+  value: string
+  label: string
+}
+
+interface ServiceCard {
+  title: string
+  description: string
+  chips: string[]
+  badge?: string
+}
+
+interface ProjectItem {
+  tag: string
+  title: string
+  description: string
+  resultLabel: string
+  result: string
+}
+
+interface ReviewItem {
+  quote: string
+  name: string
+  role: string
+  initials: string
+}
+
 export interface Translation {
-  // Navigation
   nav: {
     services: string
-    benefits: string
-    sectors: string
-    contact: string
-    demo: string
+    projects: string
+    reviews: string
+    cta: string
   }
-
-  // Hero Section
   hero: {
-    badge: string
-    title: string
-    titleHighlight: string
+    eyebrow: string
+    titleLead: string
+    tech: string
+    connector: string
+    people: string
     subtitle: string
     ctaPrimary: string
     ctaSecondary: string
-    features: {
-      support: string
-      founded: string
-      results: string
-    }
+    note: string
+    diagram: DiagramCopy
   }
-
-  // Services Section
+  metrics: {
+    responseTime: Metric
+    availability: Metric
+    quotes: Metric
+    speed: Metric
+  }
   services: {
+    eyebrow: string
     title: string
+    titleAccent: string
     subtitle: string
+    platforms: ServiceCard
+    apps: ServiceCard
+    ai: ServiceCard
+  }
+  projects: {
+    eyebrow: string
+    title: string
     items: {
-      ai: {
-        title: string
-        description: string
-      }
-      web: {
-        title: string
-        description: string
-      }
-      automation: {
-        title: string
-        description: string
-      }
-      marketing: {
-        title: string
-        description: string
-      }
-      branding: {
-        title: string
-        description: string
-      }
-      integration: {
-        title: string
-        description: string
-      }
+      distribuidora: ProjectItem
+      cosmetica: ProjectItem
+      clinica: ProjectItem
     }
   }
-
-  // Benefits Section
-  benefits: {
-    title: string
-    subtitle: string
+  reviews: {
+    eyebrow: string
+    average: string
     items: {
-      immediate: {
-        title: string
-        description: string
-      }
-      cost: {
-        title: string
-        description: string
-      }
-      scalability: {
-        title: string
-        description: string
-      }
-      integration: {
-        title: string
-        description: string
-      }
-    }
-    channels: {
-      title: string
-      whatsapp: string
-      website: string
-      ecommerce: string
-      crm: string
+      diana: ReviewItem
+      mateo: ReviewItem
+      laura: ReviewItem
     }
   }
-
-  // Sectors Section
-  sectors: {
-    title: string
+  contact: {
+    eyebrow: string
+    titleLead: string
+    titleAccent: string
     subtitle: string
-    items: {
-      ecommerce: {
-        title: string
-        description: string
-      }
-      education: {
-        title: string
-        description: string
-      }
-      startups: {
-        title: string
-        description: string
-      }
-      health: {
-        title: string
-        description: string
-      }
-      sales: {
-        title: string
-        description: string
-      }
-      realestate: {
-        title: string
-        description: string
-      }
-    }
-  }
-
-  // Team Section
-  team: {
-    title: string
-    subtitle: string
-    description: string
-  }
-
-  // Testimonials Section
-  testimonials: {
-    title: string
-    subtitle: string
-    items: {
-      laura: {
-        text: string
-        name: string
-        position: string
-      }
-      roberto: {
-        text: string
-        name: string
-        position: string
-      }
-      camila: {
-        text: string
-        name: string
-        position: string
-      }
-    }
-    stats: {
-      satisfaction: string
-      reduction: string
-      availability: string
-      leads: string
-    }
-  }
-
-  // CTA Section
-  cta: {
-    title: string
-    subtitle: string
+    whatsapp: string
+    email: string
     form: {
       name: string
       email: string
@@ -196,28 +135,15 @@ export interface Translation {
       }
       confirmationNote: string
     }
-    chatbot: {
-      title: string
-      description: string
-    }
   }
-
-  // Footer
   footer: {
-    description: string
-    services: string
-    sectors: string
-    contact: string
-    rights: string
-  }
-
-  // Chat Demo
-  chat: {
-    assistant: string
-    online: string
-    greeting: string
-    userMessage: string
-    response: string
+    tagline: string
+    exploreLabel: string
+    contactLabel: string
+    scheduleCta: string
+    email: string
+    location: string
+    copyright: string
   }
 }
 
@@ -225,185 +151,141 @@ export const translations: Record<Language, Translation> = {
   es: {
     nav: {
       services: "Servicios",
-      benefits: "Beneficios",
-      sectors: "Sectores",
-      contact: "Contacto",
-      demo: "Solicita tu Demo",
+      projects: "Proyectos",
+      reviews: "Reseñas",
+      cta: "Agendar reunión",
     },
     hero: {
-      badge: "🚀 Conectamos tecnología con personas",
-      title: "Potencia tu negocio con",
-      titleHighlight: "asistentes virtuales",
+      eyebrow: "IA · Automatización · Desarrollo",
+      titleLead: "Conectamos",
+      tech: "tecnología",
+      connector: "con",
+      people: "personas",
       subtitle:
-        "En Dos Nodos automatizamos tu atención al cliente con IA, conectamos tu marca con tecnología funcional y generamos valor real y medible para tu empresa.",
-      ctaPrimary: "Solicita tu Demo",
-      ctaSecondary: "Habla con nuestro bot ahora",
-      features: {
-        support: "Atención 24/7",
-        founded: "Fundada por desarrolladores",
-        results: "Resultados medibles",
+        "Ayudamos a empresas a vender más, responder más rápido y trabajar mejor — con automatización, asistentes con IA y plataformas a la medida.",
+      ctaPrimary: "Agendar reunión",
+      ctaSecondary: "Ver servicios",
+      note: "30 min · sin costo · con diagnóstico",
+      diagram: {
+        people: "PERSONAS",
+        results: "RESULTADOS",
+        whatsapp: "WhatsApp",
+        email: "Correo",
+        site: "Sitio web",
+        node: "dos nodos",
+        result1: "✓ Cotización · 40s",
+        result2: "✓ CRM actualizado",
+        result3: "★ Reunión agendada",
+        aria: "Diagrama: canales de personas (WhatsApp, correo, sitio web) conectados por Dos Nodos hacia resultados: cotización en 40 segundos, CRM actualizado y reunión agendada",
       },
+    },
+    metrics: {
+      responseTime: { value: "−80%", label: "en tiempo de respuesta a clientes" },
+      availability: { value: "24/7", label: "atención y ventas, sin turnos" },
+      quotes: { value: "3×", label: "cotizaciones procesadas por día" },
+      speed: { value: "40s", label: "de una pregunta a una cotización" },
     },
     services: {
-      title: "¿Qué hacemos en Dos Nodos?",
+      eyebrow: "Servicios",
+      title: "Todo lo que tu operación necesita,",
+      titleAccent: "en un solo lugar.",
       subtitle:
-        "Ofrecemos soluciones digitales integrales para empresas de todos los sectores, conectando marcas con tecnología funcional e inteligente.",
+        "Desde el sitio que te representa hasta el asistente que responde por ti. Elegimos la tecnología según el resultado, no al revés.",
+      platforms: {
+        title: "Plataformas & e‑Commerce",
+        description: "Sitios y tiendas que cargan rápido, convierten y son fáciles de administrar.",
+        chips: ["Shopify", "Web", "e‑Commerce"],
+      },
+      apps: {
+        title: "Apps & Software a medida",
+        description: "Cuando lo genérico no alcanza, construimos exactamente lo que tu proceso necesita.",
+        chips: ["Web app", "Móvil", "A la medida"],
+      },
+      ai: {
+        title: "IA & Automatización",
+        description: "Asistentes que atienden, cotizan y agendan. Procesos que corren solos, 24/7.",
+        chips: ["WhatsApp API", "n8n"],
+        badge: "ESTRELLA",
+      },
+    },
+    projects: {
+      eyebrow: "Proyectos",
+      title: "Resultados que se miden.",
       items: {
-        ai: {
-          title: "Asistentes Virtuales Inteligentes",
-          description:
-            "Chatbots con IA que atienden a tus clientes 24/7. Integración con WhatsApp, web, e-commerce y CRMs. Nuestro servicio estrella.",
+        distribuidora: {
+          tag: "Asistente IA + ERP",
+          title: "Distribuidora de repuestos",
+          description: "Cotizaciones por WhatsApp en menos de un minuto, con inventario en tiempo real.",
+          resultLabel: "Resultado",
+          result: "3× cotizaciones/día",
         },
-        web: {
-          title: "Desarrollo Web Moderno",
-          description:
-            "Páginas web responsivas, rápidas y optimizadas para conversión. Tecnología de vanguardia para tu presencia digital.",
+        cosmetica: {
+          tag: "Shopify + e‑Commerce",
+          title: "Marca de cosmética",
+          description: "Tienda rediseñada y ventas nocturnas respondidas por un asistente.",
+          resultLabel: "Resultado",
+          result: "+38% conversión",
         },
-        automation: {
-          title: "Automatización de Procesos",
-          description:
-            "Optimizamos tus operaciones empresariales con automatización inteligente que ahorra tiempo y recursos.",
-        },
-        marketing: {
-          title: "Marketing Digital & SEO",
-          description:
-            "Estrategias de posicionamiento SEO/SEM para aumentar tu visibilidad y generar más leads calificados.",
-        },
-        branding: {
-          title: "Diseño de Marca",
-          description:
-            "Branding, identidad visual y logos que conectan emocionalmente con tu audiencia y fortalecen tu marca.",
-        },
-        integration: {
-          title: "Media Buyer & Paid Media",
-          description:
-            "Ayudo a empresas a generar mejores leads, mejorar la eficiencia de adquisición y construir sistemas comerciales más sólidos mediante paid media orientado a performance.",
+        clinica: {
+          tag: "Automatización",
+          title: "Clínica odontológica",
+          description: "Agenda automática con recordatorios; menos citas perdidas.",
+          resultLabel: "Resultado",
+          result: "−45% inasistencia",
         },
       },
     },
-    benefits: {
-      title: "Asistentes virtuales que trabajan por ti 24/7",
-      subtitle: "Automatiza tu atención al cliente y libera tiempo para enfocarte en hacer crecer tu negocio",
+    reviews: {
+      eyebrow: "Reseñas",
+      average: "4.9 promedio",
       items: {
-        immediate: {
-          title: "Atención Inmediata",
-          description: "Respuestas instantáneas a tus clientes, sin esperas ni horarios limitados. Disponible 24/7.",
+        diana: {
+          quote: "Antes el equipo pasaba las tardes digitando pedidos. Hoy ese tiempo es para los clientes.",
+          name: "Diana R.",
+          role: "Gerente general · Distribuidora",
+          initials: "DR",
         },
-        cost: {
-          title: "Reducción de Costos",
-          description: "Ahorra hasta 80% en costos de atención al cliente mientras mejoras la experiencia de usuario.",
+        mateo: {
+          quote: "La tienda quedó impecable y las ventas nocturnas ahora se responden solas.",
+          name: "Mateo P.",
+          role: "Fundador · Cosmética",
+          initials: "MP",
         },
-        scalability: {
-          title: "Escalabilidad",
-          description: "Maneja miles de conversaciones simultáneas sin perder calidad ni personalización.",
-        },
-        integration: {
-          title: "Integración Multiplataforma",
-          description: "Conecta con WhatsApp, tu sitio web, e-commerce, CRM y todas tus herramientas.",
-        },
-      },
-      channels: {
-        title: "Canales de Implementación",
-        whatsapp: "WhatsApp Business",
-        website: "Sitio Web",
-        ecommerce: "E-commerce",
-        crm: "CRM Systems",
-      },
-    },
-    sectors: {
-      title: "Casos de uso por industria",
-      subtitle: "Nuestros asistentes virtuales se adaptan a las necesidades específicas de cada sector",
-      items: {
-        ecommerce: {
-          title: "Negocios Locales & E-commerce",
-          description:
-            "Soporte de ventas, seguimiento de pedidos, recomendaciones personalizadas y atención post-venta automatizada.",
-        },
-        education: {
-          title: "Universidades & Educación",
-          description:
-            "Información académica, proceso de inscripciones, soporte estudiantil 24/7 y resolución de consultas frecuentes.",
-        },
-        startups: {
-          title: "Startups & Asesorías",
-          description:
-            "Consultas especializadas, agendamiento de citas, calificación de leads y soporte técnico automatizado.",
-        },
-        health: {
-          title: "Clínicas & Sector Salud",
-          description:
-            "Agendamiento de citas médicas, recordatorios de tratamientos, información básica y triaje inicial.",
-        },
-        sales: {
-          title: "Equipos de Ventas",
-          description:
-            "Calificación automática de leads, seguimiento de prospectos, agendamiento de reuniones y nurturing.",
-        },
-        realestate: {
-          title: "Inmobiliarias & Turismo",
-          description:
-            "Información de propiedades, reservas de hoteles, tours virtuales y recomendaciones personalizadas.",
-        },
-      },
-    },
-    team: {
-      title: "Equipo Completo a tu Servicio",
-      subtitle:
-        "Contamos con un equipo multidisciplinario para apoyarte en cada etapa de la construcción de tu solución",
-      description:
-        "Desarrolladores, diseñadores, especialistas en IA y consultores estratégicos trabajando juntos para hacer realidad tu proyecto.",
-    },
-    testimonials: {
-      title: "Resultados que generan impacto",
-      subtitle: "Empresas que ya transformaron su atención al cliente con Dos Nodos",
-      items: {
         laura: {
-          text: "El equipo de Dos Nodos transformó completamente nuestra atención al cliente. Nuestro asistente virtual responde al instante y los clientes están más satisfechos que nunca.",
-          name: "Laura Martínez",
-          position: "Gerente, TiendaOnline.co",
+          quote: "Entendieron el problema real y no nos vendieron humo. El agendamiento cambió la clínica.",
+          name: "Laura C.",
+          role: "Directora · Clínica",
+          initials: "LC",
         },
-        roberto: {
-          text: "Implementamos su chatbot en nuestra universidad y ahora atendemos consultas estudiantiles 24/7. La cercanía y profesionalismo de Dos Nodos fue clave para el éxito.",
-          name: "Dr. Roberto Sánchez",
-          position: "Director, Universidad Innovación",
-        },
-        camila: {
-          text: "La automatización que desarrolló Dos Nodos nos permitió escalar sin aumentar personal. Su enfoque tecnológico pero humano marca la diferencia.",
-          name: "Camila Pérez",
-          position: "CEO, HealthTech Solutions",
-        },
-      },
-      stats: {
-        satisfaction: "Satisfacción del cliente",
-        reduction: "Reducción en tiempo de respuesta",
-        availability: "Disponibilidad garantizada",
-        leads: "Más leads calificados",
       },
     },
-    cta: {
-      title: "Tu negocio está a un clic de volverse inteligente",
+    contact: {
+      eyebrow: "Hablemos",
+      titleLead: "Hablemos de",
+      titleAccent: "tu operación.",
       subtitle:
-        "Únete a las empresas que ya están transformando su atención al cliente con Dos Nodos. Agenda tu demo gratuita y descubre cómo podemos potenciar tu negocio.",
+        "En 30 minutos encontramos al menos un proceso que puedes dejar de hacer a mano. Sin costo, sin compromiso.",
+      whatsapp: "WhatsApp +57 312 734 4026",
+      email: "hola@dosnodos.com.co",
       form: {
-        name: "Nombre completo",
-        email: "Email empresarial",
+        name: "Nombre",
+        email: "Correo de trabajo",
         company: "Empresa",
         phone: "Teléfono",
-        message: "Cuéntanos sobre tu proyecto y cómo podemos ayudarte...",
-        submit: "Solicitar Demo Gratuita",
+        message: "¿Qué quieres mejorar? Ej: responder más rápido por WhatsApp",
+        submit: "Agendar una reunión",
         submitting: "Enviando...",
         success: {
-          title: "¡Mensaje enviado con éxito!",
-          message:
-            "Gracias por tu interés en Dos Nodos. Nos pondremos en contacto contigo muy pronto para agendar tu demo gratuita.",
-          button: "Enviar otro mensaje",
+          title: "¡Listo! Te escribimos hoy.",
+          message: "Recibimos tu solicitud. Coordinamos los 30 minutos por WhatsApp o correo.",
+          button: "Enviar otra solicitud",
         },
-        progress: "Progreso del formulario",
+        progress: "Progreso",
         validation: {
           nameRequired: "El nombre es requerido",
           nameMin: "El nombre debe tener al menos 2 caracteres",
-          emailRequired: "El email es requerido",
-          emailInvalid: "Ingresa un email válido",
+          emailRequired: "El correo es requerido",
+          emailInvalid: "Ingresa un correo válido",
           companyRequired: "El nombre de la empresa es requerido",
           phoneRequired: "El teléfono es requerido",
           phoneInvalid: "Ingresa un teléfono válido",
@@ -411,207 +293,161 @@ export const translations: Record<Language, Translation> = {
           messageMin: "El mensaje debe tener al menos 10 caracteres",
           perfect: "Perfecto",
           excellent: "Excelente",
-          validEmail: "Email válido",
+          validEmail: "Correo válido",
           validPhone: "Teléfono válido",
           complete: "Mensaje completo",
         },
         errors: {
-          submitError: "Error al enviar el formulario. Por favor intenta nuevamente.",
+          submitError: "Error al enviar. Por favor intenta nuevamente.",
           tryAgain: "Inténtalo de nuevo",
         },
-        confirmationNote: "📧 Revisa tu email (incluyendo spam) para la confirmación",
-      },
-      chatbot: {
-        title: "Próximamente: Nuestro Asistente Virtual",
-        description:
-          "Aquí podrás hablar directamente con nuestro asistente virtual para resolver dudas y obtener información personalizada sobre nuestros servicios.",
+        confirmationNote: "Sin compromiso · Tus datos no se comparten",
       },
     },
     footer: {
-      description:
-        "Conectamos tecnología con personas. Agencia de desarrollo y transformación digital fundada por desarrolladores.",
-      services: "Servicios",
-      sectors: "Sectores",
-      contact: "Contacto",
-      rights: "Todos los derechos reservados. Conectamos tecnología con personas.",
-    },
-    chat: {
-      assistant: "Asistente Dos Nodos",
-      online: "Siempre disponible",
-      greeting: "¡Hola! Soy el asistente de Dos Nodos. ¿Cómo puedo ayudarte?",
-      userMessage: "Necesito automatizar mi atención al cliente",
-      response: "Perfecto! Nuestros asistentes virtuales pueden integrarse con WhatsApp, tu web, CRM y más...",
+      tagline: "Conectamos tecnología con personas.",
+      exploreLabel: "Explora",
+      contactLabel: "Contacto",
+      scheduleCta: "Agendar reunión",
+      email: "hola@dosnodos.com.co",
+      location: "Medellín, Colombia",
+      copyright: "© 2026 Dos Nodos · dosnodos.com.co",
     },
   },
+
   en: {
     nav: {
       services: "Services",
-      benefits: "Benefits",
-      sectors: "Sectors",
-      contact: "Contact",
-      demo: "Request Demo",
+      projects: "Projects",
+      reviews: "Reviews",
+      cta: "Book a meeting",
     },
     hero: {
-      badge: "🚀 Connecting technology with people",
-      title: "Power your business with",
-      titleHighlight: "intelligent virtual assistants",
+      eyebrow: "AI · Automation · Development",
+      titleLead: "We connect",
+      tech: "technology",
+      connector: "with",
+      people: "people",
       subtitle:
-        "At Dos Nodos we automate your customer service with AI, connect your brand with functional technology and generate real, measurable value for your company.",
-      ctaPrimary: "Request Demo",
-      ctaSecondary: "Talk to our bot now",
-      features: {
-        support: "24/7 Support",
-        founded: "Founded by developers",
-        results: "Measurable results",
+        "We help companies sell more, respond faster and work better — with automation, AI assistants and custom-built platforms.",
+      ctaPrimary: "Book a meeting",
+      ctaSecondary: "See services",
+      note: "30 min · free · with a diagnosis",
+      diagram: {
+        people: "PEOPLE",
+        results: "RESULTS",
+        whatsapp: "WhatsApp",
+        email: "Email",
+        site: "Website",
+        node: "dos nodos",
+        result1: "✓ Quote · 40s",
+        result2: "✓ CRM updated",
+        result3: "★ Meeting booked",
+        aria: "Diagram: people channels (WhatsApp, email, website) connected by Dos Nodos to results: a quote in 40 seconds, updated CRM and a booked meeting",
       },
+    },
+    metrics: {
+      responseTime: { value: "−80%", label: "in customer response time" },
+      availability: { value: "24/7", label: "service and sales, no shifts" },
+      quotes: { value: "3×", label: "quotes processed per day" },
+      speed: { value: "40s", label: "from a question to a quote" },
     },
     services: {
-      title: "What do we do at Dos Nodos?",
+      eyebrow: "Services",
+      title: "Everything your operation needs,",
+      titleAccent: "in one place.",
       subtitle:
-        "We offer comprehensive digital solutions for companies in all sectors, connecting brands with functional and intelligent technology.",
+        "From the site that represents you to the assistant that answers for you. We choose technology based on the result, not the other way around.",
+      platforms: {
+        title: "Platforms & e‑Commerce",
+        description: "Sites and stores that load fast, convert and are easy to manage.",
+        chips: ["Shopify", "Web", "e‑Commerce"],
+      },
+      apps: {
+        title: "Apps & Custom software",
+        description: "When generic isn't enough, we build exactly what your process needs.",
+        chips: ["Web app", "Mobile", "Custom"],
+      },
+      ai: {
+        title: "AI & Automation",
+        description: "Assistants that answer, quote and schedule. Processes that run on their own, 24/7.",
+        chips: ["WhatsApp API", "n8n"],
+        badge: "FLAGSHIP",
+      },
+    },
+    projects: {
+      eyebrow: "Projects",
+      title: "Results you can measure.",
       items: {
-        ai: {
-          title: "Intelligent Virtual Assistants",
-          description:
-            "AI chatbots that serve your customers 24/7. Integration with WhatsApp, web, e-commerce and CRMs. Our flagship service.",
+        distribuidora: {
+          tag: "AI Assistant + ERP",
+          title: "Auto-parts distributor",
+          description: "Quotes over WhatsApp in under a minute, with real-time inventory.",
+          resultLabel: "Result",
+          result: "3× quotes/day",
         },
-        web: {
-          title: "Modern Web Development",
-          description:
-            "Responsive, fast and conversion-optimized websites. Cutting-edge technology for your digital presence.",
+        cosmetica: {
+          tag: "Shopify + e‑Commerce",
+          title: "Cosmetics brand",
+          description: "Redesigned store with night sales answered by an assistant.",
+          resultLabel: "Result",
+          result: "+38% conversion",
         },
-        automation: {
-          title: "Process Automation",
-          description:
-            "We optimize your business operations with intelligent automation that saves time and resources.",
-        },
-        marketing: {
-          title: "Digital Marketing & SEO",
-          description: "SEO/SEM positioning strategies to increase your visibility and generate more qualified leads.",
-        },
-        branding: {
-          title: "Brand Design",
-          description:
-            "Branding, visual identity and logos that emotionally connect with your audience and strengthen your brand.",
-        },
-        integration: {
-          title: "Media Buyer & Paid Media",
-          description: "We connect all your communication channels in a single platform for a unified experience.",
+        clinica: {
+          tag: "Automation",
+          title: "Dental clinic",
+          description: "Automatic scheduling with reminders; fewer missed appointments.",
+          resultLabel: "Result",
+          result: "−45% no-shows",
         },
       },
     },
-    benefits: {
-      title: "Virtual assistants that work for you 24/7",
-      subtitle: "Automate your customer service and free up time to focus on growing your business",
+    reviews: {
+      eyebrow: "Reviews",
+      average: "4.9 average",
       items: {
-        immediate: {
-          title: "Immediate Attention",
-          description: "Instant responses to your customers, without waiting or limited hours. Available 24/7.",
+        diana: {
+          quote: "Our team used to spend afternoons keying in orders. Now that time goes to customers.",
+          name: "Diana R.",
+          role: "General Manager · Distributor",
+          initials: "DR",
         },
-        cost: {
-          title: "Cost Reduction",
-          description: "Save up to 80% on customer service costs while improving user experience.",
+        mateo: {
+          quote: "The store looks flawless and night sales now answer themselves.",
+          name: "Mateo P.",
+          role: "Founder · Cosmetics",
+          initials: "MP",
         },
-        scalability: {
-          title: "Scalability",
-          description: "Handle thousands of simultaneous conversations without losing quality or personalization.",
-        },
-        integration: {
-          title: "Multi-platform Integration",
-          description: "Connect with WhatsApp, your website, e-commerce, CRM and all your tools.",
-        },
-      },
-      channels: {
-        title: "Implementation Channels",
-        whatsapp: "WhatsApp Business",
-        website: "Website",
-        ecommerce: "E-commerce",
-        crm: "CRM Systems",
-      },
-    },
-    sectors: {
-      title: "Use cases by industry",
-      subtitle: "Our virtual assistants adapt to the specific needs of each sector",
-      items: {
-        ecommerce: {
-          title: "Local Business & E-commerce",
-          description: "Sales support, order tracking, personalized recommendations and automated after-sales service.",
-        },
-        education: {
-          title: "Universities & Education",
-          description:
-            "Academic information, enrollment process, 24/7 student support and resolution of frequent queries.",
-        },
-        startups: {
-          title: "Startups & Consulting",
-          description:
-            "Specialized consultations, appointment scheduling, lead qualification and automated technical support.",
-        },
-        health: {
-          title: "Clinics & Health Sector",
-          description: "Medical appointment scheduling, treatment reminders, basic information and initial triage.",
-        },
-        sales: {
-          title: "Sales Teams",
-          description: "Automatic lead qualification, prospect follow-up, meeting scheduling and nurturing.",
-        },
-        realestate: {
-          title: "Real Estate & Tourism",
-          description: "Property information, hotel reservations, virtual tours and personalized recommendations.",
-        },
-      },
-    },
-    team: {
-      title: "Complete Team at Your Service",
-      subtitle: "We have a multidisciplinary team to support you at every stage of building your solution",
-      description:
-        "Developers, designers, AI specialists and strategic consultants working together to make your project a reality.",
-    },
-    testimonials: {
-      title: "Results that generate impact",
-      subtitle: "Companies that have already transformed their customer service with Dos Nodos",
-      items: {
         laura: {
-          text: "The Dos Nodos team completely transformed our customer service. Our virtual assistant responds instantly and customers are more satisfied than ever.",
-          name: "Laura Martinez",
-          position: "Manager, TiendaOnline.co",
+          quote: "They understood the real problem and didn't sell us smoke. Scheduling changed the clinic.",
+          name: "Laura C.",
+          role: "Director · Clinic",
+          initials: "LC",
         },
-        roberto: {
-          text: "We implemented their chatbot at our university and now we handle student queries 24/7. Dos Nodos' closeness and professionalism was key to success.",
-          name: "Dr. Roberto Sanchez",
-          position: "Director, Innovation University",
-        },
-        camila: {
-          text: "The automation developed by Dos Nodos allowed us to scale without increasing staff. Their technological but human approach makes the difference.",
-          name: "Camila Perez",
-          position: "CEO, HealthTech Solutions",
-        },
-      },
-      stats: {
-        satisfaction: "Customer satisfaction",
-        reduction: "Reduction in response time",
-        availability: "Guaranteed availability",
-        leads: "More qualified leads",
       },
     },
-    cta: {
-      title: "Your business is one click away from becoming intelligent",
+    contact: {
+      eyebrow: "Let's talk",
+      titleLead: "Let's talk about",
+      titleAccent: "your operation.",
       subtitle:
-        "Join the companies that are already transforming their customer service with Dos Nodos. Schedule your free demo and discover how we can boost your business.",
+        "In 30 minutes we'll find at least one process you can stop doing by hand. Free, no commitment.",
+      whatsapp: "WhatsApp +57 312 734 4026",
+      email: "hola@dosnodos.com.co",
       form: {
-        name: "Full name",
-        email: "Business email",
+        name: "Name",
+        email: "Work email",
         company: "Company",
         phone: "Phone",
-        message: "Tell us about your project and how we can help you...",
-        submit: "Request Free Demo",
+        message: "What do you want to improve? E.g.: respond faster on WhatsApp",
+        submit: "Book a meeting",
         submitting: "Sending...",
         success: {
-          title: "Message sent successfully!",
-          message: "Thank you for your interest in Dos Nodos. We will contact you very soon to schedule your free demo.",
-          button: "Send another message",
+          title: "Done! We'll write to you today.",
+          message: "We received your request. We'll set up the 30 minutes over WhatsApp or email.",
+          button: "Send another request",
         },
-        progress: "Form progress",
+        progress: "Progress",
         validation: {
           nameRequired: "Name is required",
           nameMin: "Name must be at least 2 characters",
@@ -629,252 +465,187 @@ export const translations: Record<Language, Translation> = {
           complete: "Complete message",
         },
         errors: {
-          submitError: "Error sending form. Please try again.",
+          submitError: "Error sending. Please try again.",
           tryAgain: "Try again",
         },
-        confirmationNote: "📧 Check your email (including spam) for confirmation",
-      },
-      chatbot: {
-        title: "Coming Soon: Our Virtual Assistant",
-        description:
-          "Here you can talk directly with our virtual assistant to resolve doubts and get personalized information about our services.",
+        confirmationNote: "No commitment · Your data isn't shared",
       },
     },
     footer: {
-      description:
-        "Connecting technology with people. Digital development and transformation agency founded by developers.",
-      services: "Services",
-      sectors: "Sectors",
-      contact: "Contact",
-      rights: "All rights reserved. Connecting technology with people.",
-    },
-    chat: {
-      assistant: "DosNodos Assistant",
-      online: "Always available",
-      greeting: "Hello! I'm the DosNodos assistant. How can I help you?",
-      userMessage: "I need to automate my customer service",
-      response: "Perfect! Our virtual assistants can integrate with WhatsApp, your website, CRM and more...",
+      tagline: "We connect technology with people.",
+      exploreLabel: "Explore",
+      contactLabel: "Contact",
+      scheduleCta: "Book a meeting",
+      email: "hola@dosnodos.com.co",
+      location: "Medellín, Colombia",
+      copyright: "© 2026 Dos Nodos · dosnodos.com.co",
     },
   },
+
   pt: {
     nav: {
       services: "Serviços",
-      benefits: "Benefícios",
-      sectors: "Setores",
-      contact: "Contato",
-      demo: "Solicitar Demo",
+      projects: "Projetos",
+      reviews: "Avaliações",
+      cta: "Agendar reunião",
     },
     hero: {
-      badge: "🚀 Conectamos tecnologia com pessoas",
-      title: "Potencialize seu negócio com",
-      titleHighlight: "assistentes virtuais",
+      eyebrow: "IA · Automação · Desenvolvimento",
+      titleLead: "Conectamos",
+      tech: "tecnologia",
+      connector: "com",
+      people: "pessoas",
       subtitle:
-        "Na Dos Nodos automatizamos seu atendimento ao cliente com IA, conectamos sua marca com tecnologia funcional e geramos valor real e mensurável para sua empresa.",
-      ctaPrimary: "Solicitar Demo",
-      ctaSecondary: "Fale com nosso bot agora",
-      features: {
-        support: "Suporte 24/7",
-        founded: "Fundada por desenvolvedores",
-        results: "Resultados mensuráveis",
+        "Ajudamos empresas a vender mais, responder mais rápido e trabalhar melhor — com automação, assistentes com IA e plataformas sob medida.",
+      ctaPrimary: "Agendar reunião",
+      ctaSecondary: "Ver serviços",
+      note: "30 min · sem custo · com diagnóstico",
+      diagram: {
+        people: "PESSOAS",
+        results: "RESULTADOS",
+        whatsapp: "WhatsApp",
+        email: "E-mail",
+        site: "Site",
+        node: "dos nodos",
+        result1: "✓ Cotação · 40s",
+        result2: "✓ CRM atualizado",
+        result3: "★ Reunião agendada",
+        aria: "Diagrama: canais de pessoas (WhatsApp, e-mail, site) conectados pela Dos Nodos a resultados: cotação em 40 segundos, CRM atualizado e reunião agendada",
       },
+    },
+    metrics: {
+      responseTime: { value: "−80%", label: "no tempo de resposta ao cliente" },
+      availability: { value: "24/7", label: "atendimento e vendas, sem turnos" },
+      quotes: { value: "3×", label: "cotações processadas por dia" },
+      speed: { value: "40s", label: "de uma pergunta a uma cotação" },
     },
     services: {
-      title: "O que fazemos na Dos Nodos?",
+      eyebrow: "Serviços",
+      title: "Tudo o que sua operação precisa,",
+      titleAccent: "em um só lugar.",
       subtitle:
-        "Oferecemos soluções digitais integrais para empresas de todos os setores, conectando marcas com tecnologia funcional e inteligente.",
+        "Do site que te representa ao assistente que responde por você. Escolhemos a tecnologia pelo resultado, não o contrário.",
+      platforms: {
+        title: "Plataformas & e‑Commerce",
+        description: "Sites e lojas que carregam rápido, convertem e são fáceis de administrar.",
+        chips: ["Shopify", "Web", "e‑Commerce"],
+      },
+      apps: {
+        title: "Apps & Software sob medida",
+        description: "Quando o genérico não basta, construímos exatamente o que seu processo precisa.",
+        chips: ["Web app", "Mobile", "Sob medida"],
+      },
+      ai: {
+        title: "IA & Automação",
+        description: "Assistentes que atendem, cotam e agendam. Processos que rodam sozinhos, 24/7.",
+        chips: ["WhatsApp API", "n8n"],
+        badge: "DESTAQUE",
+      },
+    },
+    projects: {
+      eyebrow: "Projetos",
+      title: "Resultados que se medem.",
       items: {
-        ai: {
-          title: "Assistentes Virtuais Inteligentes",
-          description:
-            "Chatbots com IA que atendem seus clientes 24/7. Integração com WhatsApp, web, e-commerce e CRMs. Nosso serviço principal.",
+        distribuidora: {
+          tag: "Assistente IA + ERP",
+          title: "Distribuidora de peças",
+          description: "Cotações por WhatsApp em menos de um minuto, com estoque em tempo real.",
+          resultLabel: "Resultado",
+          result: "3× cotações/dia",
         },
-        web: {
-          title: "Desenvolvimento Web Moderno",
-          description:
-            "Sites responsivos, rápidos e otimizados para conversão. Tecnologia de ponta para sua presença digital.",
+        cosmetica: {
+          tag: "Shopify + e‑Commerce",
+          title: "Marca de cosméticos",
+          description: "Loja redesenhada e vendas noturnas respondidas por um assistente.",
+          resultLabel: "Resultado",
+          result: "+38% conversão",
         },
-        automation: {
-          title: "Automação de Processos",
-          description:
-            "Otimizamos suas operações empresariais com automação inteligente que economiza tempo e recursos.",
-        },
-        marketing: {
-          title: "Marketing Digital & SEO",
-          description:
-            "Estratégias de posicionamento SEO/SEM para aumentar sua visibilidade e gerar mais leads qualificados.",
-        },
-        branding: {
-          title: "Design de Marca",
-          description:
-            "Branding, identidade visual e logos que conectam emocionalmente com seu público e fortalecem sua marca.",
-        },
-        integration: {
-          title: "Media Buyer & Paid Media",
-          description:
-            "Conectamos todos seus canais de comunicação em uma única plataforma para uma experiência unificada.",
+        clinica: {
+          tag: "Automação",
+          title: "Clínica odontológica",
+          description: "Agenda automática com lembretes; menos consultas perdidas.",
+          resultLabel: "Resultado",
+          result: "−45% faltas",
         },
       },
     },
-    benefits: {
-      title: "Assistentes virtuais que trabalham para você 24/7",
-      subtitle: "Automatize seu atendimento ao cliente e libere tempo para focar no crescimento do seu negócio",
+    reviews: {
+      eyebrow: "Avaliações",
+      average: "4.9 média",
       items: {
-        immediate: {
-          title: "Atendimento Imediato",
-          description: "Respostas instantâneas aos seus clientes, sem esperas ou horários limitados. Disponível 24/7.",
+        diana: {
+          quote: "Antes a equipe passava as tardes digitando pedidos. Hoje esse tempo é para os clientes.",
+          name: "Diana R.",
+          role: "Gerente geral · Distribuidora",
+          initials: "DR",
         },
-        cost: {
-          title: "Redução de Custos",
-          description:
-            "Economize até 80% nos custos de atendimento ao cliente enquanto melhora a experiência do usuário.",
+        mateo: {
+          quote: "A loja ficou impecável e as vendas noturnas agora se respondem sozinhas.",
+          name: "Mateo P.",
+          role: "Fundador · Cosméticos",
+          initials: "MP",
         },
-        scalability: {
-          title: "Escalabilidade",
-          description: "Gerencie milhares de conversas simultâneas sem perder qualidade ou personalização.",
-        },
-        integration: {
-          title: "Integração Multiplataforma",
-          description: "Conecte com WhatsApp, seu site, e-commerce, CRM e todas suas ferramentas.",
-        },
-      },
-      channels: {
-        title: "Canais de Implementação",
-        whatsapp: "WhatsApp Business",
-        website: "Site",
-        ecommerce: "E-commerce",
-        crm: "Sistemas CRM",
-      },
-    },
-    sectors: {
-      title: "Casos de uso por indústria",
-      subtitle: "Nossos assistentes virtuais se adaptam às necessidades específicas de cada setor",
-      items: {
-        ecommerce: {
-          title: "Negócios Locais & E-commerce",
-          description:
-            "Suporte de vendas, rastreamento de pedidos, recomendações personalizadas e atendimento pós-venda automatizado.",
-        },
-        education: {
-          title: "Universidades & Educação",
-          description:
-            "Informações acadêmicas, processo de inscrições, suporte estudantil 24/7 e resolução de consultas frequentes.",
-        },
-        startups: {
-          title: "Startups & Consultorias",
-          description:
-            "Consultas especializadas, agendamento de reuniões, qualificação de leads e suporte técnico automatizado.",
-        },
-        health: {
-          title: "Clínicas & Setor Saúde",
-          description:
-            "Agendamento de consultas médicas, lembretes de tratamentos, informações básicas e triagem inicial.",
-        },
-        sales: {
-          title: "Equipes de Vendas",
-          description:
-            "Qualificação automática de leads, acompanhamento de prospects, agendamento de reuniões e nutrição.",
-        },
-        realestate: {
-          title: "Imobiliárias & Turismo",
-          description:
-            "Informações de propriedades, reservas de hotéis, tours virtuais e recomendações personalizadas.",
-        },
-      },
-    },
-    team: {
-      title: "Equipe Completa ao Seu Serviço",
-      subtitle: "Temos uma equipe multidisciplinar para apoiá-lo em cada etapa da construção de sua solução",
-      description:
-        "Desenvolvedores, designers, especialistas em IA e consultores estratégicos trabalhando juntos para tornar seu projeto realidade.",
-    },
-    testimonials: {
-      title: "Resultados que geram impacto",
-      subtitle: "Empresas que já transformaram seu atendimento ao cliente com Dos Nodos",
-      items: {
         laura: {
-          text: "A equipe da Dos Nodos transformou completamente nosso atendimento ao cliente. Nosso assistente virtual responde instantaneamente e os clientes estão mais satisfeitos que nunca.",
-          name: "Laura Martinez",
-          position: "Gerente, TiendaOnline.co",
+          quote: "Entenderam o problema real e não venderam ilusão. O agendamento mudou a clínica.",
+          name: "Laura C.",
+          role: "Diretora · Clínica",
+          initials: "LC",
         },
-        roberto: {
-          text: "Implementamos seu chatbot em nossa universidade e agora atendemos consultas estudantis 24/7. A proximidade e profissionalismo da Dos Nodos foi chave para o sucesso.",
-          name: "Dr. Roberto Sanchez",
-          position: "Diretor, Universidade Inovação",
-        },
-        camila: {
-          text: "A automação desenvolvida pela Dos Nodos nos permitiu escalar sem aumentar pessoal. Sua abordagem tecnológica mas humana faz a diferença.",
-          name: "Camila Perez",
-          position: "CEO, HealthTech Solutions",
-        },
-      },
-      stats: {
-        satisfaction: "Satisfação do cliente",
-        reduction: "Redução no tempo de resposta",
-        availability: "Disponibilidade garantida",
-        leads: "Mais leads qualificados",
       },
     },
-    cta: {
-      title: "Seu negócio está a um clique de se tornar inteligente",
+    contact: {
+      eyebrow: "Vamos conversar",
+      titleLead: "Vamos falar da",
+      titleAccent: "sua operação.",
       subtitle:
-        "Junte-se às empresas que já estão transformando seu atendimento ao cliente com Dos Nodos. Agende sua demo gratuita e descubra como podemos potencializar seu negócio.",
+        "Em 30 minutos encontramos ao menos um processo que você pode deixar de fazer à mão. Sem custo, sem compromisso.",
+      whatsapp: "WhatsApp +57 312 734 4026",
+      email: "hola@dosnodos.com.co",
       form: {
-        name: "Nome completo",
-        email: "Email empresarial",
+        name: "Nome",
+        email: "E-mail de trabalho",
         company: "Empresa",
         phone: "Telefone",
-        message: "Conte-nos sobre seu projeto e como podemos ajudá-lo...",
-        submit: "Solicitar Demo Gratuita",
+        message: "O que você quer melhorar? Ex: responder mais rápido no WhatsApp",
+        submit: "Agendar uma reunião",
         submitting: "Enviando...",
         success: {
-          title: "Mensagem enviada com sucesso!",
-          message:
-            "Obrigado pelo seu interesse na Dos Nodos. Entraremos em contato muito em breve para agendar sua demo gratuita.",
-          button: "Enviar outra mensagem",
+          title: "Pronto! Escrevemos hoje.",
+          message: "Recebemos sua solicitação. Combinamos os 30 minutos por WhatsApp ou e-mail.",
+          button: "Enviar outra solicitação",
         },
-        progress: "Progresso do formulário",
+        progress: "Progresso",
         validation: {
-          nameRequired: "Nome é obrigatório",
-          nameMin: "Nome deve ter pelo menos 2 caracteres",
-          emailRequired: "Email é obrigatório",
-          emailInvalid: "Digite um email válido",
-          companyRequired: "Nome da empresa é obrigatório",
-          phoneRequired: "Telefone é obrigatório",
+          nameRequired: "O nome é obrigatório",
+          nameMin: "O nome deve ter pelo menos 2 caracteres",
+          emailRequired: "O e-mail é obrigatório",
+          emailInvalid: "Digite um e-mail válido",
+          companyRequired: "O nome da empresa é obrigatório",
+          phoneRequired: "O telefone é obrigatório",
           phoneInvalid: "Digite um telefone válido",
-          messageRequired: "Mensagem é obrigatória",
-          messageMin: "Mensagem deve ter pelo menos 10 caracteres",
+          messageRequired: "A mensagem é obrigatória",
+          messageMin: "A mensagem deve ter pelo menos 10 caracteres",
           perfect: "Perfeito",
           excellent: "Excelente",
-          validEmail: "Email válido",
+          validEmail: "E-mail válido",
           validPhone: "Telefone válido",
           complete: "Mensagem completa",
         },
         errors: {
-          submitError: "Erro ao enviar formulário. Tente novamente.",
+          submitError: "Erro ao enviar. Por favor tente novamente.",
           tryAgain: "Tente novamente",
         },
-        confirmationNote: "📧 Verifique seu email (incluindo spam) para confirmação",
-      },
-      chatbot: {
-        title: "Em Breve: Nosso Assistente Virtual",
-        description:
-          "Aqui você poderá falar diretamente com nosso assistente virtual para resolver dúvidas e obter informações personalizadas sobre nossos serviços.",
+        confirmationNote: "Sem compromisso · Seus dados não são compartilhados",
       },
     },
     footer: {
-      description:
-        "Conectamos tecnologia com pessoas. Agência de desenvolvimento e transformação digital fundada por desenvolvedores.",
-      services: "Serviços",
-      sectors: "Setores",
-      contact: "Contato",
-      rights: "Todos os direitos reservados. Conectamos tecnologia com pessoas.",
-    },
-    chat: {
-      assistant: "Assistente Dos Nodos",
-      online: "Sempre disponível",
-      greeting: "Olá! Sou o assistente da Dos Nodos. Como posso ajudá-lo?",
-      userMessage: "Preciso automatizar meu atendimento ao cliente",
-      response: "Perfeito! Nossos assistentes virtuais podem se integrar com WhatsApp, seu site, CRM e mais...",
+      tagline: "Conectamos tecnologia com pessoas.",
+      exploreLabel: "Explore",
+      contactLabel: "Contato",
+      scheduleCta: "Agendar reunião",
+      email: "hola@dosnodos.com.co",
+      location: "Medellín, Colômbia",
+      copyright: "© 2026 Dos Nodos · dosnodos.com.co",
     },
   },
 }
@@ -883,10 +654,4 @@ export const languageNames: Record<Language, string> = {
   es: "Español",
   en: "English",
   pt: "Português",
-}
-
-export const languageFlags: Record<Language, string> = {
-  es: "🇪🇸",
-  en: "🇺🇸",
-  pt: "🇧🇷",
 }

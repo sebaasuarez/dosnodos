@@ -3,16 +3,15 @@
 import { useState } from "react"
 import { type Language, translations } from "@/lib/i18n"
 
-// Sections
 import { Navbar } from "@/components/sections/navbar"
 import { Hero } from "@/components/sections/hero"
+import { Metrics } from "@/components/sections/metrics"
 import { Services } from "@/components/sections/services"
-import { Team } from "@/components/sections/team"
-import { Benefits } from "@/components/sections/benefits"
-import { Sectors } from "@/components/sections/sectors"
-import { Testimonials } from "@/components/sections/testimonials"
-import { CTA } from "@/components/sections/cta"
+import { Projects } from "@/components/sections/projects"
+import { Reviews } from "@/components/sections/reviews"
+import { Contact } from "@/components/sections/contact"
 import { Footer } from "@/components/sections/footer"
+import { WhatsAppButton } from "@/components/whatsapp-button"
 import { StructuredData } from "@/components/structured-data"
 
 export default function LandingPage() {
@@ -20,17 +19,19 @@ export default function LandingPage() {
   const t = translations[currentLanguage]
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen overflow-x-hidden bg-white text-ink">
       <StructuredData language={currentLanguage} />
       <Navbar t={t} currentLanguage={currentLanguage} onLanguageChange={setCurrentLanguage} />
-      <Hero t={t} currentLanguage={currentLanguage} />
-      <Services t={t} />
-      <Team t={t} currentLanguage={currentLanguage} />
-      <Benefits t={t} />
-      <Sectors t={t} />
-      <Testimonials t={t} />
-      <CTA t={t} currentLanguage={currentLanguage} />
-      <Footer t={t} />
+      <main>
+        <Hero t={t} />
+        <Metrics t={t} />
+        <Services t={t} />
+        <Projects t={t} />
+        <Reviews t={t} />
+        <Contact t={t} currentLanguage={currentLanguage} />
+      </main>
+      <Footer t={t} currentLanguage={currentLanguage} onLanguageChange={setCurrentLanguage} />
+      <WhatsAppButton />
     </div>
   )
 }

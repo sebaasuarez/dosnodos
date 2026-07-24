@@ -1,50 +1,53 @@
 "use client"
 
-import { useState } from "react"
-import { ChevronDown, Globe } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { type Language, languageNames, languageFlags } from "@/lib/i18n"
+import { type Language } from "@/lib/i18n"
 import { trackLanguageChange } from "@/lib/gtm"
+import { cn } from "@/lib/utils"
 
 interface LanguageSelectorProps {
   currentLanguage: Language
   onLanguageChange: (language: Language) => void
+  variant?: "light" | "dark"
 }
 
-export default function LanguageSelector({ currentLanguage, onLanguageChange }: LanguageSelectorProps) {
-  const [isOpen, setIsOpen] = useState(false)
+const LANGS: Language[] = ["es", "en", "pt"]
+
+export default function LanguageSelector({
+  currentLanguage,
+  onLanguageChange,
+  variant = "light",
+}: LanguageSelectorProps) {
+  const handle = (lang: Language) => {
+    if (lang === currentLanguage) return
+    trackLanguageChange(currentLanguage, lang)
+    onLanguageChange(lang)
+  }
 
   return (
-    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm"
-        >
-          <Globe className="h-4 w-4 mr-2" />
-          <span className="mr-1">{languageFlags[currentLanguage]}</span>
-          <span className="hidden sm:inline">{languageNames[currentLanguage]}</span>
-          <ChevronDown className="h-4 w-4 ml-2" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-white/95 backdrop-blur-sm border-white/20">
-        {(Object.keys(languageNames) as Language[]).map((lang) => (
-          <DropdownMenuItem
+    <div className="flex items-center gap-1.5" role="group" aria-label="Idioma / Language">
+      {LANGS.map((lang) => {
+        const active = lang === currentLanguage
+        return (
+          <button
             key={lang}
-            onClick={() => {
-              trackLanguageChange(currentLanguage, lang)
-              onLanguageChange(lang)
-              setIsOpen(false)
-            }}
-            className={`cursor-pointer ${currentLanguage === lang ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"}`}
+            type="button"
+            onClick={() => handle(lang)}
+            aria-pressed={active}
+            className={cn(
+              "font-mono text-[11px] uppercase rounded-full px-2.5 py-1 leading-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/50",
+              active
+                ? variant === "dark"
+                  ? "bg-gradient-to-r from-brand-cta to-brand-blue text-white"
+                  : "bg-ink text-white"
+                : variant === "dark"
+                  ? "border border-[#2A2542] text-[#A29FBE] hover:text-white"
+                  : "text-[#9c98b4] hover:text-ink",
+            )}
           >
-            <span className="mr-2">{languageFlags[lang]}</span>
-            {languageNames[lang]}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+            {lang}
+          </button>
+        )
+      })}
+    </div>
   )
 }

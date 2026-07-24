@@ -1,33 +1,58 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { IBM_Plex_Sans, IBM_Plex_Mono, IBM_Plex_Serif } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const plexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-plex-sans",
+  display: "swap",
+})
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex-mono",
+  display: "swap",
+})
+
+const plexSerif = IBM_Plex_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["italic"],
+  variable: "--font-plex-serif",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
-  title: "Dos Nodos - Asistentes Virtuales Inteligentes para tu Empresa",
+  metadataBase: new URL("https://dosnodos.com.co"),
+  title: "Dos Nodos — Tecnología con propósito",
   description:
-    "Potencia tu negocio con asistentes virtuales inteligentes. En Dos Nodos conectamos tecnología con personas, automatizamos tu atención al cliente 24/7 y generamos valor real y medible.",
+    "Conectamos tecnología con personas. Automatización, asistentes con IA y plataformas a la medida para que tu empresa venda más, responda más rápido y trabaje mejor.",
   keywords:
-    "Dos Nodos, asistentes virtuales, chatbots, inteligencia artificial, automatización, atención al cliente, desarrollo web, marketing digital, Colombia, Medellín",
+    "Dos Nodos, automatización, inteligencia artificial, asistentes virtuales, WhatsApp, Shopify, e-commerce, desarrollo web, aplicaciones, marketing digital, SEO, Colombia, Medellín",
   authors: [{ name: "Dos Nodos" }],
   creator: "Dos Nodos",
   publisher: "Dos Nodos",
   robots: "index, follow",
   openGraph: {
-    title: "Dos Nodos - Asistentes Virtuales Inteligentes",
-    description: "Conectamos tecnología con personas. Automatiza tu negocio con IA.",
+    title: "Dos Nodos — Tecnología con propósito",
+    description:
+      "Automatización, asistentes con IA y plataformas a la medida. Conectamos tecnología con personas.",
     url: "https://dosnodos.com.co",
     siteName: "Dos Nodos",
     locale: "es_CO",
     type: "website",
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
-  }
+    icon: [
+      { url: "/dosnodos-mark.png", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/dosnodos-mark.png",
+    apple: "/dosnodos-mark.png",
+  },
 }
 
 export default function RootLayout({
@@ -36,7 +61,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html
+      lang="es"
+      suppressHydrationWarning
+      className={`${plexSans.variable} ${plexMono.variable} ${plexSerif.variable}`}
+    >
       <head>
         {/* Google Tag Manager */}
         <script
@@ -49,7 +78,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className="font-sans antialiased">
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

@@ -1,13 +1,23 @@
 import { NextResponse } from "next/server"
 import OpenAI from "openai"
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  baseURL: "https://api.groq.com/openai/v1",
-})
+// Cliente perezoso: se instancia en cada request para no requerir la API key
+// durante el build (evita fallar la recolección de datos de página sin env).
+function getClient() {
+  if (!process.env.OPENAI_API_KEY) return null
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+    baseURL: "https://api.groq.com/openai/v1",
+  })
+}
 
 export async function POST(req: Request) {
   try {
+    const openai = getClient()
+    if (!openai) {
+      return NextResponse.json({ error: "Chat no configurado" }, { status: 503 })
+    }
+
     const { messages, language } = await req.json()
 
     // Preparar el contexto de DosNodos según el idioma

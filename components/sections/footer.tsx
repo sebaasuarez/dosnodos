@@ -1,91 +1,73 @@
+"use client"
+
 import Image from "next/image"
-import { trackEmailClick, trackWhatsAppClick } from "@/lib/gtm"
-import { type Translation } from "@/lib/i18n"
+import { type Language, type Translation } from "@/lib/i18n"
+import LanguageSelector from "@/components/language-selector"
+import { trackEmailClick } from "@/lib/gtm"
 
 interface FooterProps {
   t: Translation
+  currentLanguage: Language
+  onLanguageChange: (language: Language) => void
 }
 
-export function Footer({ t }: FooterProps) {
+export function Footer({ t, currentLanguage, onLanguageChange }: FooterProps) {
   return (
-    <footer className="bg-gray-900 text-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-8">
-          <div className="space-y-4">
+    <footer className="bg-ink-3">
+      <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-[clamp(20px,5vw,40px)] py-[clamp(36px,5vw,56px)]">
+        <div className="flex flex-wrap items-start justify-between gap-6">
+          <div className="flex max-w-[34ch] flex-col gap-3">
             <Image
-              src="/logo-dosnodos.png"
-              alt="DosNodos Logo"
-              width={120}
-              height={40}
-              className="h-8 w-auto brightness-0 invert"
+              src="/dosnodos-logo.png"
+              alt="Dos Nodos"
+              width={150}
+              height={30}
+              className="dn-logo-white h-[30px] w-auto"
             />
-            <p className="text-gray-400">{t.footer.description}</p>
-            <p className="text-sm text-blue-400">dosnodos.com.co</p>
+            <span className="font-serif text-[15px] italic text-[#A29FBE]">{t.footer.tagline}</span>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="font-semibold">{t.footer.services}</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li>{t.services.items.ai.title}</li>
-              <li>{t.services.items.web.title}</li>
-              <li>{t.services.items.marketing.title}</li>
-              <li>{t.services.items.automation.title}</li>
-              <li>{t.services.items.branding.title}</li>
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="font-semibold">{t.footer.sectors}</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li>{t.sectors.items.ecommerce.title}</li>
-              <li>{t.sectors.items.education.title}</li>
-              <li>{t.sectors.items.health.title}</li>
-              <li>{t.sectors.items.realestate.title}</li>
-              <li>{t.sectors.items.startups.title}</li>
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="font-semibold">{t.footer.contact}</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li>
-                <a
-                  href="mailto:hola@dosnodos.com.co"
-                  className="hover:text-white transition-colors"
-                  onClick={trackEmailClick}
-                >
-                  hola@dosnodos.com.co
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://wa.me/573127344026?text=Hola,%20vengo%20desde%20su%20sitio%20Dos%20Nodos."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                  onClick={trackWhatsAppClick}
-                >
-                  +57 3127344026
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://wa.me/573127344026?text=Hola,%20vengo%20desde%20su%20sitio%20Dos%20Nodos."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                  onClick={trackWhatsAppClick}
-                >
-                  WhatsApp: +57 3127344026
-                </a>
-              </li>
-              <li>Medellín, Colombia</li>
-            </ul>
+          <div className="flex flex-wrap gap-x-[clamp(28px,5vw,64px)] gap-y-6">
+            <div className="flex flex-col gap-2.5 text-[14px]">
+              <span className="mb-0.5 font-mono text-[11px] uppercase tracking-[.1em] text-[#726E90]">
+                {t.footer.exploreLabel}
+              </span>
+              <a href="#servicios" className="text-[#C9C6DE] transition-colors hover:text-white">
+                {t.nav.services}
+              </a>
+              <a href="#casos" className="text-[#C9C6DE] transition-colors hover:text-white">
+                {t.nav.projects}
+              </a>
+              <a href="#resenas" className="text-[#C9C6DE] transition-colors hover:text-white">
+                {t.nav.reviews}
+              </a>
+            </div>
+            <div className="flex flex-col gap-2.5 text-[14px]">
+              <span className="mb-0.5 font-mono text-[11px] uppercase tracking-[.1em] text-[#726E90]">
+                {t.footer.contactLabel}
+              </span>
+              <a href="#contacto" className="text-[#C9C6DE] transition-colors hover:text-white">
+                {t.footer.scheduleCta}
+              </a>
+              <a
+                href={`mailto:${t.footer.email}`}
+                onClick={() => trackEmailClick()}
+                className="text-[#C9C6DE] transition-colors hover:text-white"
+              >
+                {t.footer.email}
+              </a>
+              <span className="text-[#C9C6DE]">{t.footer.location}</span>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2025 DosNodos. {t.footer.rights}</p>
+        <div className="flex flex-wrap items-center justify-between gap-3.5 border-t border-[#1A1630] pt-5">
+          <span className="font-mono text-[11.5px] text-[#726E90]">{t.footer.copyright}</span>
+          <LanguageSelector
+            currentLanguage={currentLanguage}
+            onLanguageChange={onLanguageChange}
+            variant="dark"
+          />
         </div>
       </div>
     </footer>

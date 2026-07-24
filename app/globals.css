@@ -62,6 +62,42 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  color: #141126;
+}
+
+/* ---- Dos Nodos design system ---- */
+
+/* Brand gradient text (keywords, metrics) */
+.dn-grad-text {
+  background: linear-gradient(120deg, #9333ea, #2563eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Animated flow paths in diagrams */
+@keyframes dnDash {
+  to {
+    stroke-dashoffset: -22;
+  }
+}
+.dn-flow {
+  stroke-dasharray: 5 6;
+  animation: dnDash 1.4s linear infinite;
+}
+
+/* White version of the horizontal logo (footer over dark) */
+.dn-logo-white {
+  filter: brightness(0) invert(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dn-flow {
+    animation: none;
+  }
+}
+
 /* Custom animations - Optimized for performance */
 @keyframes fadeInUp {
   from {

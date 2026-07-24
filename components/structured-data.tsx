@@ -10,30 +10,25 @@ export function StructuredData({ language }: StructuredDataProps) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "name": "DosNodos",
-    "image": "https://dosnodos.com.co/logo-dosnodos.png",
+    name: "Dos Nodos",
+    image: "https://dosnodos.com.co/dosnodos-logo.png",
     "@id": "https://dosnodos.com.co",
-    "url": "https://dosnodos.com.co",
-    "telephone": "+57 3127344026",
-    "address": {
+    url: "https://dosnodos.com.co",
+    telephone: "+57 3127344026",
+    address: {
       "@type": "PostalAddress",
-      "streetAddress": "Medellín",
-      "addressLocality": "Antioquia",
-      "addressCountry": "CO"
+      streetAddress: "Medellín",
+      addressLocality: "Antioquia",
+      addressCountry: "CO",
     },
-    "description": t.hero.subtitle,
-    "serviceType": [
-      t.services.items.ai.title,
-      t.services.items.web.title,
-      t.services.items.automation.title
-    ],
-    "provider": {
+    description: t.hero.subtitle,
+    slogan: t.footer.tagline,
+    serviceType: [t.services.platforms.title, t.services.apps.title, t.services.ai.title],
+    provider: {
       "@type": "Organization",
-      "name": "DosNodos",
-      "sameAs": [
-        "https://wa.me/573127344026"
-      ]
-    }
+      name: "Dos Nodos",
+      sameAs: ["https://wa.me/573127344026"],
+    },
   }
 
   return (

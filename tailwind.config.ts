@@ -19,7 +19,29 @@ const config: Config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-plex-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-plex-mono)", "ui-monospace", "monospace"],
+        serif: ["var(--font-plex-serif)", "Georgia", "serif"],
+      },
       colors: {
+        // Dos Nodos brand tokens
+        brand: {
+          purple: "#9333EA",
+          blue: "#2563EB",
+          cta: "#7C22CE",
+        },
+        ink: {
+          DEFAULT: "#0C0A18",
+          2: "#141127",
+          3: "#08060F",
+        },
+        surface: {
+          2: "#F5F3FC",
+          3: "#F1EFFA",
+        },
+        star: "#F5B301",
+        whatsapp: "#25D366",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -68,10 +90,19 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "dn-dash": {
+          to: { strokeDashoffset: "-22" },
+        },
+        "dn-reveal": {
+          from: { opacity: "0", transform: "translateY(14px)" },
+          to: { opacity: "1", transform: "none" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "dn-dash": "dn-dash 1.4s linear infinite",
+        "dn-reveal": "dn-reveal .55s cubic-bezier(.2,.7,.3,1) both",
       },
     },
   },

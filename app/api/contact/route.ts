@@ -21,10 +21,17 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const formData: ContactFormData = await request.json()
+    const raw: ContactFormData = await request.json()
 
-    if (!formData.name || !formData.email || !formData.company || !formData.phone || !formData.message) {
+    // El sitio pide solo Nombre, Correo y Mensaje; empresa/teléfono son opcionales.
+    if (!raw.name || !raw.email || !raw.message) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 })
+    }
+
+    const formData: ContactFormData = {
+      ...raw,
+      company: raw.company?.trim() ? raw.company : "—",
+      phone: raw.phone?.trim() ? raw.phone : "—",
     }
 
     // 1. Google Sheets
@@ -73,7 +80,7 @@ export async function POST(request: NextRequest) {
         body: JSON.stringify({
           from: FROM,
           to: [adminEmail],
-          subject: `🚀 Nuevo Lead: ${formData.company}`,
+          subject: `🚀 Nuevo Lead: ${formData.company !== "—" ? formData.company : formData.name}`,
           html: getInternalNotificationTemplate(formData),
         }),
       })
