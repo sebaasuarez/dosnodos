@@ -20,9 +20,9 @@ export function Footer({ t, currentLanguage, onLanguageChange }: FooterProps) {
             <Image
               src="/dosnodos-logo.png"
               alt="Dos Nodos"
-              width={150}
-              height={30}
-              className="dn-logo-white h-[30px] w-auto"
+              width={170}
+              height={86}
+              className="dn-logo-white h-auto w-[150px] object-contain sm:w-[170px]"
             />
             <span className="font-serif text-[15px] italic text-[#A29FBE]">{t.footer.tagline}</span>
           </div>

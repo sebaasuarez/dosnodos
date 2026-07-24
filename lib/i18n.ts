@@ -25,6 +25,11 @@ interface ServiceCard {
   badge?: string
 }
 
+interface WebDevelopmentService {
+  title: string
+  description: string
+}
+
 interface ProjectItem {
   tag: string
   title: string
@@ -73,6 +78,12 @@ export interface Translation {
     platforms: ServiceCard
     apps: ServiceCard
     ai: ServiceCard
+    webDevelopment: {
+      eyebrow: string
+      title: string
+      subtitle: string
+      items: WebDevelopmentService[]
+    }
   }
   projects: {
     eyebrow: string
@@ -206,6 +217,21 @@ export const translations: Record<Language, Translation> = {
         description: "Asistentes que atienden, cotizan y agendan. Procesos que corren solos, 24/7.",
         chips: ["WhatsApp API", "n8n"],
         badge: "ESTRELLA",
+      },
+      webDevelopment: {
+        eyebrow: "Desarrollo web",
+        title: "Visibiliza en línea tu marca con el desarrollo de páginas web",
+        subtitle:
+          "Diseñamos y construimos experiencias digitales rápidas, escalables y enfocadas en convertir visitas en oportunidades.",
+        items: [
+          { title: "Desarrollo de Shopify", description: "Tiendas sólidas, fáciles de operar y listas para crecer." },
+          { title: "Diseño de Páginas Web", description: "Sitios memorables que comunican el valor real de tu marca." },
+          { title: "Desarrollo de e-Commerce", description: "Experiencias de compra optimizadas de principio a fin." },
+          { title: "Desarrollo de Aplicaciones Móviles", description: "Aplicaciones intuitivas para iOS, Android y entornos multiplataforma." },
+          { title: "Desarrollo de Aplicaciones Web", description: "Productos digitales veloces, seguros y accesibles desde cualquier lugar." },
+          { title: "Desarrollo a la Medida", description: "Software diseñado alrededor de los procesos únicos de tu negocio." },
+          { title: "Equipos Dedicados de Desarrollo", description: "Talento especializado que se integra a tu equipo y objetivos." },
+        ],
       },
     },
     projects: {
@@ -374,6 +400,21 @@ export const translations: Record<Language, Translation> = {
         chips: ["WhatsApp API", "n8n"],
         badge: "FLAGSHIP",
       },
+      webDevelopment: {
+        eyebrow: "Web development",
+        title: "Make your brand visible online with web development",
+        subtitle:
+          "We design and build fast, scalable digital experiences focused on turning visits into opportunities.",
+        items: [
+          { title: "Shopify Development", description: "Robust stores that are easy to run and ready to grow." },
+          { title: "Website Design", description: "Memorable sites that communicate your brand's true value." },
+          { title: "e-Commerce Development", description: "End-to-end optimized shopping experiences." },
+          { title: "Mobile App Development", description: "Intuitive apps for iOS, Android and cross-platform environments." },
+          { title: "Web Application Development", description: "Fast, secure digital products accessible from anywhere." },
+          { title: "Custom Development", description: "Software designed around your business's unique processes." },
+          { title: "Dedicated Development Teams", description: "Specialized talent integrated with your team and goals." },
+        ],
+      },
     },
     projects: {
       eyebrow: "Projects",
@@ -540,6 +581,21 @@ export const translations: Record<Language, Translation> = {
         description: "Assistentes que atendem, cotam e agendam. Processos que rodam sozinhos, 24/7.",
         chips: ["WhatsApp API", "n8n"],
         badge: "DESTAQUE",
+      },
+      webDevelopment: {
+        eyebrow: "Desenvolvimento web",
+        title: "Dê visibilidade online à sua marca com desenvolvimento de sites",
+        subtitle:
+          "Projetamos e construímos experiências digitais rápidas, escaláveis e focadas em transformar visitas em oportunidades.",
+        items: [
+          { title: "Desenvolvimento Shopify", description: "Lojas robustas, fáceis de operar e prontas para crescer." },
+          { title: "Design de Sites", description: "Sites memoráveis que comunicam o valor real da sua marca." },
+          { title: "Desenvolvimento de e-Commerce", description: "Experiências de compra otimizadas do início ao fim." },
+          { title: "Desenvolvimento de Aplicativos Móveis", description: "Aplicativos intuitivos para iOS, Android e ambientes multiplataforma." },
+          { title: "Desenvolvimento de Aplicações Web", description: "Produtos digitais rápidos, seguros e acessíveis de qualquer lugar." },
+          { title: "Desenvolvimento Sob Medida", description: "Software projetado para os processos únicos do seu negócio." },
+          { title: "Equipes Dedicadas de Desenvolvimento", description: "Talento especializado integrado à sua equipe e aos seus objetivos." },
+        ],
       },
     },
     projects: {
