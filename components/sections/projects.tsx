@@ -1,10 +1,13 @@
 "use client"
 
 import AnimatedSection from "@/components/animated-section"
-import { type Translation } from "@/lib/i18n"
+import { type Language, type Translation } from "@/lib/i18n"
+import type { Illustration, Project } from "@/lib/types"
 
 interface ProjectsProps {
   t: Translation
+  rows?: Project[] | null
+  lang?: Language
 }
 
 const mono = "'IBM Plex Mono', var(--font-plex-mono), monospace"
@@ -44,19 +47,28 @@ const IllustrationSchedule = (
   </svg>
 )
 
-function ProjectCard({
-  illustration,
-  item,
-  delay,
-}: {
-  illustration: React.ReactNode
-  item: Translation["projects"]["items"]["distribuidora"]
-  delay: number
-}) {
+const ILLUSTRATIONS: Record<Illustration, React.ReactNode> = {
+  quote: IllustrationQuote,
+  store: IllustrationStore,
+  schedule: IllustrationSchedule,
+}
+
+interface CardData {
+  illustration: Illustration
+  tag: string
+  title: string
+  description: string
+  resultLabel: string
+  result: string
+}
+
+function ProjectCard({ item, delay }: { item: CardData; delay: number }) {
   return (
     <AnimatedSection animation="fadeInUp" delay={delay} className="h-full">
       <article className="flex h-full flex-col overflow-hidden rounded-[20px] border border-[#E4E1F0] bg-white">
-        <div className="flex justify-center border-b border-[#E4E1F0] bg-surface-3 p-[26px]">{illustration}</div>
+        <div className="flex justify-center border-b border-[#E4E1F0] bg-surface-3 p-[26px]">
+          {ILLUSTRATIONS[item.illustration] ?? IllustrationQuote}
+        </div>
         <div className="flex flex-1 flex-col gap-2.5 p-[22px]">
           <span className="font-mono text-[11px] uppercase tracking-[.1em] text-brand-cta">{item.tag}</span>
           <h3 className="text-[19px] font-semibold">{item.title}</h3>
@@ -71,7 +83,27 @@ function ProjectCard({
   )
 }
 
-export function Projects({ t }: ProjectsProps) {
+function tr(row: Project, lang: string, field: "tag" | "title" | "description" | "result_label" | "result"): string {
+  return row.i18n?.[lang]?.[field] ?? (row[field] as string | null) ?? ""
+}
+
+export function Projects({ t, rows, lang = "es" }: ProjectsProps) {
+  const items: CardData[] =
+    rows && rows.length
+      ? rows.map((r) => ({
+          illustration: r.illustration,
+          tag: tr(r, lang, "tag"),
+          title: tr(r, lang, "title"),
+          description: tr(r, lang, "description"),
+          resultLabel: tr(r, lang, "result_label") || t.projects.items.distribuidora.resultLabel,
+          result: tr(r, lang, "result"),
+        }))
+      : [
+          { illustration: "quote", ...t.projects.items.distribuidora },
+          { illustration: "store", ...t.projects.items.cosmetica },
+          { illustration: "schedule", ...t.projects.items.clinica },
+        ]
+
   return (
     <section id="casos" className="border-y border-[#EDEAF6] bg-surface-2">
       <div className="mx-auto flex max-w-[1180px] flex-col gap-[clamp(24px,4vw,40px)] px-[clamp(20px,5vw,40px)] py-[clamp(56px,8vw,96px)]">
@@ -87,9 +119,9 @@ export function Projects({ t }: ProjectsProps) {
         </AnimatedSection>
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
-          <ProjectCard illustration={IllustrationQuote} item={t.projects.items.distribuidora} delay={60} />
-          <ProjectCard illustration={IllustrationStore} item={t.projects.items.cosmetica} delay={120} />
-          <ProjectCard illustration={IllustrationSchedule} item={t.projects.items.clinica} delay={180} />
+          {items.map((item, i) => (
+            <ProjectCard key={item.title + i} item={item} delay={60 + i * 60} />
+          ))}
         </div>
       </div>
     </section>

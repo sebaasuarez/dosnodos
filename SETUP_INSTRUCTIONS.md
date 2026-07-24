@@ -146,3 +146,58 @@ Si tienes problemas con la configuración:
 1. Revisa los logs en Vercel Functions
 2. Verifica que las variables de entorno estén correctas
 3. Prueba el webhook de Google Sheets directamente
+
+---
+
+# 🛠️ Panel de administración + CRM (Supabase)
+
+El sitio incluye un panel en **`/admin`** para gestionar contenido, leads, SEO y
+tags de medición. Está construido sobre **Supabase** (Postgres + Auth).
+
+> El sitio público funciona **sin** Supabase (usa el contenido por defecto).
+> El panel y el CRM se activan al configurar las variables de entorno.
+
+## 1. Variables de entorno
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...   # solo servidor, no exponer
+```
+
+## 2. Base de datos
+
+Aplica la migración incluida en `supabase/migrations/` (crea tablas `leads`,
+`projects`, `reviews`, `site_settings`, `page_seo`, con RLS y datos semilla):
+
+- **Supabase Studio** → SQL Editor → pega el contenido del archivo `.sql` y ejecútalo, o
+- **CLI:** `supabase db push` (con el proyecto enlazado).
+
+## 3. Usuario administrador
+
+En Supabase → **Authentication → Users → Add user** crea la cuenta del equipo
+(email + contraseña). Cualquier usuario autenticado puede entrar al panel, así
+que crea cuentas solo para el equipo.
+
+## 4. Qué hay en el panel
+
+- **Leads · CRM** — cada envío del formulario de contacto se guarda como lead.
+  Lista con filtros por estado, detalle con gestión (estado, notas) y acceso
+  rápido a WhatsApp/correo. Así se va construyendo la base de clientes.
+- **Proyectos** — CRUD del portafolio (incluye proyectos en curso como borrador),
+  con traducciones EN/PT opcionales.
+- **Reseñas** — CRUD de testimonios con calificación y traducciones.
+- **SEO** — title, description, keywords y OG image de la home.
+- **Tracking & Config** — IDs de **Google Tag Manager, Google Analytics 4,
+  Google Ads, Meta Pixel y TikTok Pixel**, más número de WhatsApp y correo.
+  Se inyectan automáticamente en el sitio. Incluye un campo de scripts extra
+  para el `<head>`.
+
+## 5. Flujo de datos del formulario
+
+`Formulario → /api/contact →`
+1. **CRM (Supabase `leads`)** — siempre, si Supabase está configurado.
+2. **Google Sheets** — si `GOOGLE_SHEETS_WEBHOOK_URL` está definido.
+3. **Emails (Resend)** — confirmación al cliente + aviso interno, si `RESEND_API_KEY`.
+
+Si faltan Sheets/Resend, el lead igual queda en el CRM.

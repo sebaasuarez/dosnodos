@@ -8,11 +8,12 @@ import { type Language, type Translation } from "@/lib/i18n"
 interface ContactProps {
   t: Translation
   currentLanguage: Language
+  whatsapp?: string
+  contactEmail?: string
 }
 
-const WA_NUMBER = "573127344026"
-
-export function Contact({ t, currentLanguage }: ContactProps) {
+export function Contact({ t, currentLanguage, whatsapp = "573127344026", contactEmail }: ContactProps) {
+  const email = contactEmail || t.contact.email
   return (
     <section id="contacto" className="relative overflow-hidden bg-ink">
       <div
@@ -46,7 +47,7 @@ export function Contact({ t, currentLanguage }: ContactProps) {
 
             <div className="mt-1 flex flex-col gap-3">
               <a
-                href={`https://wa.me/${WA_NUMBER}`}
+                href={`https://wa.me/${whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick()}
@@ -60,7 +61,7 @@ export function Contact({ t, currentLanguage }: ContactProps) {
                 {t.contact.whatsapp}
               </a>
               <a
-                href={`mailto:${t.contact.email}`}
+                href={`mailto:${email}`}
                 onClick={() => trackEmailClick()}
                 className="flex items-center gap-2.5 text-[14.5px] text-[#ECEAF7] transition-colors hover:text-white"
               >
@@ -70,7 +71,7 @@ export function Contact({ t, currentLanguage }: ContactProps) {
                     <path d="M3 7l9 6 9-6" />
                   </svg>
                 </span>
-                {t.contact.email}
+                {email}
               </a>
             </div>
           </div>

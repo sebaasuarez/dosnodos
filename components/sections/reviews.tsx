@@ -1,19 +1,23 @@
 "use client"
 
 import AnimatedSection from "@/components/animated-section"
-import { type Translation } from "@/lib/i18n"
+import { type Language, type Translation } from "@/lib/i18n"
+import type { Review } from "@/lib/types"
 
 interface ReviewsProps {
   t: Translation
+  rows?: Review[] | null
+  lang?: Language
 }
 
-function ReviewCard({
-  item,
-  delay,
-}: {
-  item: Translation["reviews"]["items"]["diana"]
-  delay: number
-}) {
+interface CardData {
+  quote: string
+  name: string
+  role: string
+  initials: string
+}
+
+function ReviewCard({ item, delay }: { item: CardData; delay: number }) {
   return (
     <AnimatedSection animation="fadeInUp" delay={delay} className="h-full">
       <figure className="flex h-full flex-col gap-3.5 rounded-[18px] border border-[#E4E1F0] bg-white p-[26px]">
@@ -35,7 +39,21 @@ function ReviewCard({
   )
 }
 
-export function Reviews({ t }: ReviewsProps) {
+function tr(row: Review, lang: string, field: "quote" | "role"): string {
+  return row.i18n?.[lang]?.[field] ?? (row[field] as string | null) ?? ""
+}
+
+export function Reviews({ t, rows, lang = "es" }: ReviewsProps) {
+  const items: CardData[] =
+    rows && rows.length
+      ? rows.map((r) => ({
+          quote: tr(r, lang, "quote"),
+          name: r.name,
+          role: tr(r, lang, "role"),
+          initials: r.initials || r.name.slice(0, 2).toUpperCase(),
+        }))
+      : [t.reviews.items.diana, t.reviews.items.mateo, t.reviews.items.laura]
+
   return (
     <section id="resenas">
       <div className="mx-auto flex max-w-[1180px] flex-col gap-[clamp(24px,4vw,40px)] px-[clamp(20px,5vw,40px)] py-[clamp(56px,8vw,96px)]">
@@ -53,9 +71,9 @@ export function Reviews({ t }: ReviewsProps) {
         </AnimatedSection>
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
-          <ReviewCard item={t.reviews.items.diana} delay={60} />
-          <ReviewCard item={t.reviews.items.mateo} delay={120} />
-          <ReviewCard item={t.reviews.items.laura} delay={180} />
+          {items.map((item, i) => (
+            <ReviewCard key={item.name + i} item={item} delay={60 + i * 60} />
+          ))}
         </div>
       </div>
     </section>

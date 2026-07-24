@@ -2,12 +2,10 @@
 
 import { trackWhatsAppClick } from "@/lib/gtm"
 
-const WA_NUMBER = "573127344026"
-
-export function WhatsAppButton() {
+export function WhatsAppButton({ number = "573127344026" }: { number?: string }) {
   return (
     <a
-      href={`https://wa.me/${WA_NUMBER}`}
+      href={`https://wa.me/${number}`}
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => trackWhatsAppClick()}

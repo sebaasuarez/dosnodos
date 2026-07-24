@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getEmailSubject, getEmailTemplate, getInternalNotificationTemplate } from "@/lib/email-templates"
+import { createAdminSupabase, createReadSupabase } from "@/lib/supabase/admin"
 
 interface ContactFormData {
   name: string
@@ -14,13 +15,6 @@ const FROM = process.env.RESEND_FROM_EMAIL ?? "DosNodos <onboarding@resend.dev>"
 
 export async function POST(request: NextRequest) {
   try {
-    if (!process.env.GOOGLE_SHEETS_WEBHOOK_URL || !process.env.RESEND_API_KEY) {
-      return NextResponse.json(
-        { error: "Configuration missing" },
-        { status: 500 },
-      )
-    }
-
     const raw: ContactFormData = await request.json()
 
     // El sitio pide solo Nombre, Correo y Mensaje; empresa/teléfono son opcionales.
@@ -32,6 +26,32 @@ export async function POST(request: NextRequest) {
       ...raw,
       company: raw.company?.trim() ? raw.company : "—",
       phone: raw.phone?.trim() ? raw.phone : "—",
+    }
+
+    // 0. CRM — guardar el lead en la base de datos (best-effort).
+    // Usa service role si existe; si no, cae al cliente anónimo (política de
+    // inserción pública en la tabla leads).
+    try {
+      const supabase = createAdminSupabase() ?? createReadSupabase()
+      if (supabase) {
+        await supabase.from("leads").insert({
+          name: raw.name,
+          email: raw.email,
+          message: raw.message,
+          company: raw.company?.trim() || null,
+          phone: raw.phone?.trim() || null,
+          language: raw.language || "es",
+          source: "landing",
+          status: "nuevo",
+        })
+      }
+    } catch (e) {
+      console.error("CRM Lead Error:", e)
+    }
+
+    // Email/Sheets requieren configuración; si falta, igual guardamos el lead arriba.
+    if (!process.env.GOOGLE_SHEETS_WEBHOOK_URL || !process.env.RESEND_API_KEY) {
+      return NextResponse.json({ success: true, note: "lead stored; notifications skipped" })
     }
 
     // 1. Google Sheets
