@@ -34,6 +34,9 @@ export interface Project {
   result_label: string | null
   result: string | null
   illustration: Illustration
+  /** Pantallazo del proyecto; si está vacío se usa la ilustración. */
+  image_url: string | null
+  image_alt: string | null
   published: boolean
   sort_order: number
   i18n: Record<string, Partial<Record<string, string>>>

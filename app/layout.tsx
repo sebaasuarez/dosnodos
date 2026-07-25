@@ -71,15 +71,19 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [seo?.og_image || "/dosnodos-logo.png"],
     },
     icons: {
+      // El SVG lo prefieren los navegadores modernos (nítido a cualquier tamaño);
+      // los PNG y el .ico son el respaldo.
       icon: [
-        { url: "/icon-16.png", sizes: "16x16", type: "image/png" },
+        { url: "/icon.svg", type: "image/svg+xml" },
         { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
+        { url: "/icon-16.png", sizes: "16x16", type: "image/png" },
         { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-        { url: "/favicon.ico", sizes: "256x256" },
+        { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
       ],
       shortcut: "/favicon.ico",
       apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
     },
+    manifest: "/manifest.webmanifest",
   }
 }
 

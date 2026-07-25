@@ -70,6 +70,8 @@ export async function upsertProject(fd: FormData) {
     result_label: str(fd, "result_label") || "Resultado",
     result: str(fd, "result") || null,
     illustration: (str(fd, "illustration") || "quote") as Illustration,
+    image_url: str(fd, "image_url") || null,
+    image_alt: str(fd, "image_alt") || null,
     published: bool(fd, "published"),
     sort_order: num(fd, "sort_order"),
     i18n: buildI18n(fd, ["tag", "title", "description", "result"]),

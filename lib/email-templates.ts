@@ -37,7 +37,7 @@ export function getEmailTemplate(formData: ContactFormData): string {
       <body>
         <div class="container">
           <div class="header">
-            <img src="https://dosnodos.com.co/logo-dosnodos.png" alt="DosNodos Logo" class="logo-img" style="filter: brightness(0) invert(1);">
+            <img src="https://dosnodos.com.co/dosnodos-logo.png" alt="DosNodos Logo" class="logo-img" style="filter: brightness(0) invert(1);">
             <h1>¡Hola ${formData.name}!</h1>
             <p>Gracias por contactarnos. Conectamos tecnología con personas.</p>
           </div>

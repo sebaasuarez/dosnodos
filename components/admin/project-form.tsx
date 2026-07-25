@@ -19,11 +19,38 @@ export function ProjectForm({ project }: { project?: Project }) {
             <Field label="Etiqueta / categoría" name="tag" defaultValue={project?.tag} placeholder="Ej: Shopify + e-Commerce" />
           </div>
           <TextareaField label="Descripción" name="description" defaultValue={project?.description} />
+          <div className="rounded-xl border border-[#EDEAF6] bg-[#FAF9FE] p-4">
+            <div className="grid gap-4 md:grid-cols-2">
+              <Field
+                label="Pantallazo del proyecto"
+                name="image_url"
+                defaultValue={project?.image_url}
+                placeholder="https://… o /proyectos/mi-captura.png"
+                hint="Recomendado 1200×750 (proporción 16:10). Si lo dejas vacío se usa la ilustración."
+              />
+              <Field
+                label="Texto alternativo"
+                name="image_alt"
+                defaultValue={project?.image_alt}
+                placeholder="Tienda en línea de la marca X"
+                hint="Describe la captura (accesibilidad y SEO)."
+              />
+            </div>
+            {project?.image_url && (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={project.image_url}
+                alt={project.image_alt || project.title}
+                className="mt-3 max-h-40 w-auto rounded-lg border border-[#E4E1F0] object-contain"
+              />
+            )}
+          </div>
+
           <div className="grid gap-4 md:grid-cols-3">
             <Field label="Etiqueta de resultado" name="result_label" defaultValue={project?.result_label ?? "Resultado"} />
             <Field label="Resultado" name="result" defaultValue={project?.result} placeholder="Ej: +38% conversión" />
             <SelectField
-              label="Ilustración"
+              label="Ilustración de respaldo"
               name="illustration"
               defaultValue={project?.illustration ?? "quote"}
               options={[

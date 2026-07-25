@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import AnimatedSection from "@/components/animated-section"
 import { type Language, type Translation } from "@/lib/i18n"
 import type { Illustration, Project } from "@/lib/types"
@@ -55,6 +56,9 @@ const ILLUSTRATIONS: Record<Illustration, React.ReactNode> = {
 
 interface CardData {
   illustration: Illustration
+  /** Pantallazo real del proyecto; manda sobre la ilustración. */
+  imageUrl?: string | null
+  imageAlt?: string | null
   tag: string
   title: string
   description: string
@@ -66,9 +70,21 @@ function ProjectCard({ item, delay }: { item: CardData; delay: number }) {
   return (
     <AnimatedSection animation="fadeInUp" delay={delay} className="h-full">
       <article className="flex h-full flex-col overflow-hidden rounded-[20px] border border-[#E4E1F0] bg-white">
-        <div className="flex justify-center border-b border-[#E4E1F0] bg-surface-3 p-[26px]">
-          {ILLUSTRATIONS[item.illustration] ?? IllustrationQuote}
-        </div>
+        {item.imageUrl ? (
+          <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-[#E4E1F0] bg-surface-3">
+            <Image
+              src={item.imageUrl}
+              alt={item.imageAlt || item.title}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1180px) 50vw, 380px"
+              className="object-cover"
+            />
+          </div>
+        ) : (
+          <div className="flex justify-center border-b border-[#E4E1F0] bg-surface-3 p-[26px]">
+            {ILLUSTRATIONS[item.illustration] ?? IllustrationQuote}
+          </div>
+        )}
         <div className="flex flex-1 flex-col gap-2.5 p-[22px]">
           <span className="font-mono text-[11px] uppercase tracking-[.1em] text-brand-cta">{item.tag}</span>
           <h3 className="text-[19px] font-semibold">{item.title}</h3>
@@ -92,6 +108,8 @@ export function Projects({ t, rows, lang = "es" }: ProjectsProps) {
     rows && rows.length
       ? rows.map((r) => ({
           illustration: r.illustration,
+          imageUrl: r.image_url,
+          imageAlt: r.image_alt,
           tag: tr(r, lang, "tag"),
           title: tr(r, lang, "title"),
           description: tr(r, lang, "description"),

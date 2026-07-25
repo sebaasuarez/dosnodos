@@ -34,9 +34,9 @@ export function PageShell({
               src="/dosnodos-logo.png"
               alt="Dos Nodos"
               width={170}
-              height={34}
+              height={86}
               priority
-              className="h-[34px] w-auto"
+              className="h-auto w-[132px] object-contain sm:w-[150px]"
             />
           </Link>
           <nav className="flex flex-wrap items-center justify-end gap-x-[clamp(10px,2.4vw,28px)] gap-y-2 text-[15px] text-[#3A3550]">
@@ -96,9 +96,9 @@ export function PageShell({
               <Image
                 src="/dosnodos-logo.png"
                 alt="Dos Nodos"
-                width={150}
-                height={30}
-                className="dn-logo-white h-[30px] w-auto"
+                width={170}
+                height={86}
+                className="dn-logo-white h-auto w-[150px] object-contain sm:w-[170px]"
               />
               <span className="font-serif text-[15px] italic text-[#A29FBE]">{t.footer.tagline}</span>
             </div>
