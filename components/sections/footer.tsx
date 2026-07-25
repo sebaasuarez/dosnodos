@@ -59,7 +59,7 @@ export function Footer({ t, currentLanguage, alternates }: FooterProps) {
               </a>
               <a
                 href={`mailto:${t.footer.email}`}
-                onClick={() => trackEmailClick()}
+                onClick={() => trackEmailClick("footer", currentLanguage)}
                 className="text-[#C9C6DE] transition-colors hover:text-white"
               >
                 {t.footer.email}

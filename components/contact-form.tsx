@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { type Language, translations } from "@/lib/i18n"
-import { trackFormSubmit } from "@/lib/gtm"
+import { trackFormStart, trackGenerateLead } from "@/lib/gtm"
 
 interface ContactFormProps {
   language: Language
@@ -44,6 +44,14 @@ export default function ContactForm({ language }: ContactFormProps) {
 
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState("")
+  const [started, setStarted] = useState(false)
+
+  /** Primera interacción con el formulario: permite medir abandono. */
+  function handleFirstInteraction() {
+    if (started) return
+    setStarted(true)
+    trackFormStart("contact_section", language)
+  }
 
   const values = watch()
 
@@ -69,7 +77,7 @@ export default function ContactForm({ language }: ContactFormProps) {
 
       setIsSubmitted(true)
       reset()
-      trackFormSubmit(language, data.name)
+      trackGenerateLead({ location: "contact_section", language })
     } catch (error) {
       console.error("Error al enviar formulario:", error)
       setSubmitError(f.errors.submitError)
@@ -100,6 +108,7 @@ export default function ContactForm({ language }: ContactFormProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
+      onFocus={handleFirstInteraction}
       className="flex flex-col gap-[15px] rounded-[22px] border border-[#2A2542] bg-ink-2 p-[clamp(22px,3vw,30px)]"
     >
       {submitError && (

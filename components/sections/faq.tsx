@@ -2,6 +2,7 @@
 
 import AnimatedSection from "@/components/animated-section"
 import { type Translation } from "@/lib/i18n"
+import { trackFaqOpen } from "@/lib/gtm"
 
 interface FaqProps {
   t: Translation
@@ -30,6 +31,11 @@ export function Faq({ t }: FaqProps) {
                 key={item.question}
                 className="group border-b border-[#EDEAF6] last:border-b-0 [&_summary::-webkit-details-marker]:hidden"
                 open={i === 0}
+                onToggle={(e) => {
+                  if ((e.currentTarget as HTMLDetailsElement).open) {
+                    trackFaqOpen(item.question, "home_faq")
+                  }
+                }}
               >
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-[clamp(18px,3vw,26px)] py-5 text-[16.5px] font-semibold leading-snug tracking-[-0.01em] transition-colors hover:text-brand-cta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/50">
                   <h3 className="text-[16.5px] font-semibold">{item.question}</h3>

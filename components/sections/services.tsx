@@ -4,6 +4,7 @@ import Link from "next/link"
 import AnimatedSection from "@/components/animated-section"
 import { type Language, type ServiceId, type Translation } from "@/lib/i18n"
 import { findServiceById, servicePath } from "@/lib/services-content"
+import { trackServiceCardClick } from "@/lib/gtm"
 import {
   AppWindow,
   CodeXml,
@@ -99,7 +100,17 @@ function ServiceCard({ item, delay, lang }: { item: ServiceItemT; delay: number;
   return (
     <AnimatedSection animation="fadeInUp" delay={delay} className="h-full">
       {href ? (
-        <Link href={href} className="block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/50 focus-visible:ring-offset-2 rounded-[20px]">
+        <Link
+          href={href}
+          onClick={() =>
+            trackServiceCardClick({
+              id: item.id,
+              name: item.title,
+              category: content?.category ?? "",
+              language: lang,
+            })
+          }
+          className="block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/50 focus-visible:ring-offset-2 rounded-[20px]">
           {card}
         </Link>
       ) : (

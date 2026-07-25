@@ -42,7 +42,29 @@ export function StructuredData({ language }: StructuredDataProps) {
         addressRegion: "Antioquia",
         addressCountry: "CO",
       },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 6.2442,
+        longitude: -75.5812,
+      },
+      // Atención 24 horas de lunes a sábado.
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "https://schema.org/Monday",
+            "https://schema.org/Tuesday",
+            "https://schema.org/Wednesday",
+            "https://schema.org/Thursday",
+            "https://schema.org/Friday",
+            "https://schema.org/Saturday",
+          ],
+          opens: "00:00",
+          closes: "23:59",
+        },
+      ],
       areaServed: [
+        { "@type": "City", name: "Medellín" },
         { "@type": "Country", name: "Colombia" },
         { "@type": "Place", name: "Latinoamérica" },
       ],

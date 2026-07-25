@@ -50,7 +50,7 @@ export function Contact({ t, currentLanguage, whatsapp = "573127344026", contact
                 href={`https://wa.me/${whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackWhatsAppClick()}
+                onClick={() => trackWhatsAppClick("contact_section", currentLanguage)}
                 className="flex items-center gap-2.5 text-[14.5px] text-[#ECEAF7] transition-colors hover:text-white"
               >
                 <span className="flex h-[30px] w-[30px] items-center justify-center rounded-lg bg-white/[0.06]">
@@ -62,7 +62,7 @@ export function Contact({ t, currentLanguage, whatsapp = "573127344026", contact
               </a>
               <a
                 href={`mailto:${email}`}
-                onClick={() => trackEmailClick()}
+                onClick={() => trackEmailClick("contact_section", currentLanguage)}
                 className="flex items-center gap-2.5 text-[14.5px] text-[#ECEAF7] transition-colors hover:text-white"
               >
                 <span className="flex h-[30px] w-[30px] items-center justify-center rounded-lg bg-white/[0.06]">

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { TrackServiceView } from "@/components/track-service-view"
 import { type Language, translations } from "@/lib/i18n"
 import {
   SERVICES,
@@ -83,6 +84,12 @@ export function ServiceDetail({
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <TrackServiceView
+        id={service.id}
+        name={service.h1[lang]}
+        category={service.category}
+        language={lang}
+      />
 
       {/* Encabezado */}
       <section

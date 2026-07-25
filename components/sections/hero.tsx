@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic"
 import AnimatedSection from "@/components/animated-section"
 import { FlowDiagram } from "@/components/brand/flow-diagram"
-import { trackCTAClick } from "@/lib/gtm"
+import { trackCtaClick } from "@/lib/gtm"
 import { type Translation } from "@/lib/i18n"
 
 // Fondo decorativo con three.js: se carga después del contenido para no
@@ -55,14 +55,14 @@ export function Hero({ t }: HeroProps) {
           <div className="flex flex-wrap justify-center gap-3">
             <a
               href="#contacto"
-              onClick={() => trackCTAClick("primary", "hero")}
+              onClick={() => trackCtaClick({ id: "hero_primary", text: t.hero.ctaPrimary, location: "hero" })}
               className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-brand-cta to-brand-blue px-[26px] py-[14px] text-[16px] font-semibold text-white shadow-[0_12px_28px_-12px_rgba(124,34,206,.65)] transition-transform hover:-translate-y-px"
             >
               {t.hero.ctaPrimary} <span aria-hidden>→</span>
             </a>
             <a
               href="#servicios"
-              onClick={() => trackCTAClick("secondary", "hero")}
+              onClick={() => trackCtaClick({ id: "hero_secondary", text: t.hero.ctaSecondary, location: "hero" })}
               className="inline-flex items-center rounded-full border border-[#E4E1F0] bg-white px-[26px] py-[14px] text-[16px] font-semibold text-ink transition-colors hover:bg-surface-2"
             >
               {t.hero.ctaSecondary}

@@ -8,7 +8,7 @@ export function WhatsAppButton({ number = "573127344026" }: { number?: string })
       href={`https://wa.me/${number}`}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => trackWhatsAppClick()}
+      onClick={() => trackWhatsAppClick("floating_button")}
       aria-label="Escríbenos por WhatsApp"
       className="fixed bottom-[22px] right-[22px] z-[60] flex h-[58px] w-[58px] items-center justify-center rounded-full bg-whatsapp shadow-[0_12px_28px_-10px_rgba(37,211,102,.7)] transition-transform hover:scale-105"
     >
