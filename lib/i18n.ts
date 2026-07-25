@@ -18,16 +18,33 @@ interface Metric {
   label: string
 }
 
-interface ServiceCard {
+/** Claves estables de icono/servicio (no se traducen). */
+export type ServiceId =
+  | "web-design"
+  | "ecommerce"
+  | "shopify"
+  | "web-app"
+  | "mobile-app"
+  | "custom-dev"
+  | "ai-assistant"
+  | "automation"
+  | "seo"
+  | "branding"
+
+interface ServiceItem {
+  id: ServiceId
   title: string
   description: string
   chips: string[]
+  /** Si viene, la card se muestra destacada. */
   badge?: string
 }
 
-interface WebDevelopmentService {
+interface ServiceCategory {
+  eyebrow: string
   title: string
   description: string
+  items: ServiceItem[]
 }
 
 interface ProjectItem {
@@ -50,6 +67,7 @@ export interface Translation {
     services: string
     projects: string
     reviews: string
+    faq: string
     cta: string
   }
   hero: {
@@ -75,15 +93,7 @@ export interface Translation {
     title: string
     titleAccent: string
     subtitle: string
-    platforms: ServiceCard
-    apps: ServiceCard
-    ai: ServiceCard
-    webDevelopment: {
-      eyebrow: string
-      title: string
-      subtitle: string
-      items: WebDevelopmentService[]
-    }
+    categories: ServiceCategory[]
   }
   projects: {
     eyebrow: string
@@ -102,6 +112,12 @@ export interface Translation {
       mateo: ReviewItem
       laura: ReviewItem
     }
+  }
+  faq: {
+    eyebrow: string
+    title: string
+    titleAccent: string
+    items: { question: string; answer: string }[]
   }
   contact: {
     eyebrow: string
@@ -164,6 +180,7 @@ export const translations: Record<Language, Translation> = {
       services: "Servicios",
       projects: "Proyectos",
       reviews: "Reseñas",
+      faq: "Preguntas",
       cta: "Agendar reunión",
     },
     hero: {
@@ -202,37 +219,91 @@ export const translations: Record<Language, Translation> = {
       titleAccent: "en un solo lugar.",
       subtitle:
         "Desde el sitio que te representa hasta el asistente que responde por ti. Elegimos la tecnología según el resultado, no al revés.",
-      platforms: {
-        title: "Plataformas & e‑Commerce",
-        description: "Sitios y tiendas que cargan rápido, convierten y son fáciles de administrar.",
-        chips: ["Shopify", "Web", "e‑Commerce"],
-      },
-      apps: {
-        title: "Apps & Software a medida",
-        description: "Cuando lo genérico no alcanza, construimos exactamente lo que tu proceso necesita.",
-        chips: ["Web app", "Móvil", "A la medida"],
-      },
-      ai: {
-        title: "IA & Automatización",
-        description: "Asistentes que atienden, cotizan y agendan. Procesos que corren solos, 24/7.",
-        chips: ["WhatsApp API", "n8n"],
-        badge: "ESTRELLA",
-      },
-      webDevelopment: {
-        eyebrow: "Desarrollo web",
-        title: "Visibiliza en línea tu marca con el desarrollo de páginas web",
-        subtitle:
-          "Diseñamos y construimos experiencias digitales rápidas, escalables y enfocadas en convertir visitas en oportunidades.",
-        items: [
-          { title: "Desarrollo de Shopify", description: "Tiendas sólidas, fáciles de operar y listas para crecer." },
-          { title: "Diseño de Páginas Web", description: "Sitios memorables que comunican el valor real de tu marca." },
-          { title: "Desarrollo de e-Commerce", description: "Experiencias de compra optimizadas de principio a fin." },
-          { title: "Desarrollo de Aplicaciones Móviles", description: "Aplicaciones intuitivas para iOS, Android y entornos multiplataforma." },
-          { title: "Desarrollo de Aplicaciones Web", description: "Productos digitales veloces, seguros y accesibles desde cualquier lugar." },
-          { title: "Desarrollo a la Medida", description: "Software diseñado alrededor de los procesos únicos de tu negocio." },
-          { title: "Equipos Dedicados de Desarrollo", description: "Talento especializado que se integra a tu equipo y objetivos." },
-        ],
-      },
+      categories: [
+        {
+          eyebrow: "Sitios web & e‑Commerce",
+          title: "Presencia digital que vende",
+          description: "Sitios de alto impacto visual y tiendas listas para facturar desde el primer día.",
+          items: [
+            {
+              id: "web-design",
+              title: "Diseño de Páginas Web",
+              description: "Sitios de alto impacto visual, memorables y construidos para convertir visitas en clientes.",
+              chips: ["Alto impacto visual", "Responsive"],
+            },
+            {
+              id: "ecommerce",
+              title: "Desarrollo de e‑Commerce",
+              description: "Tiendas completas con checkout optimizado, pagos y post‑venta automatizada.",
+              chips: ["Checkout", "Pagos", "Wompi"],
+              badge: "MÁS SOLICITADO",
+            },
+            {
+              id: "shopify",
+              title: "Desarrollo de Shopify",
+              description: "Tiendas Shopify sólidas, fáciles de operar y listas para crecer sin rehacerlas.",
+              chips: ["Shopify", "Temas a medida"],
+            },
+          ],
+        },
+        {
+          eyebrow: "Apps & Software a la medida",
+          title: "Cuando lo genérico no alcanza",
+          description: "Construimos exactamente lo que tu proceso necesita, sin plantillas.",
+          items: [
+            {
+              id: "web-app",
+              title: "Aplicaciones Web",
+              description: "Productos digitales veloces y seguros, accesibles desde cualquier lugar.",
+              chips: ["Next.js", "Dashboards"],
+            },
+            {
+              id: "mobile-app",
+              title: "Aplicaciones Móviles",
+              description: "Apps intuitivas para iOS, Android y entornos multiplataforma.",
+              chips: ["iOS", "Android"],
+            },
+            {
+              id: "custom-dev",
+              title: "Desarrollo a la Medida",
+              description: "Software diseñado alrededor de los procesos únicos de tu negocio.",
+              chips: ["Portales", "Integraciones"],
+            },
+          ],
+        },
+        {
+          eyebrow: "IA, Automatización & Crecimiento",
+          title: "Tecnología que trabaja sola",
+          description: "Vender y operar sin fricción, también fuera del horario laboral.",
+          items: [
+            {
+              id: "ai-assistant",
+              title: "Asistentes Virtuales Inteligentes",
+              description: "Atienden, cotizan y agendan por WhatsApp y correo, 24/7, con la información de tu negocio.",
+              chips: ["WhatsApp API", "24/7"],
+              badge: "ESTRELLA",
+            },
+            {
+              id: "automation",
+              title: "Automatización de Procesos",
+              description: "Integramos tus plataformas para que el trabajo repetitivo corra solo.",
+              chips: ["n8n", "APIs", "ERP · CRM"],
+            },
+            {
+              id: "seo",
+              title: "Marketing Digital & SEO",
+              description: "Que te encuentren en Google y también en las respuestas de la IA.",
+              chips: ["SEO", "GEO", "Ads"],
+            },
+            {
+              id: "branding",
+              title: "Diseño de Marca",
+              description: "Identidad visual coherente en cada punto de contacto con tu cliente.",
+              chips: ["Identidad", "Diseño"],
+            },
+          ],
+        },
+      ],
     },
     projects: {
       eyebrow: "Proyectos",
@@ -284,6 +355,48 @@ export const translations: Record<Language, Translation> = {
           initials: "LC",
         },
       },
+    },
+    faq: {
+      eyebrow: "Preguntas frecuentes",
+      title: "Lo que suelen",
+      titleAccent: "preguntarnos.",
+      items: [
+        {
+          question: "¿Qué hace Dos Nodos?",
+          answer:
+            "Dos Nodos es una empresa colombiana de tecnología que ayuda a empresas a vender más y trabajar mejor con tres frentes: sitios web y tiendas e‑Commerce, aplicaciones y software a la medida, e inteligencia artificial con automatización de procesos.",
+        },
+        {
+          question: "¿Cuánto cuesta un sitio web o una tienda en línea?",
+          answer:
+            "Depende del alcance. Un sitio corporativo suele ir de 6 a 12 semanas de trabajo y una tienda e‑Commerce depende del catálogo y las integraciones. Entregamos por etapas y cotizamos con precio cerrado después de una reunión de diagnóstico de 30 minutos, sin costo.",
+        },
+        {
+          question: "¿Cuánto tarda un proyecto?",
+          answer:
+            "Las primeras automatizaciones o un asistente con IA quedan operando en 2 a 4 semanas. Sitios web, tiendas y plataformas completas toman entre 6 y 12 semanas según el alcance. Siempre entregamos por etapas para que veas resultados desde el primer mes.",
+        },
+        {
+          question: "¿Tengo que cambiar las herramientas que ya uso?",
+          answer:
+            "No. Trabajamos sobre lo que ya tienes: tu ERP, tu CRM, WhatsApp, Shopify, Siigo, Google Workspace o Microsoft 365, y los conectamos para que funcionen como un solo sistema.",
+        },
+        {
+          question: "¿Qué es un asistente virtual inteligente y para qué sirve?",
+          answer:
+            "Es un asistente entrenado con la información de tu negocio que responde por WhatsApp o correo las 24 horas: atiende preguntas, cotiza, agenda citas y registra cada contacto en tu CRM. Nuestros clientes pasan de horas a menos de un minuto en enviar una cotización.",
+        },
+        {
+          question: "¿Trabajan con empresas fuera de Colombia?",
+          answer:
+            "Sí. Estamos en Medellín, Colombia, y trabajamos de forma remota con empresas de toda Latinoamérica y Estados Unidos, en español, inglés y portugués.",
+        },
+        {
+          question: "¿Cómo empiezo a trabajar con Dos Nodos?",
+          answer:
+            "Agenda una reunión de 30 minutos sin costo en dosnodos.com.co o escríbenos por WhatsApp. En esa sesión revisamos tu operación y sales con un diagnóstico concreto de qué se puede automatizar o construir primero.",
+        },
+      ],
     },
     contact: {
       eyebrow: "Hablemos",
@@ -346,6 +459,7 @@ export const translations: Record<Language, Translation> = {
       services: "Services",
       projects: "Projects",
       reviews: "Reviews",
+      faq: "FAQ",
       cta: "Book a meeting",
     },
     hero: {
@@ -384,37 +498,91 @@ export const translations: Record<Language, Translation> = {
       titleAccent: "in one place.",
       subtitle:
         "From the site that represents you to the assistant that answers for you. We choose technology based on the result, not the other way around.",
-      platforms: {
-        title: "Platforms & e‑Commerce",
-        description: "Sites and stores that load fast, convert and are easy to manage.",
-        chips: ["Shopify", "Web", "e‑Commerce"],
-      },
-      apps: {
-        title: "Apps & Custom software",
-        description: "When generic isn't enough, we build exactly what your process needs.",
-        chips: ["Web app", "Mobile", "Custom"],
-      },
-      ai: {
-        title: "AI & Automation",
-        description: "Assistants that answer, quote and schedule. Processes that run on their own, 24/7.",
-        chips: ["WhatsApp API", "n8n"],
-        badge: "FLAGSHIP",
-      },
-      webDevelopment: {
-        eyebrow: "Web development",
-        title: "Make your brand visible online with web development",
-        subtitle:
-          "We design and build fast, scalable digital experiences focused on turning visits into opportunities.",
-        items: [
-          { title: "Shopify Development", description: "Robust stores that are easy to run and ready to grow." },
-          { title: "Website Design", description: "Memorable sites that communicate your brand's true value." },
-          { title: "e-Commerce Development", description: "End-to-end optimized shopping experiences." },
-          { title: "Mobile App Development", description: "Intuitive apps for iOS, Android and cross-platform environments." },
-          { title: "Web Application Development", description: "Fast, secure digital products accessible from anywhere." },
-          { title: "Custom Development", description: "Software designed around your business's unique processes." },
-          { title: "Dedicated Development Teams", description: "Specialized talent integrated with your team and goals." },
-        ],
-      },
+      categories: [
+        {
+          eyebrow: "Websites & e‑Commerce",
+          title: "A digital presence that sells",
+          description: "High-impact websites and stores ready to sell from day one.",
+          items: [
+            {
+              id: "web-design",
+              title: "Website Design",
+              description: "Visually striking, memorable sites built to turn visits into customers.",
+              chips: ["High visual impact", "Responsive"],
+            },
+            {
+              id: "ecommerce",
+              title: "e‑Commerce Development",
+              description: "Complete stores with optimized checkout, payments and automated post-sale.",
+              chips: ["Checkout", "Payments"],
+              badge: "MOST REQUESTED",
+            },
+            {
+              id: "shopify",
+              title: "Shopify Development",
+              description: "Robust Shopify stores that are easy to run and ready to grow.",
+              chips: ["Shopify", "Custom themes"],
+            },
+          ],
+        },
+        {
+          eyebrow: "Apps & Custom software",
+          title: "When generic isn't enough",
+          description: "We build exactly what your process needs — no templates.",
+          items: [
+            {
+              id: "web-app",
+              title: "Web Applications",
+              description: "Fast, secure digital products accessible from anywhere.",
+              chips: ["Next.js", "Dashboards"],
+            },
+            {
+              id: "mobile-app",
+              title: "Mobile Applications",
+              description: "Intuitive apps for iOS, Android and cross-platform environments.",
+              chips: ["iOS", "Android"],
+            },
+            {
+              id: "custom-dev",
+              title: "Custom Development",
+              description: "Software designed around your business's unique processes.",
+              chips: ["Portals", "Integrations"],
+            },
+          ],
+        },
+        {
+          eyebrow: "AI, Automation & Growth",
+          title: "Technology that works on its own",
+          description: "Sell and operate without friction, also outside business hours.",
+          items: [
+            {
+              id: "ai-assistant",
+              title: "Intelligent Virtual Assistants",
+              description: "They answer, quote and schedule over WhatsApp and email, 24/7, trained on your business.",
+              chips: ["WhatsApp API", "24/7"],
+              badge: "FLAGSHIP",
+            },
+            {
+              id: "automation",
+              title: "Process Automation",
+              description: "We connect your platforms so repetitive work runs by itself.",
+              chips: ["n8n", "APIs", "ERP · CRM"],
+            },
+            {
+              id: "seo",
+              title: "Digital Marketing & SEO",
+              description: "Get found on Google — and inside AI answers too.",
+              chips: ["SEO", "GEO", "Ads"],
+            },
+            {
+              id: "branding",
+              title: "Brand Design",
+              description: "Consistent visual identity across every customer touchpoint.",
+              chips: ["Identity", "Design"],
+            },
+          ],
+        },
+      ],
     },
     projects: {
       eyebrow: "Projects",
@@ -466,6 +634,48 @@ export const translations: Record<Language, Translation> = {
           initials: "LC",
         },
       },
+    },
+    faq: {
+      eyebrow: "Frequently asked questions",
+      title: "What people usually",
+      titleAccent: "ask us.",
+      items: [
+        {
+          question: "What does Dos Nodos do?",
+          answer:
+            "Dos Nodos is a Colombian technology company that helps businesses sell more and work better across three areas: websites and e‑Commerce stores, custom apps and software, and artificial intelligence with process automation.",
+        },
+        {
+          question: "How much does a website or online store cost?",
+          answer:
+            "It depends on scope. A corporate site usually takes 6 to 12 weeks, and an e‑Commerce store depends on catalog size and integrations. We deliver in stages and quote a fixed price after a free 30-minute diagnosis call.",
+        },
+        {
+          question: "How long does a project take?",
+          answer:
+            "First automations or an AI assistant go live in 2 to 4 weeks. Full websites, stores and platforms take 6 to 12 weeks depending on scope. We always deliver in stages so you see results within the first month.",
+        },
+        {
+          question: "Do I have to change the tools I already use?",
+          answer:
+            "No. We work with what you already have — your ERP, CRM, WhatsApp, Shopify, Google Workspace or Microsoft 365 — and connect them so they behave like one system.",
+        },
+        {
+          question: "What is an intelligent virtual assistant and what is it for?",
+          answer:
+            "It's an assistant trained on your business information that answers over WhatsApp or email 24/7: it handles questions, sends quotes, books appointments and logs every contact in your CRM. Our clients go from hours to under a minute to send a quote.",
+        },
+        {
+          question: "Do you work with companies outside Colombia?",
+          answer:
+            "Yes. We're based in Medellín, Colombia, and work remotely with companies across Latin America and the United States, in Spanish, English and Portuguese.",
+        },
+        {
+          question: "How do I start working with Dos Nodos?",
+          answer:
+            "Book a free 30-minute call at dosnodos.com.co or message us on WhatsApp. In that session we review your operation and you leave with a concrete diagnosis of what to automate or build first.",
+        },
+      ],
     },
     contact: {
       eyebrow: "Let's talk",
@@ -528,6 +738,7 @@ export const translations: Record<Language, Translation> = {
       services: "Serviços",
       projects: "Projetos",
       reviews: "Avaliações",
+      faq: "Perguntas",
       cta: "Agendar reunião",
     },
     hero: {
@@ -566,37 +777,91 @@ export const translations: Record<Language, Translation> = {
       titleAccent: "em um só lugar.",
       subtitle:
         "Do site que te representa ao assistente que responde por você. Escolhemos a tecnologia pelo resultado, não o contrário.",
-      platforms: {
-        title: "Plataformas & e‑Commerce",
-        description: "Sites e lojas que carregam rápido, convertem e são fáceis de administrar.",
-        chips: ["Shopify", "Web", "e‑Commerce"],
-      },
-      apps: {
-        title: "Apps & Software sob medida",
-        description: "Quando o genérico não basta, construímos exatamente o que seu processo precisa.",
-        chips: ["Web app", "Mobile", "Sob medida"],
-      },
-      ai: {
-        title: "IA & Automação",
-        description: "Assistentes que atendem, cotam e agendam. Processos que rodam sozinhos, 24/7.",
-        chips: ["WhatsApp API", "n8n"],
-        badge: "DESTAQUE",
-      },
-      webDevelopment: {
-        eyebrow: "Desenvolvimento web",
-        title: "Dê visibilidade online à sua marca com desenvolvimento de sites",
-        subtitle:
-          "Projetamos e construímos experiências digitais rápidas, escaláveis e focadas em transformar visitas em oportunidades.",
-        items: [
-          { title: "Desenvolvimento Shopify", description: "Lojas robustas, fáceis de operar e prontas para crescer." },
-          { title: "Design de Sites", description: "Sites memoráveis que comunicam o valor real da sua marca." },
-          { title: "Desenvolvimento de e-Commerce", description: "Experiências de compra otimizadas do início ao fim." },
-          { title: "Desenvolvimento de Aplicativos Móveis", description: "Aplicativos intuitivos para iOS, Android e ambientes multiplataforma." },
-          { title: "Desenvolvimento de Aplicações Web", description: "Produtos digitais rápidos, seguros e acessíveis de qualquer lugar." },
-          { title: "Desenvolvimento Sob Medida", description: "Software projetado para os processos únicos do seu negócio." },
-          { title: "Equipes Dedicadas de Desenvolvimento", description: "Talento especializado integrado à sua equipe e aos seus objetivos." },
-        ],
-      },
+      categories: [
+        {
+          eyebrow: "Sites & e‑Commerce",
+          title: "Presença digital que vende",
+          description: "Sites de alto impacto visual e lojas prontas para vender desde o primeiro dia.",
+          items: [
+            {
+              id: "web-design",
+              title: "Design de Sites",
+              description: "Sites de alto impacto visual, memoráveis e construídos para converter visitas em clientes.",
+              chips: ["Alto impacto visual", "Responsivo"],
+            },
+            {
+              id: "ecommerce",
+              title: "Desenvolvimento de e‑Commerce",
+              description: "Lojas completas com checkout otimizado, pagamentos e pós‑venda automatizado.",
+              chips: ["Checkout", "Pagamentos"],
+              badge: "MAIS PROCURADO",
+            },
+            {
+              id: "shopify",
+              title: "Desenvolvimento Shopify",
+              description: "Lojas Shopify robustas, fáceis de operar e prontas para crescer.",
+              chips: ["Shopify", "Temas sob medida"],
+            },
+          ],
+        },
+        {
+          eyebrow: "Apps & Software sob medida",
+          title: "Quando o genérico não basta",
+          description: "Construímos exatamente o que seu processo precisa, sem modelos prontos.",
+          items: [
+            {
+              id: "web-app",
+              title: "Aplicações Web",
+              description: "Produtos digitais rápidos e seguros, acessíveis de qualquer lugar.",
+              chips: ["Next.js", "Dashboards"],
+            },
+            {
+              id: "mobile-app",
+              title: "Aplicativos Móveis",
+              description: "Aplicativos intuitivos para iOS, Android e ambientes multiplataforma.",
+              chips: ["iOS", "Android"],
+            },
+            {
+              id: "custom-dev",
+              title: "Desenvolvimento Sob Medida",
+              description: "Software projetado para os processos únicos do seu negócio.",
+              chips: ["Portais", "Integrações"],
+            },
+          ],
+        },
+        {
+          eyebrow: "IA, Automação & Crescimento",
+          title: "Tecnologia que trabalha sozinha",
+          description: "Vender e operar sem atrito, também fora do horário comercial.",
+          items: [
+            {
+              id: "ai-assistant",
+              title: "Assistentes Virtuais Inteligentes",
+              description: "Atendem, cotam e agendam por WhatsApp e e-mail, 24/7, treinados com seu negócio.",
+              chips: ["WhatsApp API", "24/7"],
+              badge: "DESTAQUE",
+            },
+            {
+              id: "automation",
+              title: "Automação de Processos",
+              description: "Conectamos suas plataformas para que o trabalho repetitivo rode sozinho.",
+              chips: ["n8n", "APIs", "ERP · CRM"],
+            },
+            {
+              id: "seo",
+              title: "Marketing Digital & SEO",
+              description: "Ser encontrado no Google e também nas respostas da IA.",
+              chips: ["SEO", "GEO", "Ads"],
+            },
+            {
+              id: "branding",
+              title: "Design de Marca",
+              description: "Identidade visual coerente em cada ponto de contato com seu cliente.",
+              chips: ["Identidade", "Design"],
+            },
+          ],
+        },
+      ],
     },
     projects: {
       eyebrow: "Projetos",
@@ -648,6 +913,48 @@ export const translations: Record<Language, Translation> = {
           initials: "LC",
         },
       },
+    },
+    faq: {
+      eyebrow: "Perguntas frequentes",
+      title: "O que costumam",
+      titleAccent: "nos perguntar.",
+      items: [
+        {
+          question: "O que a Dos Nodos faz?",
+          answer:
+            "A Dos Nodos é uma empresa colombiana de tecnologia que ajuda empresas a vender mais e trabalhar melhor em três frentes: sites e lojas e‑Commerce, aplicativos e software sob medida, e inteligência artificial com automação de processos.",
+        },
+        {
+          question: "Quanto custa um site ou uma loja online?",
+          answer:
+            "Depende do escopo. Um site corporativo leva de 6 a 12 semanas e uma loja e‑Commerce depende do catálogo e das integrações. Entregamos por etapas e orçamos com preço fechado após uma reunião de diagnóstico de 30 minutos, sem custo.",
+        },
+        {
+          question: "Quanto tempo leva um projeto?",
+          answer:
+            "As primeiras automações ou um assistente com IA entram em operação em 2 a 4 semanas. Sites, lojas e plataformas completas levam de 6 a 12 semanas conforme o escopo. Sempre entregamos por etapas para que você veja resultados no primeiro mês.",
+        },
+        {
+          question: "Preciso trocar as ferramentas que já uso?",
+          answer:
+            "Não. Trabalhamos com o que você já tem — seu ERP, CRM, WhatsApp, Shopify, Google Workspace ou Microsoft 365 — e conectamos tudo para funcionar como um só sistema.",
+        },
+        {
+          question: "O que é um assistente virtual inteligente e para que serve?",
+          answer:
+            "É um assistente treinado com as informações do seu negócio que responde por WhatsApp ou e-mail 24 horas: atende perguntas, envia cotações, agenda compromissos e registra cada contato no seu CRM. Nossos clientes passam de horas para menos de um minuto para enviar uma cotação.",
+        },
+        {
+          question: "Vocês trabalham com empresas fora da Colômbia?",
+          answer:
+            "Sim. Estamos em Medellín, Colômbia, e trabalhamos remotamente com empresas de toda a América Latina e dos Estados Unidos, em espanhol, inglês e português.",
+        },
+        {
+          question: "Como começo a trabalhar com a Dos Nodos?",
+          answer:
+            "Agende uma reunião de 30 minutos sem custo em dosnodos.com.co ou fale com a gente no WhatsApp. Nessa conversa revisamos sua operação e você sai com um diagnóstico concreto do que automatizar ou construir primeiro.",
+        },
+      ],
     },
     contact: {
       eyebrow: "Vamos conversar",

@@ -34,6 +34,9 @@ export function Navbar({ t, currentLanguage, onLanguageChange }: NavbarProps) {
           <a href="#resenas" className="hidden text-[#3A3550] transition-colors hover:text-ink sm:inline">
             {t.nav.reviews}
           </a>
+          <a href="#faq" className="hidden text-[#3A3550] transition-colors hover:text-ink md:inline">
+            {t.nav.faq}
+          </a>
           <LanguageSelector currentLanguage={currentLanguage} onLanguageChange={onLanguageChange} />
           <a
             href="#contacto"

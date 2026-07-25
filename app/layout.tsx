@@ -46,7 +46,12 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: "Dos Nodos" }],
     creator: "Dos Nodos",
     publisher: "Dos Nodos",
-    robots: "index, follow",
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+    },
+    alternates: { canonical: "/" },
     openGraph: {
       title,
       description,
@@ -54,7 +59,13 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Dos Nodos",
       locale: "es_CO",
       type: "website",
-      images: seo?.og_image ? [{ url: seo.og_image }] : undefined,
+      images: [{ url: seo?.og_image || "/dosnodos-logo.png", width: 850, height: 430, alt: "Dos Nodos" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [seo?.og_image || "/dosnodos-logo.png"],
     },
     icons: {
       icon: [

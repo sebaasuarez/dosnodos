@@ -41,6 +41,9 @@ export function Footer({ t, currentLanguage, onLanguageChange }: FooterProps) {
               <a href="#resenas" className="text-[#C9C6DE] transition-colors hover:text-white">
                 {t.nav.reviews}
               </a>
+              <a href="#faq" className="text-[#C9C6DE] transition-colors hover:text-white">
+                {t.nav.faq}
+              </a>
             </div>
             <div className="flex flex-col gap-2.5 text-[14px]">
               <span className="mb-0.5 font-mono text-[11px] uppercase tracking-[.1em] text-[#726E90]">

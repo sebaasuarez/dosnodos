@@ -1,10 +1,17 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import AnimatedSection from "@/components/animated-section"
 import { FlowDiagram } from "@/components/brand/flow-diagram"
-import { DottedSurface } from "@/components/ui/dotted-surface"
 import { trackCTAClick } from "@/lib/gtm"
 import { type Translation } from "@/lib/i18n"
+
+// Fondo decorativo con three.js: se carga después del contenido para no
+// pesar sobre el LCP ni el bundle inicial del hero.
+const DottedSurface = dynamic(
+  () => import("@/components/ui/dotted-surface").then((m) => m.DottedSurface),
+  { ssr: false },
+)
 
 interface HeroProps {
   t: Translation

@@ -10,6 +10,7 @@ import { Metrics } from "@/components/sections/metrics"
 import { Services } from "@/components/sections/services"
 import { Projects } from "@/components/sections/projects"
 import { Reviews } from "@/components/sections/reviews"
+import { Faq } from "@/components/sections/faq"
 import { Contact } from "@/components/sections/contact"
 import { Footer } from "@/components/sections/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
@@ -36,6 +37,7 @@ export function SiteClient({ projects, reviews, whatsapp, contactEmail }: SiteCl
         <Services t={t} />
         <Projects t={t} rows={projects} lang={currentLanguage} />
         <Reviews t={t} rows={reviews} lang={currentLanguage} />
+        <Faq t={t} />
         <Contact t={t} currentLanguage={currentLanguage} whatsapp={whatsapp} contactEmail={contactEmail} />
       </main>
       <Footer t={t} currentLanguage={currentLanguage} onLanguageChange={setCurrentLanguage} />
