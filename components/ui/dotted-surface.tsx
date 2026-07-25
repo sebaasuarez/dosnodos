@@ -10,12 +10,21 @@ type DottedSurfaceProps = Omit<React.ComponentProps<"div">, "ref">
 /**
  * Superficie de puntos animada con three.js (onda senoidal).
  *
- * Mantiene el diseño de referencia: rejilla 40×60, separación 150, tamaño 8,
- * cámara en 0/355/1220 con fov 60 y ondas 0.3/0.5 de amplitud 50.
- * Adaptaciones para este sitio:
+ * Encuadre: la referencia original apuntaba la cámara en horizontal, así que
+ * el horizonte caía a media altura y la mitad superior quedaba vacía. Aquí la
+ * cámara se inclina ~35° hacia el plano para que la rejilla cubra el alto
+ * completo del contenedor, de esquina a esquina y en cualquier proporción.
+ *
+ * La geometría se reescala por K respecto de la referencia (separación 150 →
+ * 90 y cámara 0/600/1400 → 0/360/840). Al acercar la cámara en la misma
+ * proporción el encuadre no cambia, pero cabe ~2.5× más densidad de puntos:
+ * necesario porque estirar la rejilla sobre todo el alto la ralearía.
+ *
+ * Otras adaptaciones para este sitio:
  * - Se posiciona dentro de su contenedor (el hero), no sobre todo el viewport.
- * - Mide contra el contenedor, no contra window.
- * - En móvil reduce partículas y limita el devicePixelRatio.
+ * - Mide contra el contenedor y lo observa con ResizeObserver: el alto del
+ *   hero cambia sin que haya resize de window (carga de fuentes, contenido).
+ * - En móvil reduce el ancho de la rejilla y limita el devicePixelRatio.
  * - Respeta prefers-reduced-motion: dibuja un solo fotograma estático.
  */
 export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
@@ -38,19 +47,27 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     const isMobile = window.matchMedia("(max-width: 640px)").matches
 
-    const SEPARATION = 150
-    const AMOUNTX = isMobile ? 26 : 40
-    const AMOUNTY = isMobile ? 40 : 60
+    // Escala respecto de la referencia (separación 150, cámara 0/600/1400).
+    const K = 0.6
+    const SEPARATION = 90
+    // El ancho de la rejilla se calcula para tapar las esquinas superiores, que
+    // es el punto del encuadre más lejano a la cámara. En móvil el viewport es
+    // angosto y necesita menos ancho, pero la misma profundidad.
+    const AMOUNTX = isMobile ? 44 : 88
+    const AMOUNTY = isMobile ? 96 : 104
 
     // Scene setup
     const scene = new THREE.Scene()
-    scene.fog = new THREE.Fog(0xffffff, 2000, 10000)
+    scene.fog = new THREE.Fog(0xffffff, 2000 * K, 10000 * K)
 
     const width = container.clientWidth || window.innerWidth
     const height = container.clientHeight || window.innerHeight
 
     const camera = new THREE.PerspectiveCamera(60, width / height, 1, 10000)
-    camera.position.set(0, 355, 1220)
+    camera.position.set(0, 600 * K, 1400 * K)
+    // Inclinación hacia el plano: saca el horizonte por encima del encuadre y
+    // hace que los puntos lleguen hasta el borde superior del hero.
+    camera.lookAt(0, 0, 540 * K)
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2))
@@ -83,7 +100,7 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
     geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3))
 
     const material = new THREE.PointsMaterial({
-      size: 8,
+      size: 8 * K,
       vertexColors: true,
       transparent: true,
       opacity: 0.8,
@@ -104,7 +121,11 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
       for (let ix = 0; ix < AMOUNTX; ix++) {
         for (let iy = 0; iy < AMOUNTY; iy++) {
           const index = i * 3
-          array[index + 1] = Math.sin((ix + count) * 0.3) * 50 + Math.sin((iy + count) * 0.5) * 50
+          // El índice va escalado por K para que la longitud de onda en
+          // unidades de mundo sea la misma de la referencia pese a la
+          // separación más corta; la amplitud se escala igual.
+          array[index + 1] =
+            (Math.sin((ix * K + count) * 0.3) * 50 + Math.sin((iy * K + count) * 0.5) * 50) * K
           i++
         }
       }
@@ -120,15 +141,28 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
       if (sceneRef.current) sceneRef.current.animationId = animationId
     }
 
+    let lastW = width
+    let lastH = height
+
     const handleResize = () => {
       const w = container.clientWidth || window.innerWidth
       const h = container.clientHeight || window.innerHeight
+      if (w === lastW && h === lastH) return
+      lastW = w
+      lastH = h
       camera.aspect = w / h
       camera.updateProjectionMatrix()
       renderer.setSize(w, h)
+      // Con reduced-motion no hay bucle de animación: hay que repintar a mano.
+      if (prefersReducedMotion) renderer.render(scene, camera)
     }
 
     window.addEventListener("resize", handleResize)
+
+    // El alto del hero cambia sin resize de window (swap de fuentes, contenido
+    // que entra). Sin esto el canvas se queda con la medida del primer frame.
+    const observer = new ResizeObserver(handleResize)
+    observer.observe(container)
 
     if (prefersReducedMotion) {
       updateWave()
@@ -141,6 +175,7 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 
     return () => {
       window.removeEventListener("resize", handleResize)
+      observer.disconnect()
 
       if (sceneRef.current) {
         cancelAnimationFrame(sceneRef.current.animationId)

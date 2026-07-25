@@ -27,9 +27,10 @@ export function Hero({ t }: HeroProps) {
           "radial-gradient(680px 340px at 15% 0%, rgba(147,51,234,.13), transparent 66%), radial-gradient(720px 360px at 88% 6%, rgba(37,99,235,.13), transparent 68%)",
       }}
     >
-      {/* Puntos oscuros: se desvanecen detrás del titular y ganan presencia
-          hacia abajo, donde la onda queda encuadrada por la cámara. */}
-      <DottedSurface className="opacity-[0.45] [mask-image:linear-gradient(to_bottom,transparent_0%,rgba(0,0,0,.35)_28%,black_60%,black_100%)]" />
+      {/* Los puntos cubren el alto completo del hero. La máscara ya no los
+          apaga arriba: solo los atenúa detrás del titular, donde la rejilla es
+          más densa, para no comerse la legibilidad. */}
+      <DottedSurface className="opacity-[0.45] [mask-image:linear-gradient(to_bottom,rgba(0,0,0,.55)_0%,rgba(0,0,0,.42)_24%,rgba(0,0,0,.8)_52%,black_78%)]" />
       <div className="relative z-10 mx-auto flex max-w-[1180px] flex-col items-center gap-[clamp(18px,3vw,26px)] px-[clamp(20px,5vw,40px)] py-[clamp(48px,8vw,92px)] text-center">
         <AnimatedSection animation="fadeInUp">
           <span className="inline-flex items-center gap-2.5 font-mono text-[12px] uppercase tracking-[.16em] text-brand-cta">
