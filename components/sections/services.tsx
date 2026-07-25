@@ -1,7 +1,9 @@
 "use client"
 
+import Link from "next/link"
 import AnimatedSection from "@/components/animated-section"
-import { type ServiceId, type Translation } from "@/lib/i18n"
+import { type Language, type ServiceId, type Translation } from "@/lib/i18n"
+import { findServiceById, servicePath } from "@/lib/services-content"
 import {
   AppWindow,
   CodeXml,
@@ -18,6 +20,7 @@ import {
 
 interface ServicesProps {
   t: Translation
+  lang: Language
 }
 
 /** Un icono por servicio, mapeado por id estable (no por índice). */
@@ -50,12 +53,13 @@ function Chip({ children, featured = false }: { children: React.ReactNode; featu
 
 type ServiceItemT = Translation["services"]["categories"][number]["items"][number]
 
-function ServiceCard({ item, delay }: { item: ServiceItemT; delay: number }) {
+function ServiceCard({ item, delay, lang }: { item: ServiceItemT; delay: number; lang: Language }) {
   const Icon = SERVICE_ICONS[item.id]
   const featured = Boolean(item.badge)
+  const content = findServiceById(item.id)
+  const href = content ? servicePath(lang, content) : undefined
 
-  return (
-    <AnimatedSection animation="fadeInUp" delay={delay} className="h-full">
+  const card = (
       <article
         className={`relative flex h-full flex-col gap-3.5 rounded-[20px] p-7 transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1 ${
           featured
@@ -90,11 +94,22 @@ function ServiceCard({ item, delay }: { item: ServiceItemT; delay: number }) {
           </div>
         )}
       </article>
+  )
+
+  return (
+    <AnimatedSection animation="fadeInUp" delay={delay} className="h-full">
+      {href ? (
+        <Link href={href} className="block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/50 focus-visible:ring-offset-2 rounded-[20px]">
+          {card}
+        </Link>
+      ) : (
+        card
+      )}
     </AnimatedSection>
   )
 }
 
-export function Services({ t }: ServicesProps) {
+export function Services({ t, lang }: ServicesProps) {
   return (
     <section id="servicios">
       <div className="mx-auto flex max-w-[1180px] flex-col gap-[clamp(28px,4vw,44px)] px-[clamp(20px,5vw,40px)] py-[clamp(56px,8vw,96px)]">
@@ -134,7 +149,7 @@ export function Services({ t }: ServicesProps) {
 
               <div className="grid grid-cols-[repeat(auto-fit,minmax(258px,1fr))] gap-4">
                 {category.items.map((item, i) => (
-                  <ServiceCard key={item.id} item={item} delay={Math.min(catIndex * 30 + i * 60, 240)} />
+                  <ServiceCard key={item.id} item={item} lang={lang} delay={Math.min(catIndex * 30 + i * 60, 240)} />
                 ))}
               </div>
             </div>

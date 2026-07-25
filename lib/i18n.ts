@@ -119,6 +119,19 @@ export interface Translation {
     titleAccent: string
     items: { question: string; answer: string }[]
   }
+  servicePage: {
+    breadcrumbHome: string
+    breadcrumbServices: string
+    servicesTitle: string
+    servicesSubtitle: string
+    benefitsTitle: string
+    faqTitle: string
+    ctaTitle: string
+    ctaSubtitle: string
+    ctaButton: string
+    otherServices: string
+    seeService: string
+  }
   contact: {
     eyebrow: string
     titleLead: string
@@ -397,6 +410,21 @@ export const translations: Record<Language, Translation> = {
             "Agenda una reunión de 30 minutos sin costo en dosnodos.com.co o escríbenos por WhatsApp. En esa sesión revisamos tu operación y sales con un diagnóstico concreto de qué se puede automatizar o construir primero.",
         },
       ],
+    },
+    servicePage: {
+      breadcrumbHome: "Inicio",
+      breadcrumbServices: "Servicios",
+      servicesTitle: "Servicios de tecnología para tu empresa",
+      servicesSubtitle:
+        "Sitios web y tiendas, aplicaciones a la medida, e inteligencia artificial con automatización. Todo con un mismo equipo.",
+      benefitsTitle: "Qué incluye",
+      faqTitle: "Preguntas frecuentes",
+      ctaTitle: "¿Hablamos de tu proyecto?",
+      ctaSubtitle:
+        "30 minutos, sin costo. Sales con un diagnóstico concreto y un siguiente paso claro.",
+      ctaButton: "Agendar reunión",
+      otherServices: "Otros servicios",
+      seeService: "Ver servicio",
     },
     contact: {
       eyebrow: "Hablemos",
@@ -677,6 +705,20 @@ export const translations: Record<Language, Translation> = {
         },
       ],
     },
+    servicePage: {
+      breadcrumbHome: "Home",
+      breadcrumbServices: "Services",
+      servicesTitle: "Technology services for your company",
+      servicesSubtitle:
+        "Websites and stores, custom applications, and artificial intelligence with automation. All from one team.",
+      benefitsTitle: "What's included",
+      faqTitle: "Frequently asked questions",
+      ctaTitle: "Shall we talk about your project?",
+      ctaSubtitle: "30 minutes, free. You leave with a concrete diagnosis and a clear next step.",
+      ctaButton: "Book a meeting",
+      otherServices: "Other services",
+      seeService: "View service",
+    },
     contact: {
       eyebrow: "Let's talk",
       titleLead: "Let's talk about",
@@ -955,6 +997,20 @@ export const translations: Record<Language, Translation> = {
             "Agende uma reunião de 30 minutos sem custo em dosnodos.com.co ou fale com a gente no WhatsApp. Nessa conversa revisamos sua operação e você sai com um diagnóstico concreto do que automatizar ou construir primeiro.",
         },
       ],
+    },
+    servicePage: {
+      breadcrumbHome: "Início",
+      breadcrumbServices: "Serviços",
+      servicesTitle: "Serviços de tecnologia para sua empresa",
+      servicesSubtitle:
+        "Sites e lojas, aplicações sob medida e inteligência artificial com automação. Tudo com uma única equipe.",
+      benefitsTitle: "O que inclui",
+      faqTitle: "Perguntas frequentes",
+      ctaTitle: "Vamos falar do seu projeto?",
+      ctaSubtitle: "30 minutos, sem custo. Você sai com um diagnóstico concreto e um próximo passo claro.",
+      ctaButton: "Agendar reunião",
+      otherServices: "Outros serviços",
+      seeService: "Ver serviço",
     },
     contact: {
       eyebrow: "Vamos conversar",

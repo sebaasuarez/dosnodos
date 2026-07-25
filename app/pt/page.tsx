@@ -1,8 +1,18 @@
+import type { Metadata } from "next"
 import { getProjects, getReviews, getSiteSettings } from "@/lib/data"
 import { SiteClient } from "@/components/site-client"
-import { homeAlternates } from "@/lib/seo"
+import { homeAlternates, homeMetadata } from "@/lib/seo"
+import { translations } from "@/lib/i18n"
 
-export default async function LandingPage() {
+const LANG = "pt" as const
+
+export const metadata: Metadata = homeMetadata(
+  LANG,
+  "Dos Nodos — Tecnologia com propósito",
+  translations[LANG].hero.subtitle,
+)
+
+export default async function Page() {
   const [projects, reviews, settings] = await Promise.all([
     getProjects(),
     getReviews(),
@@ -11,7 +21,7 @@ export default async function LandingPage() {
 
   return (
     <SiteClient
-      lang="es"
+      lang={LANG}
       alternates={homeAlternates()}
       projects={projects}
       reviews={reviews}

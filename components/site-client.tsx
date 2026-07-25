@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { type Language, translations } from "@/lib/i18n"
 import type { Project, Review } from "@/lib/types"
 
@@ -17,30 +16,40 @@ import { WhatsAppButton } from "@/components/whatsapp-button"
 import { StructuredData } from "@/components/structured-data"
 
 interface SiteClientProps {
+  /** Idioma resuelto por la ruta (/ es, /en, /pt). */
+  lang: Language
+  /** Ruta equivalente del home por idioma. */
+  alternates: Record<Language, string>
   projects: Project[] | null
   reviews: Review[] | null
   whatsapp: string
   contactEmail: string
 }
 
-export function SiteClient({ projects, reviews, whatsapp, contactEmail }: SiteClientProps) {
-  const [currentLanguage, setCurrentLanguage] = useState<Language>("es")
-  const t = translations[currentLanguage]
+export function SiteClient({
+  lang,
+  alternates,
+  projects,
+  reviews,
+  whatsapp,
+  contactEmail,
+}: SiteClientProps) {
+  const t = translations[lang]
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white text-ink">
-      <StructuredData language={currentLanguage} />
-      <Navbar t={t} currentLanguage={currentLanguage} onLanguageChange={setCurrentLanguage} />
+      <StructuredData language={lang} />
+      <Navbar t={t} currentLanguage={lang} alternates={alternates} />
       <main>
         <Hero t={t} />
         <Metrics t={t} />
-        <Services t={t} />
-        <Projects t={t} rows={projects} lang={currentLanguage} />
-        <Reviews t={t} rows={reviews} lang={currentLanguage} />
+        <Services t={t} lang={lang} />
+        <Projects t={t} rows={projects} lang={lang} />
+        <Reviews t={t} rows={reviews} lang={lang} />
         <Faq t={t} />
-        <Contact t={t} currentLanguage={currentLanguage} whatsapp={whatsapp} contactEmail={contactEmail} />
+        <Contact t={t} currentLanguage={lang} whatsapp={whatsapp} contactEmail={contactEmail} />
       </main>
-      <Footer t={t} currentLanguage={currentLanguage} onLanguageChange={setCurrentLanguage} />
+      <Footer t={t} currentLanguage={lang} alternates={alternates} />
       <WhatsAppButton number={whatsapp} />
     </div>
   )

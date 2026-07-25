@@ -51,7 +51,10 @@ export async function generateMetadata(): Promise<Metadata> {
       follow: true,
       googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
     },
-    alternates: { canonical: "/" },
+    alternates: {
+      canonical: "/",
+      languages: { es: "/", en: "/en", pt: "/pt", "x-default": "/" },
+    },
     openGraph: {
       title,
       description,

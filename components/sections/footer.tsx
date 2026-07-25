@@ -1,17 +1,19 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { type Language, type Translation } from "@/lib/i18n"
 import LanguageSelector from "@/components/language-selector"
+import { servicesIndexPath } from "@/lib/services-content"
 import { trackEmailClick } from "@/lib/gtm"
 
 interface FooterProps {
   t: Translation
   currentLanguage: Language
-  onLanguageChange: (language: Language) => void
+  alternates: Record<Language, string>
 }
 
-export function Footer({ t, currentLanguage, onLanguageChange }: FooterProps) {
+export function Footer({ t, currentLanguage, alternates }: FooterProps) {
   return (
     <footer className="bg-ink-3">
       <div className="mx-auto flex max-w-[1180px] flex-col gap-7 px-[clamp(20px,5vw,40px)] py-[clamp(36px,5vw,56px)]">
@@ -32,9 +34,12 @@ export function Footer({ t, currentLanguage, onLanguageChange }: FooterProps) {
               <span className="mb-0.5 font-mono text-[11px] uppercase tracking-[.1em] text-[#726E90]">
                 {t.footer.exploreLabel}
               </span>
-              <a href="#servicios" className="text-[#C9C6DE] transition-colors hover:text-white">
+              <Link
+                href={servicesIndexPath(currentLanguage)}
+                className="text-[#C9C6DE] transition-colors hover:text-white"
+              >
                 {t.nav.services}
-              </a>
+              </Link>
               <a href="#casos" className="text-[#C9C6DE] transition-colors hover:text-white">
                 {t.nav.projects}
               </a>
@@ -66,11 +71,7 @@ export function Footer({ t, currentLanguage, onLanguageChange }: FooterProps) {
 
         <div className="flex flex-wrap items-center justify-between gap-3.5 border-t border-[#1A1630] pt-5">
           <span className="font-mono text-[11.5px] text-[#726E90]">{t.footer.copyright}</span>
-          <LanguageSelector
-            currentLanguage={currentLanguage}
-            onLanguageChange={onLanguageChange}
-            variant="dark"
-          />
+          <LanguageSelector currentLanguage={currentLanguage} alternates={alternates} variant="dark" />
         </div>
       </div>
     </footer>
