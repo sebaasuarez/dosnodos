@@ -73,7 +73,7 @@ export function WhatsAppPreview({
 
         {state.enabled ? (
           <div
-            className={`absolute bottom-4 flex h-[46px] items-center justify-center gap-2 rounded-full bg-whatsapp shadow-[0_10px_22px_-10px_rgba(37,211,102,.8)] ${
+            className={`absolute bottom-4 flex h-[46px] items-center justify-center gap-2 rounded-full bg-whatsapp shadow-[0_10px_22px_-12px_rgba(11,97,84,.65)] ${
               state.position === "left" ? "left-4" : "right-4"
             } ${state.label ? "px-4" : "w-[46px]"}`}
           >

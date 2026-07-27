@@ -74,7 +74,7 @@ export function WhatsAppButton({
       rel="noopener noreferrer"
       onClick={() => trackWhatsAppClick("floating_button")}
       aria-label={aria}
-      className={`fixed bottom-[22px] ${side} z-[60] flex h-[58px] items-center justify-center gap-2.5 rounded-full bg-whatsapp shadow-[0_12px_28px_-10px_rgba(37,211,102,.7)] transition-transform hover:scale-105 ${
+      className={`fixed bottom-[22px] ${side} z-[60] flex h-[58px] items-center justify-center gap-2.5 rounded-full bg-whatsapp shadow-[0_12px_28px_-12px_rgba(11,97,84,.6)] transition-transform hover:scale-105 ${
         label ? "px-[18px]" : "w-[58px]"
       }`}
     >

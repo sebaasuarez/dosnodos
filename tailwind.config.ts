@@ -41,7 +41,14 @@ const config: Config = {
           3: "#F1EFFA",
         },
         star: "#F5B301",
-        whatsapp: "#25D366",
+        // El #25D366 de la marca WhatsApp da 1.98 con contenido blanco encima
+        // y 1.98 contra el fondo blanco de la página: falla WCAG 1.4.3 y
+        // 1.4.11 en las dos direcciones. Este tono da 5.22 en ambas y sigue
+        // leyéndose como WhatsApp.
+        whatsapp: "#0F7A6C",
+        // El brillante queda solo para ilustraciones decorativas (el diagrama
+        // de flujo), donde no transporta información.
+        "whatsapp-bright": "#25D366",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

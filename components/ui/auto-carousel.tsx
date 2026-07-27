@@ -179,10 +179,26 @@ export function AutoCarousel({
       <div
         ref={trackRef}
         onScroll={onScroll}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowRight") {
+            e.preventDefault()
+            goTo(page + 1)
+          } else if (e.key === "ArrowLeft") {
+            e.preventDefault()
+            goTo(page - 1)
+          }
+        }}
+        // El carril es una región con scroll y sus tarjetas no contienen nada
+        // enfocable, así que sin tabindex quedaba fuera del alcance del
+        // teclado (WCAG 2.1.1). Con foco propio se recorre con las flechas.
+        // Lighthouse no lo reporta; axe sí.
+        tabIndex={single ? -1 : 0}
+        role="group"
+        aria-label={label}
         // Con avance automático se deja en "off": anunciar un cambio cada 3
         // segundos sería ruido constante en un lector de pantalla.
         aria-live={playing && !single && !reduced ? "off" : "polite"}
-        className="dn-no-scrollbar -mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-1"
+        className="dn-no-scrollbar -mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-1 outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/50 focus-visible:ring-offset-2"
       >
         {children.map((child, i) => (
           <div
