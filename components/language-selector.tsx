@@ -40,7 +40,7 @@ export default function LanguageSelector({
                   : "bg-ink text-white"
                 : variant === "dark"
                   ? "border border-[#2A2542] text-[#A29FBE] hover:text-white"
-                  : "text-[#9c98b4] hover:text-ink",
+                  : "text-[#6F6B8A] hover:text-ink",
             )}
           >
             {lang}

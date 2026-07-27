@@ -1,59 +1,40 @@
 # Dos Nodos
 
-> Empresa colombiana de tecnología (Medellín) que ayuda a empresas a vender más,
-> responder más rápido y trabajar mejor mediante sitios web y e‑Commerce,
-> aplicaciones y software a la medida, e inteligencia artificial con
-> automatización de procesos. Lema: "Conectamos tecnología con personas."
+> Empresa colombiana de tecnología (Medellín) que ayuda a otras empresas a vender más, responder más rápido y trabajar mejor mediante sitios web y e‑Commerce, aplicaciones y software a la medida, e inteligencia artificial con automatización de procesos. Lema: "Conectamos tecnología con personas."
 
-- Sitio web: https://dosnodos.com.co
-- Contacto: hola@dosnodos.com.co · WhatsApp +57 312 734 4026
-- Ubicación: Medellín, Colombia. Atiende Latinoamérica y Estados Unidos, remoto.
-- Idiomas: español, inglés, portugués.
-- Primer paso: reunión de diagnóstico de 30 minutos, sin costo.
+Contacto: hola@dosnodos.com.co · WhatsApp +57 312 734 4026. Ubicada en Medellín, Colombia; atiende Latinoamérica y Estados Unidos en modalidad remota, 24/7 de lunes a sábado. Atiende en español, inglés y portugués. El primer paso siempre es una reunión de diagnóstico de 30 minutos, sin costo y sin compromiso.
+
+Resultados típicos de sus proyectos: −80% en tiempo de respuesta a clientes, atención y ventas 24/7 sin turnos ni horas extra, 3× cotizaciones procesadas por día, y 40 segundos desde una pregunta hasta una cotización enviada.
+
+Trabaja sobre las herramientas que la empresa ya usa (ERP, CRM, WhatsApp, Shopify, Siigo, Google Workspace, Microsoft 365) y las conecta para que funcionen como un solo sistema; no obliga a migrar de plataforma. Las primeras automatizaciones o un asistente con IA quedan operando en 2 a 4 semanas; sitios web, tiendas y plataformas completas toman entre 6 y 12 semanas según el alcance, siempre entregando por etapas. Los precios se cotizan cerrados después de la reunión de diagnóstico, porque dependen del alcance.
 
 ## Servicios
 
-### Sitios web & e‑Commerce
-- **Diseño de Páginas Web**: sitios de alto impacto visual, memorables y construidos para convertir visitas en clientes.
-- **Desarrollo de e‑Commerce**: tiendas completas con checkout optimizado, pagos y post‑venta automatizada. Es el servicio más solicitado.
-- **Desarrollo de Shopify**: tiendas Shopify sólidas, fáciles de operar y listas para crecer.
+- [Asistentes Virtuales Inteligentes](https://dosnodos.com.co/servicios/asistentes-virtuales-inteligentes): servicio estrella. Asistentes entrenados con la información del negocio que atienden, cotizan y agendan por WhatsApp y correo 24/7, y registran cada contacto en el CRM.
+- [Desarrollo de e‑Commerce](https://dosnodos.com.co/servicios/desarrollo-de-ecommerce): el servicio más solicitado. Tiendas en línea completas con checkout optimizado, pasarelas de pago y post‑venta automatizada.
+- [Diseño de Páginas Web](https://dosnodos.com.co/servicios/diseno-de-paginas-web): sitios de alto impacto visual, memorables y construidos para convertir visitas en clientes.
+- [Desarrollo de Shopify](https://dosnodos.com.co/servicios/desarrollo-shopify): tiendas Shopify sólidas, fáciles de operar y listas para crecer.
+- [Automatización de Procesos](https://dosnodos.com.co/servicios/automatizacion-de-procesos): integración de plataformas (ERP, CRM, WhatsApp, correo) con n8n y APIs para que el trabajo repetitivo corra solo.
+- [Aplicaciones Web](https://dosnodos.com.co/servicios/desarrollo-de-aplicaciones-web): productos digitales veloces y seguros, accesibles desde cualquier lugar. Next.js, paneles y dashboards.
+- [Aplicaciones Móviles](https://dosnodos.com.co/servicios/desarrollo-de-aplicaciones-moviles): apps intuitivas para iOS, Android y multiplataforma.
+- [Desarrollo a la Medida](https://dosnodos.com.co/servicios/desarrollo-a-la-medida): software diseñado alrededor de los procesos únicos del negocio; portales internos e integraciones.
+- [Marketing Digital & SEO](https://dosnodos.com.co/servicios/marketing-digital-y-seo): posicionamiento en Google y en las respuestas de motores de IA (GEO), más pauta digital.
+- [Diseño de Marca](https://dosnodos.com.co/servicios/diseno-de-marca): identidad visual coherente en cada punto de contacto.
 
-### Apps & Software a la medida
-- **Aplicaciones Web**: productos digitales veloces y seguros, accesibles desde cualquier lugar (Next.js, dashboards).
-- **Aplicaciones Móviles**: apps intuitivas para iOS, Android y multiplataforma.
-- **Desarrollo a la Medida**: software diseñado alrededor de los procesos únicos del negocio; portales e integraciones.
+## Páginas principales
 
-### IA, Automatización & Crecimiento
-- **Asistentes Virtuales Inteligentes** (servicio estrella): asistentes entrenados con la información del negocio que atienden, cotizan y agendan por WhatsApp y correo 24/7, y registran cada contacto en el CRM.
-- **Automatización de Procesos**: integración de plataformas (ERP, CRM, WhatsApp, correo) con n8n y APIs para que el trabajo repetitivo corra solo.
-- **Marketing Digital & SEO**: posicionamiento en Google y en respuestas de motores de IA (GEO), más pauta digital.
-- **Diseño de Marca**: identidad visual coherente en cada punto de contacto.
+- [Inicio](https://dosnodos.com.co): propuesta, servicios, casos y formulario de contacto.
+- [Todos los servicios](https://dosnodos.com.co/servicios): índice con los diez servicios agrupados en tres categorías.
+- [Agendar reunión](https://dosnodos.com.co/#contacto): formulario de contacto. Reunión de diagnóstico de 30 minutos sin costo.
+- [Casos de éxito](https://dosnodos.com.co/#casos): proyectos entregados con su resultado medible.
+- [Preguntas frecuentes](https://dosnodos.com.co/#faq): tiempos, costos, herramientas y cómo empezar.
 
-## Resultados típicos
+## Otros idiomas
 
-- −80% en tiempo de respuesta a clientes.
-- Atención y ventas 24/7 sin turnos ni horas extra.
-- 3× cotizaciones procesadas por día.
-- 40 segundos de una pregunta a una cotización enviada.
+- [English](https://dosnodos.com.co/en): same site in English. Services at /en/services.
+- [Português](https://dosnodos.com.co/pt): mesmo site em português. Serviços em /pt/servicos.
 
-## Casos de éxito
+## Optional
 
-- **Distribuidora de repuestos** (asistente IA + ERP): cotizaciones por WhatsApp en menos de un minuto con inventario en tiempo real. Resultado: 3× cotizaciones por día.
-- **Marca de cosmética** (Shopify + e‑Commerce): tienda rediseñada y ventas nocturnas respondidas por un asistente. Resultado: +38% de conversión.
-- **Clínica odontológica** (automatización): agenda automática con recordatorios. Resultado: −45% de inasistencia.
-
-## Preguntas frecuentes
-
-**¿Cuánto tarda un proyecto?** Las primeras automatizaciones o un asistente con IA
-quedan operando en 2 a 4 semanas. Sitios web, tiendas y plataformas completas toman
-entre 6 y 12 semanas según el alcance, siempre entregando por etapas.
-
-**¿Cuánto cuesta un sitio web o una tienda en línea?** Depende del alcance; se
-cotiza con precio cerrado después de una reunión de diagnóstico de 30 minutos sin costo.
-
-**¿Hay que cambiar las herramientas actuales?** No. Dos Nodos trabaja sobre el ERP,
-CRM, WhatsApp, Shopify, Siigo, Google Workspace o Microsoft 365 que la empresa ya usa
-y los conecta para que funcionen como un solo sistema.
-
-**¿Cómo empezar?** Agendar una reunión de 30 minutos sin costo en https://dosnodos.com.co
-o escribir por WhatsApp al +57 312 734 4026.
+- [Mapa del sitio](https://dosnodos.com.co/sitemap.xml): las URLs indexables en los tres idiomas.
+- [WhatsApp](https://wa.me/573127344026): canal de contacto directo, atendido 24/7 de lunes a sábado.

@@ -208,6 +208,70 @@ body {
   }
 }
 
+/* ── Entrada de secciones ──────────────────────────────────────────────────
+   Antes esto lo resolvía framer-motion, que servía el HTML con
+   `style="opacity:0"` y solo lo revelaba tras hidratar. El <h1> del hero es
+   el elemento LCP y tardaba 3,4 s en pintarse por esperar al JS. Ahora son
+   dos mecanismos de CSS:
+
+   .dn-enter  — contenido sobre la línea de flotación (el hero). Anima apenas
+                se pinta la página; no depende del JS en absoluto.
+   .dn-reveal — contenido más abajo. Arranca oculto y un IntersectionObserver
+                compartido le agrega .dn-in cuando entra en pantalla. */
+
+.dn-enter {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.21, 0.47, 0.32, 0.98);
+  animation-fill-mode: both;
+}
+.dn-enter-fadeInUp {
+  animation-name: fadeInUp;
+}
+.dn-enter-fadeInLeft {
+  animation-name: fadeInLeft;
+}
+.dn-enter-fadeInRight {
+  animation-name: fadeInRight;
+}
+.dn-enter-scaleIn {
+  animation-name: scaleIn;
+}
+
+.dn-reveal {
+  opacity: 0;
+  transition:
+    opacity 0.6s cubic-bezier(0.21, 0.47, 0.32, 0.98),
+    transform 0.6s cubic-bezier(0.21, 0.47, 0.32, 0.98);
+}
+.dn-reveal-fadeInUp {
+  transform: translateY(30px);
+}
+.dn-reveal-fadeInLeft {
+  transform: translateX(-30px);
+}
+.dn-reveal-fadeInRight {
+  transform: translateX(30px);
+}
+.dn-reveal-scaleIn {
+  transform: scale(0.9);
+}
+.dn-reveal.dn-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dn-enter {
+    animation: none;
+  }
+  .dn-reveal,
+  .dn-reveal.dn-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Hide v0 built-with button */
 [id*="v0-built-with-button"] {
   display: none !important;

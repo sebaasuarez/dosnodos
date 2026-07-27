@@ -102,6 +102,12 @@ export default async function RootLayout({
     >
       <head>
         <TrackingHead settings={settings} />
+        {/* Las secciones bajo la línea de flotación arrancan ocultas y las
+            revela un IntersectionObserver. Sin JavaScript nunca se revelarían,
+            así que se muestran de una. */}
+        <noscript>
+          <style>{`.dn-reveal{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
       </head>
       <body className="font-sans antialiased">
         <TrackingNoscript settings={settings} />

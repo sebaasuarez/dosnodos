@@ -1,6 +1,7 @@
 "use client"
 
 import dynamic from "next/dynamic"
+import { useEffect, useState } from "react"
 import AnimatedSection from "@/components/animated-section"
 import { FlowDiagram } from "@/components/brand/flow-diagram"
 import { trackCtaClick } from "@/lib/gtm"
@@ -17,7 +18,36 @@ interface HeroProps {
   t: Translation
 }
 
+/**
+ * El fondo de puntos es decorativo y three.js cuesta ~800 ms de evaluación en
+ * un móvil de gama media. Se monta cuando el navegador queda libre, para que
+ * no compita con el LCP ni sume tiempo de bloqueo.
+ */
+function useIdle() {
+  const [idle, setIdle] = useState(false)
+
+  useEffect(() => {
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number
+      cancelIdleCallback?: (id: number) => void
+    }
+
+    if (!w.requestIdleCallback) {
+      const t = window.setTimeout(() => setIdle(true), 400)
+      return () => window.clearTimeout(t)
+    }
+
+    // El timeout garantiza que se monte aunque el hilo principal siga ocupado.
+    const id = w.requestIdleCallback(() => setIdle(true), { timeout: 2500 })
+    return () => w.cancelIdleCallback?.(id)
+  }, [])
+
+  return idle
+}
+
 export function Hero({ t }: HeroProps) {
+  const showSurface = useIdle()
+
   return (
     <section
       id="top"
@@ -30,29 +60,31 @@ export function Hero({ t }: HeroProps) {
       {/* Los puntos cubren el alto completo del hero. La máscara ya no los
           apaga arriba: solo los atenúa detrás del titular, donde la rejilla es
           más densa, para no comerse la legibilidad. */}
-      <DottedSurface className="opacity-[0.45] [mask-image:linear-gradient(to_bottom,rgba(0,0,0,.55)_0%,rgba(0,0,0,.42)_24%,rgba(0,0,0,.8)_52%,black_78%)]" />
+      {showSurface && (
+        <DottedSurface className="opacity-[0.45] [mask-image:linear-gradient(to_bottom,rgba(0,0,0,.55)_0%,rgba(0,0,0,.42)_24%,rgba(0,0,0,.8)_52%,black_78%)]" />
+      )}
       <div className="relative z-10 mx-auto flex max-w-[1180px] flex-col items-center gap-[clamp(18px,3vw,26px)] px-[clamp(20px,5vw,40px)] py-[clamp(48px,8vw,92px)] text-center">
-        <AnimatedSection animation="fadeInUp">
+        <AnimatedSection immediate animation="fadeInUp">
           <span className="inline-flex items-center gap-2.5 font-mono text-[12px] uppercase tracking-[.16em] text-brand-cta">
             <span className="h-2 w-2 rounded-full bg-gradient-to-r from-brand-purple to-brand-blue" />
             {t.hero.eyebrow}
           </span>
         </AnimatedSection>
 
-        <AnimatedSection animation="fadeInUp" delay={60}>
+        <AnimatedSection immediate animation="fadeInUp" delay={60}>
           <h1 className="max-w-[16ch] text-[clamp(38px,7vw,68px)] font-semibold leading-[1.02] tracking-[-0.035em]">
             {t.hero.titleLead} <span className="dn-grad-text">{t.hero.tech}</span> {t.hero.connector}{" "}
             <span className="dn-grad-text">{t.hero.people}</span>.
           </h1>
         </AnimatedSection>
 
-        <AnimatedSection animation="fadeInUp" delay={120}>
+        <AnimatedSection immediate animation="fadeInUp" delay={120}>
           <p className="max-w-[56ch] text-[clamp(16px,2.2vw,20px)] leading-[1.55] text-[#5A5570]">
             {t.hero.subtitle}
           </p>
         </AnimatedSection>
 
-        <AnimatedSection animation="fadeInUp" delay={180}>
+        <AnimatedSection immediate animation="fadeInUp" delay={180}>
           <div className="flex flex-wrap justify-center gap-3">
             <a
               href="#contacto"
@@ -71,11 +103,11 @@ export function Hero({ t }: HeroProps) {
           </div>
         </AnimatedSection>
 
-        <AnimatedSection animation="fadeInUp" delay={220}>
+        <AnimatedSection immediate animation="fadeInUp" delay={220}>
           <span className="font-mono text-[12px] text-[#6A667E]">{t.hero.note}</span>
         </AnimatedSection>
 
-        <AnimatedSection animation="scaleIn" delay={260} className="w-full">
+        <AnimatedSection immediate animation="scaleIn" delay={260} className="w-full">
           <div className="mx-auto mt-2 w-full max-w-[820px] rounded-[20px] border border-[#EDEAF6] bg-surface-2 p-[clamp(16px,3vw,28px)]">
             <FlowDiagram d={t.hero.diagram} />
           </div>

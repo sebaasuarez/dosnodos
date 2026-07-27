@@ -13,7 +13,7 @@ interface ContactFormProps {
 }
 
 const inputBase =
-  "w-full rounded-[11px] border-[1.5px] bg-white/[0.04] px-3.5 py-3 text-[15px] text-[#ECEAF7] placeholder:text-[#726E90] outline-none transition-colors focus:border-brand-purple focus:shadow-[0_0_0_3px_rgba(147,51,234,.28)]"
+  "w-full rounded-[11px] border-[1.5px] bg-white/[0.04] px-3.5 py-3 text-[15px] text-[#ECEAF7] placeholder:text-[#807CA0] outline-none transition-colors focus:border-brand-purple focus:shadow-[0_0_0_3px_rgba(147,51,234,.28)]"
 
 export default function ContactForm({ language }: ContactFormProps) {
   const t = translations[language]
@@ -197,7 +197,7 @@ export default function ContactForm({ language }: ContactFormProps) {
           </span>
           <span
             className={`font-mono text-[11px] ${
-              (values.message?.length || 0) < 10 ? "text-[#726E90]" : "text-[#8FD3AC]"
+              (values.message?.length || 0) < 10 ? "text-[#807CA0]" : "text-[#8FD3AC]"
             }`}
           >
             {values.message?.length || 0}/10
@@ -224,7 +224,7 @@ export default function ContactForm({ language }: ContactFormProps) {
 
       {/* Progreso sutil */}
       <div className="flex flex-col gap-1.5">
-        <div className="flex justify-between font-mono text-[11px] text-[#726E90]">
+        <div className="flex justify-between font-mono text-[11px] text-[#807CA0]">
           <span>{f.progress}</span>
           <span>{progress}%</span>
         </div>
@@ -236,7 +236,7 @@ export default function ContactForm({ language }: ContactFormProps) {
         </div>
       </div>
 
-      <span className="text-center font-mono text-[11px] text-[#726E90]">{f.confirmationNote}</span>
+      <span className="text-center font-mono text-[11px] text-[#807CA0]">{f.confirmationNote}</span>
     </form>
   )
 }

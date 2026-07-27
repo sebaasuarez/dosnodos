@@ -20,6 +20,13 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    // El CSS va dentro del HTML en vez de en un <link>. Las dos hojas de
+    // estilo bloqueaban el renderizado ~600 ms, que se pagaban antes de
+    // pintar cualquier cosa. El sitio tiene pocas páginas y la hoja es
+    // pequeña, así que inlinearla sale más barato que cachearla.
+    inlineCss: true,
+  },
   poweredByHeader: false,
   compress: true,
 }

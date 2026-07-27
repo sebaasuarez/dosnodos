@@ -1,32 +1,59 @@
 "use client"
 
 import type React from "react"
-import { motion } from "framer-motion"
+import { useEffect, useRef } from "react"
+
+type Animation = "fadeInUp" | "fadeInLeft" | "fadeInRight" | "scaleIn"
 
 interface AnimatedSectionProps {
   children: React.ReactNode
   className?: string
-  animation?: "fadeInUp" | "fadeInLeft" | "fadeInRight" | "scaleIn"
+  animation?: Animation
   delay?: number
+  /**
+   * Contenido sobre la línea de flotación. Anima con CSS puro apenas se pinta
+   * la página, sin esperar a que hidrate el JS. Obligatorio en el hero: su
+   * <h1> es el elemento LCP y con la versión anterior (framer-motion, que
+   * servía el HTML con opacity:0) tardaba 3,4 s en aparecer.
+   */
+  immediate?: boolean
 }
 
-const animations = {
-  fadeInUp: {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-  },
-  fadeInLeft: {
-    initial: { opacity: 0, x: -30 },
-    whileInView: { opacity: 1, x: 0 },
-  },
-  fadeInRight: {
-    initial: { opacity: 0, x: 30 },
-    whileInView: { opacity: 1, x: 0 },
-  },
-  scaleIn: {
-    initial: { opacity: 0, scale: 0.9 },
-    whileInView: { opacity: 1, scale: 1 },
-  },
+/**
+ * Un único observador para todas las secciones. Con 43 instancias en el home,
+ * un IntersectionObserver por componente era trabajo de más en el hilo
+ * principal sin ninguna ganancia.
+ */
+let observer: IntersectionObserver | null = null
+
+function reveal(el: Element) {
+  el.classList.add("dn-in")
+}
+
+function observe(el: Element) {
+  // Sin soporte de IntersectionObserver el contenido se muestra sin animación,
+  // nunca oculto.
+  if (typeof IntersectionObserver === "undefined") {
+    reveal(el)
+    return
+  }
+
+  if (!observer) {
+    observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          reveal(entry.target)
+          observer?.unobserve(entry.target)
+        }
+      },
+      // Equivale al viewport margin que usaba framer-motion: el elemento tiene
+      // que entrar 50px en pantalla antes de revelarse.
+      { rootMargin: "-50px" },
+    )
+  }
+
+  observer.observe(el)
 }
 
 export default function AnimatedSection({
@@ -34,22 +61,27 @@ export default function AnimatedSection({
   className = "",
   animation = "fadeInUp",
   delay = 0,
+  immediate = false,
 }: AnimatedSectionProps) {
-  const config = animations[animation]
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (immediate) return
+    const el = ref.current
+    if (el) observe(el)
+  }, [immediate])
+
+  const base = immediate
+    ? `dn-enter dn-enter-${animation}`
+    : `dn-reveal dn-reveal-${animation}`
 
   return (
-    <motion.div
-      initial={config.initial}
-      whileInView={config.whileInView}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        duration: 0.6,
-        delay: delay / 1000,
-        ease: [0.21, 0.47, 0.32, 0.98], // Custom cubic-bezier for "premium" feel
-      }}
-      className={className}
+    <div
+      ref={ref}
+      className={className ? `${base} ${className}` : base}
+      style={delay ? { animationDelay: `${delay}ms`, transitionDelay: `${delay}ms` } : undefined}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }

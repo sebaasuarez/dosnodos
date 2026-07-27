@@ -25,7 +25,7 @@ export function AdminShell({ email, children }: { email?: string; children: Reac
         <Link href="/admin" className="flex items-center gap-2">
           <Image src="/dosnodos-logo.png" alt="Dos Nodos" width={130} height={26} className="dn-logo-white h-[26px] w-auto" />
         </Link>
-        <span className="font-mono text-[10px] uppercase tracking-[.14em] text-[#726E90]">Panel</span>
+        <span className="font-mono text-[10px] uppercase tracking-[.14em] text-[#807CA0]">Panel</span>
         <nav className="flex flex-col gap-1">
           {NAV.map((item) => {
             const active = item.exact ? pathname === item.href : pathname.startsWith(item.href)
@@ -55,7 +55,7 @@ export function AdminShell({ email, children }: { email?: string; children: Reac
               Cerrar sesión
             </button>
           </form>
-          <Link href="/" className="text-[12px] text-[#726E90] hover:text-[#A29FBE]">
+          <Link href="/" className="text-[12px] text-[#807CA0] hover:text-[#A29FBE]">
             ← Ver sitio público
           </Link>
         </div>
