@@ -64,6 +64,7 @@ export default async function LeadsPage({
                   <th className="px-4 py-3 font-medium">Nombre</th>
                   <th className="px-4 py-3 font-medium">Empresa</th>
                   <th className="px-4 py-3 font-medium">Contacto</th>
+                  <th className="px-4 py-3 font-medium">Origen</th>
                   <th className="px-4 py-3 font-medium">Estado</th>
                   <th className="px-4 py-3 font-medium">Fecha</th>
                 </tr>
@@ -77,7 +78,20 @@ export default async function LeadsPage({
                       </Link>
                     </td>
                     <td className="px-4 py-3 text-[#5A5570]">{l.company || "—"}</td>
-                    <td className="px-4 py-3 text-[#5A5570]">{l.email}</td>
+                    {/* Los leads de la landing de ventas llegan por WhatsApp y
+                        no traen correo: se muestra el número. */}
+                    <td className="px-4 py-3 text-[#5A5570]">{l.email || l.phone || "—"}</td>
+                    <td className="px-4 py-3">
+                      <span
+                        className={
+                          l.source === "ventas"
+                            ? "rounded-full bg-[#E9E6FB] px-2.5 py-1 font-mono text-[11px] uppercase tracking-[.06em] text-brand-cta"
+                            : "rounded-full bg-[#F1EFFA] px-2.5 py-1 font-mono text-[11px] uppercase tracking-[.06em] text-[#5A5570]"
+                        }
+                      >
+                        {l.source === "ventas" ? "ventas" : "principal"}
+                      </span>
+                    </td>
                     <td className="px-4 py-3">
                       <StatusBadge status={l.status as LeadStatus} />
                     </td>

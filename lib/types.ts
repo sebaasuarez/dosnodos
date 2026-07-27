@@ -11,7 +11,7 @@ export interface Lead {
   created_at: string
   updated_at: string
   name: string
-  email: string
+  email: string | null
   message: string | null
   company: string | null
   phone: string | null
