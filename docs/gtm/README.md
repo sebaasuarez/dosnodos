@@ -1,9 +1,19 @@
-# Medición — GTM + GA4
-
-Este directorio contiene el contenedor de Google Tag Manager listo para importar:
-**`dosnodos-gtm-ga4-container.json`** (10 etiquetas, 9 activadores, 18 variables).
+# Medición — GTM + GA4 + Google Ads
 
 El código que empuja los eventos está en [`lib/gtm.ts`](../../lib/gtm.ts).
+
+## Cuál archivo importar
+
+| Archivo | Contenido | Cuándo usarlo |
+|---|---|---|
+| **`dosnodos-gtm-completo.json`** | 12 etiquetas, 9 activadores, 20 variables | **Recomendado.** GA4 + Google Ads en una sola importación. |
+| `dosnodos-gtm-ga4-container.json` | 10 etiquetas, 9 activadores, 18 variables | Solo GA4, si Google Ads queda para después. |
+| `dosnodos-gtm-google-ads.json` | 2 etiquetas, 1 activador, 4 variables | Solo Google Ads, para sumarlo después del anterior. |
+
+Los dos archivos separados comparten tres elementos (`DLV - value`,
+`DLV - currency` y el activador `CE - dn_generate_lead`). Si los importas por
+separado te van a quedar duplicados con sufijo `1`: funciona, pero ensucia el
+contenedor. Por eso existe el combinado, que ya viene deduplicado.
 
 ---
 
@@ -11,17 +21,28 @@ El código que empuja los eventos está en [`lib/gtm.ts`](../../lib/gtm.ts).
 
 1. GTM → contenedor **GTM-W9BTLNH8** → **Administrador** → **Importar contenedor**.
 2. Sube el archivo JSON.
-3. **Espacio de trabajo:** elige *Crear uno nuevo* y llámalo `GA4 eventos`.
+3. **Espacio de trabajo:** elige *Crear uno nuevo* y llámalo `Medición`.
    Así nada se toca en el espacio principal hasta que publiques.
 4. **Opción de importación:** **Combinar** → **Cambiar el nombre de las
    etiquetas, los activadores y las variables en conflicto**.
-   ⚠️ No uses *Sobrescribir*: borraría lo que ya tengas en el contenedor.
+   ⚠️ No uses *Sobrescribir*: borra el contenedor entero, incluida la
+   verificación de Search Console que ya tienes montada ahí.
 5. Revisa la vista previa de cambios y confirma.
 
 ## Después de importar (obligatorio)
 
 1. **Variables → `CONST - GA4 Measurement ID`** → reemplaza `G-XXXXXXXXXX` por
    el ID de medición real de GA4 (GA4 → Administrar → Flujos de datos).
+1b. Solo si importaste el combinado o el de Google Ads:
+   - **`CONST - Google Ads Conversion ID`** → reemplaza `AW-XXXXXXXXX`.
+   - **`CONST - Google Ads Label Lead`** → reemplaza la etiqueta de conversión.
+
+   Los dos salen de Google Ads → *Objetivos* → *Conversiones* → la acción de
+   conversión → *Configurar la etiqueta manualmente*.
+
+   ⚠️ Si mides la conversión con esta etiqueta, **no importes además
+   `generate_lead` desde GA4 a Google Ads**: contarías cada lead dos veces.
+   Elige un camino solo.
 2. **Si ya tenías una etiqueta de Google / configuración de GA4 en el
    contenedor:** borra la etiqueta importada `Google Tag - GA4` y en cada
    etiqueta `GA4 - *` cambia el campo *Measurement ID* para que apunte a la
@@ -30,6 +51,23 @@ El código que empuja los eventos está en [`lib/gtm.ts`](../../lib/gtm.ts).
    una pregunta frecuente y envía el formulario. Cada acción debe aparecer en el
    panel de depuración con su etiqueta disparada.
 4. **Publicar.**
+
+## Qué queda montado
+
+| Etiqueta | Tipo | Se dispara con |
+|---|---|---|
+| `Google Tag - GA4` | Etiqueta de Google | Initialization - All Pages |
+| `GA4 - generate_lead` | Evento GA4 | `dn_generate_lead` |
+| `GA4 - form_start` | Evento GA4 | `dn_form_start` |
+| `GA4 - cta_click` | Evento GA4 | `dn_cta_click` |
+| `GA4 - whatsapp_click` | Evento GA4 | `dn_whatsapp_click` |
+| `GA4 - email_click` | Evento GA4 | `dn_email_click` |
+| `GA4 - language_change` | Evento GA4 | `dn_language_change` |
+| `GA4 - service_card_click` | Evento GA4 | `dn_service_card_click` |
+| `GA4 - view_service` | Evento GA4 | `dn_view_service` |
+| `GA4 - faq_open` | Evento GA4 | `dn_faq_open` |
+| `Google Ads - Conversion Lead` | Conversión de Google Ads | `dn_generate_lead` |
+| `Google Ads - Conversion Linker` | Conversion Linker | All Pages |
 
 ## En GA4, una sola vez
 
