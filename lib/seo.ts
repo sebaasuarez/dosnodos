@@ -42,28 +42,66 @@ function buildLanguages(alternates: Record<Language, string>) {
   return languages
 }
 
+/** Etiqueta superior de la tarjeta OG, por idioma. */
+const OG_KICKER: Record<Language, string> = {
+  es: "Tecnología con propósito",
+  en: "Technology with purpose",
+  pt: "Tecnologia com propósito",
+}
+
+/**
+ * URL de la imagen Open Graph. Se genera en /api/og con la proporción correcta
+ * (1200×630) y el contenido de cada página; antes se compartía el logo, de
+ * 850×430, que las redes recortaban.
+ */
+export function ogImageUrl(lang: Language, title: string, subtitle?: string): string {
+  const p = new URLSearchParams({ t: title, k: OG_KICKER[lang] })
+  if (subtitle) p.set("s", subtitle)
+  return `${SITE}/api/og?${p.toString()}`
+}
+
+/** Metadatos editables desde /admin, si existe la fila en page_seo. */
+export interface SeoOverride {
+  title?: string | null
+  description?: string | null
+  keywords?: string | null
+  og_image?: string | null
+}
+
 function base(
   lang: Language,
   title: string,
   description: string,
   path: string,
   alternates: Record<Language, string>,
+  override?: SeoOverride | null,
 ): Metadata {
+  const finalTitle = override?.title?.trim() || title
+  const finalDescription = override?.description?.trim() || description
+  // La imagen cargada a mano en el panel manda; si no hay, se genera.
+  const image = override?.og_image?.trim() || ogImageUrl(lang, finalTitle, finalDescription)
+
   return {
     metadataBase: new URL(SITE),
-    title,
-    description,
+    title: finalTitle,
+    description: finalDescription,
+    ...(override?.keywords?.trim() ? { keywords: override.keywords } : {}),
     alternates: { canonical: path, languages: buildLanguages(alternates) },
     openGraph: {
-      title,
-      description,
+      title: finalTitle,
+      description: finalDescription,
       url: `${SITE}${path}`,
       siteName: "Dos Nodos",
       locale: OG_LOCALE[lang],
       type: "website",
-      images: [{ url: "/dosnodos-logo.png", width: 850, height: 430, alt: "Dos Nodos" }],
+      images: [{ url: image, width: 1200, height: 630, alt: finalTitle }],
     },
-    twitter: { card: "summary_large_image", title, description, images: ["/dosnodos-logo.png"] },
+    twitter: {
+      card: "summary_large_image",
+      title: finalTitle,
+      description: finalDescription,
+      images: [image],
+    },
     robots: {
       index: true,
       follow: true,
@@ -72,17 +110,22 @@ function base(
   }
 }
 
-export function serviceMetadata(lang: Language, service: ServiceContent): Metadata {
+export function serviceMetadata(
+  lang: Language,
+  service: ServiceContent,
+  override?: SeoOverride | null,
+): Metadata {
   return base(
     lang,
     service.metaTitle[lang],
     service.metaDescription[lang],
     servicePath(lang, service),
     serviceAlternates(service),
+    override,
   )
 }
 
-export function servicesIndexMetadata(lang: Language): Metadata {
+export function servicesIndexMetadata(lang: Language, override?: SeoOverride | null): Metadata {
   const sp = translations[lang].servicePage
   return base(
     lang,
@@ -90,11 +133,17 @@ export function servicesIndexMetadata(lang: Language): Metadata {
     sp.servicesSubtitle,
     servicesIndexPath(lang),
     servicesIndexAlternates(),
+    override,
   )
 }
 
-export function homeMetadata(lang: Language, title: string, description: string): Metadata {
-  return base(lang, title, description, homePath(lang), homeAlternates())
+export function homeMetadata(
+  lang: Language,
+  title: string,
+  description: string,
+  override?: SeoOverride | null,
+): Metadata {
+  return base(lang, title, description, homePath(lang), homeAlternates(), override)
 }
 
 /** Todas las URLs indexables del sitio, para el sitemap. */

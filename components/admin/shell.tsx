@@ -13,6 +13,7 @@ const NAV = [
   { href: "/admin/projects", label: "Proyectos" },
   { href: "/admin/reviews", label: "Reseñas" },
   { href: "/admin/seo", label: "SEO" },
+  { href: "/admin/whatsapp", label: "Botón WhatsApp" },
   { href: "/admin/tracking", label: "Tracking & Config" },
 ]
 

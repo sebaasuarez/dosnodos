@@ -208,6 +208,16 @@ body {
   }
 }
 
+/* La barra de scroll del carrusel estorba: el control son los puntos y las
+   flechas. El arrastre táctil y con trackpad siguen funcionando igual. */
+.dn-no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.dn-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* ── Entrada de secciones ──────────────────────────────────────────────────
    Antes esto lo resolvía framer-motion, que servía el HTML con
    `style="opacity:0"` y solo lo revelaba tras hidratar. El <h1> del hero es

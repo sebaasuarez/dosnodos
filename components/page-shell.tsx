@@ -1,11 +1,12 @@
-import type React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { type Language, translations } from "@/lib/i18n";
-import { homePath, servicesIndexPath } from "@/lib/services-content";
-import { WhatsAppButton } from "@/components/whatsapp-button";
+import type React from "react"
+import Link from "next/link"
+import Image from "next/image"
+import { type Language, translations } from "@/lib/i18n"
+import { homePath, servicesIndexPath } from "@/lib/services-content"
+import { WhatsAppButton } from "@/components/whatsapp-button"
+import type { WhatsAppConfig } from "@/lib/whatsapp"
 
-const LANGS: Language[] = ["es", "en", "pt"];
+const LANGS: Language[] = ["es", "en", "pt"]
 
 /**
  * Marco de las páginas internas (servicios). A diferencia del home, el
@@ -14,26 +15,23 @@ const LANGS: Language[] = ["es", "en", "pt"];
 export function PageShell({
   lang,
   alternates,
-  whatsapp = "573127344026",
+  whatsappButton,
   children,
 }: {
-  lang: Language;
+  lang: Language
   /** Ruta equivalente por idioma, para el selector y el hreflang. */
-  alternates: Record<Language, string>;
-  whatsapp?: string;
-  children: React.ReactNode;
+  alternates: Record<Language, string>
+  /** Configuración del botón flotante, editable desde /admin. */
+  whatsappButton: WhatsAppConfig
+  children: React.ReactNode
 }) {
-  const t = translations[lang];
+  const t = translations[lang]
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white text-ink">
       <header className="sticky top-0 z-50 border-b border-[#EDEAF6] bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1180px] items-center justify-between px-[clamp(20px,5vw,40px)] py-[13px]">
-          <Link
-            href={homePath(lang)}
-            className="flex items-center"
-            aria-label="Dos Nodos"
-          >
+          <Link href={homePath(lang)} className="flex items-center" aria-label="Dos Nodos">
             <Image
               src="/dosnodos-logo.png"
               alt="Dos Nodos"
@@ -65,11 +63,7 @@ export function PageShell({
               {t.nav.faq}
             </Link>
 
-            <div
-              className="flex items-center gap-1.5"
-              role="group"
-              aria-label="Idioma / Language"
-            >
+            <div className="flex items-center gap-1.5" role="group" aria-label="Idioma / Language">
               {LANGS.map((l) => (
                 <Link
                   key={l}
@@ -160,14 +154,12 @@ export function PageShell({
             </div>
           </div>
           <div className="flex flex-wrap items-center justify-between gap-3.5 border-t border-[#1A1630] pt-5">
-            <span className="font-mono text-[11.5px] text-[#807CA0]">
-              {t.footer.copyright}
-            </span>
+            <span className="font-mono text-[11.5px] text-[#807CA0]">{t.footer.copyright}</span>
           </div>
         </div>
       </footer>
 
-      <WhatsAppButton number={whatsapp} />
+      <WhatsAppButton config={whatsappButton} lang={lang} />
     </div>
-  );
+  )
 }

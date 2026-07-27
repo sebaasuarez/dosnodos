@@ -161,3 +161,40 @@ export async function updateSettings(fd: FormData) {
   revalidatePath("/admin/tracking")
   revalidatePath("/", "layout")
 }
+
+// ---------------- Botón flotante de WhatsApp ----------------
+
+/** Junta los tres campos de un texto traducible en el jsonb que guarda la tabla. */
+function localized(fd: FormData, prefix: string): Record<string, string> {
+  const out: Record<string, string> = {}
+  for (const lang of ["es", "en", "pt"]) {
+    const v = str(fd, `${prefix}_${lang}`)
+    if (v) out[lang] = v
+  }
+  return out
+}
+
+export async function updateWhatsApp(fd: FormData) {
+  const { supabase } = await requireUser()
+
+  const position = str(fd, "whatsapp_position")
+  const icon = str(fd, "whatsapp_icon")
+  // El retardo se acota al mismo rango que valida la base, para que un valor
+  // raro escrito a mano no reviente el guardado con un error de constraint.
+  const delay = Math.min(Math.max(Number(str(fd, "whatsapp_delay_ms")) || 0, 0), 60000)
+
+  await supabase.from("site_settings").upsert({
+    id: 1,
+    whatsapp_enabled: fd.get("whatsapp_enabled") === "on",
+    whatsapp_number: str(fd, "whatsapp_number") || null,
+    whatsapp_link: str(fd, "whatsapp_link") || null,
+    whatsapp_message: localized(fd, "whatsapp_message"),
+    whatsapp_label: localized(fd, "whatsapp_label"),
+    whatsapp_position: position === "left" ? "left" : "right",
+    whatsapp_icon: icon === "chat" || icon === "phone" ? icon : "whatsapp",
+    whatsapp_delay_ms: delay,
+  })
+
+  revalidatePath("/admin/whatsapp")
+  revalidatePath("/", "layout")
+}

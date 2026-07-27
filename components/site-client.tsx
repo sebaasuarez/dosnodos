@@ -13,6 +13,7 @@ import { Faq } from "@/components/sections/faq"
 import { Contact } from "@/components/sections/contact"
 import { Footer } from "@/components/sections/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
+import type { WhatsAppConfig } from "@/lib/whatsapp"
 import { StructuredData } from "@/components/structured-data"
 
 interface SiteClientProps {
@@ -22,7 +23,10 @@ interface SiteClientProps {
   alternates: Record<Language, string>
   projects: Project[] | null
   reviews: Review[] | null
+  /** Número para los enlaces de la sección de contacto. */
   whatsapp: string
+  /** Configuración del botón flotante, editable desde /admin. */
+  whatsappButton: WhatsAppConfig
   contactEmail: string
 }
 
@@ -32,6 +36,7 @@ export function SiteClient({
   projects,
   reviews,
   whatsapp,
+  whatsappButton,
   contactEmail,
 }: SiteClientProps) {
   const t = translations[lang]
@@ -50,7 +55,7 @@ export function SiteClient({
         <Contact t={t} currentLanguage={lang} whatsapp={whatsapp} contactEmail={contactEmail} />
       </main>
       <Footer t={t} currentLanguage={lang} alternates={alternates} />
-      <WhatsAppButton number={whatsapp} />
+      <WhatsAppButton config={whatsappButton} lang={lang} />
     </div>
   )
 }

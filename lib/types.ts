@@ -56,6 +56,26 @@ export interface Review {
   i18n: Record<string, Partial<Record<string, string>>>
 }
 
+export type WhatsAppPosition = "right" | "left"
+export type WhatsAppIcon = "whatsapp" | "chat" | "phone"
+
+export const WHATSAPP_POSITIONS: WhatsAppPosition[] = ["right", "left"]
+export const WHATSAPP_ICONS: WhatsAppIcon[] = ["whatsapp", "chat", "phone"]
+
+export const WHATSAPP_POSITION_LABEL: Record<WhatsAppPosition, string> = {
+  right: "Abajo a la derecha",
+  left: "Abajo a la izquierda",
+}
+
+export const WHATSAPP_ICON_LABEL: Record<WhatsAppIcon, string> = {
+  whatsapp: "Logo de WhatsApp",
+  chat: "Burbuja de chat",
+  phone: "Teléfono",
+}
+
+/** Texto por idioma. Las claves son los códigos de `Language`. */
+export type LocalizedText = Partial<Record<string, string>>
+
 export interface SiteSettings {
   id: number
   gtm_id: string | null
@@ -67,6 +87,15 @@ export interface SiteSettings {
   contact_email: string | null
   extra_head_html: string | null
   updated_at: string
+  /** Botón flotante de WhatsApp. */
+  whatsapp_enabled: boolean
+  /** URL alterna; si está vacía se arma wa.me con el número y el mensaje. */
+  whatsapp_link: string | null
+  whatsapp_message: LocalizedText
+  whatsapp_label: LocalizedText
+  whatsapp_position: WhatsAppPosition
+  whatsapp_icon: WhatsAppIcon
+  whatsapp_delay_ms: number
 }
 
 export interface PageSeo {

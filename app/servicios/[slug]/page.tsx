@@ -5,6 +5,7 @@ import { PageShell } from "@/components/page-shell"
 import { SERVICES, findServiceBySlug } from "@/lib/services-content"
 import { serviceAlternates, serviceMetadata } from "@/lib/seo"
 import { getSiteSettings } from "@/lib/data"
+import { whatsappConfig } from "@/lib/whatsapp"
 
 const LANG = "es" as const
 
@@ -33,7 +34,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     <PageShell
       lang={LANG}
       alternates={serviceAlternates(service)}
-      whatsapp={settings.whatsapp_number || undefined}
+      whatsappButton={whatsappConfig(settings)}
     >
       <ServiceDetail service={service} lang={LANG} />
     </PageShell>

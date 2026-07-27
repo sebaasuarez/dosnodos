@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { IBM_Plex_Sans, IBM_Plex_Mono, IBM_Plex_Serif } from "next/font/google"
 import "./globals.css"
 import { getPageSeo, getSiteSettings } from "@/lib/data"
+import { ogImageUrl } from "@/lib/seo"
 import { TrackingHead, TrackingNoscript } from "@/components/tracking-scripts"
 
 const plexSans = IBM_Plex_Sans({
@@ -35,6 +36,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPageSeo("/")
   const title = seo?.title || FALLBACK_TITLE
   const description = seo?.description || FALLBACK_DESC
+  // La imagen cargada desde el panel manda; si no hay, se genera una tarjeta
+  // 1200×630 en /api/og. Antes se compartía el logo, de 850×430, que las redes
+  // recortaban por no ser proporción de Open Graph.
+  const ogImage = seo?.og_image?.trim() || ogImageUrl("es", title, description)
 
   return {
     metadataBase: new URL("https://dosnodos.com.co"),
@@ -62,13 +67,13 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Dos Nodos",
       locale: "es_CO",
       type: "website",
-      images: [{ url: seo?.og_image || "/dosnodos-logo.png", width: 850, height: 430, alt: "Dos Nodos" }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [seo?.og_image || "/dosnodos-logo.png"],
+      images: [ogImage],
     },
     icons: {
       // El SVG lo prefieren los navegadores modernos (nítido a cualquier tamaño);

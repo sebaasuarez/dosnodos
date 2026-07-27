@@ -14,6 +14,13 @@ const DEFAULT_SETTINGS: SiteSettings = {
   contact_email: "hola@dosnodos.com.co",
   extra_head_html: null,
   updated_at: "",
+  whatsapp_enabled: true,
+  whatsapp_link: null,
+  whatsapp_message: {},
+  whatsapp_label: {},
+  whatsapp_position: "right",
+  whatsapp_icon: "whatsapp",
+  whatsapp_delay_ms: 0,
 }
 
 /** Configuración global del sitio (tracking + contacto). Siempre devuelve algo. */

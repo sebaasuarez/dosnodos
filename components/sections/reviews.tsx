@@ -1,6 +1,7 @@
 "use client"
 
 import AnimatedSection from "@/components/animated-section"
+import { AutoCarousel } from "@/components/ui/auto-carousel"
 import { type Language, type Translation } from "@/lib/i18n"
 import type { Review } from "@/lib/types"
 
@@ -17,25 +18,23 @@ interface CardData {
   initials: string
 }
 
-function ReviewCard({ item, delay }: { item: CardData; delay: number }) {
+function ReviewCard({ item }: { item: CardData }) {
   return (
-    <AnimatedSection animation="fadeInUp" delay={delay} className="h-full">
-      <figure className="flex h-full flex-col gap-3.5 rounded-[18px] border border-[#E4E1F0] bg-white p-[26px]">
-        <div className="text-[14px] tracking-[1px] text-star" aria-label="5 de 5 estrellas">
-          ★★★★★
-        </div>
-        <blockquote className="text-[16px] leading-[1.55]">“{item.quote}”</blockquote>
-        <figcaption className="mt-auto flex items-center gap-2.5">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-brand-purple to-brand-blue text-[14px] font-semibold text-white">
-            {item.initials}
-          </span>
-          <span>
-            <b className="block text-[14px]">{item.name}</b>
-            <span className="text-[12.5px] text-[#6A667E]">{item.role}</span>
-          </span>
-        </figcaption>
-      </figure>
-    </AnimatedSection>
+    <figure className="flex h-full min-h-[230px] flex-col gap-3.5 rounded-[18px] border border-[#E4E1F0] bg-white p-[26px]">
+      <div className="text-[14px] tracking-[1px] text-star" aria-label="5 de 5 estrellas">
+        ★★★★★
+      </div>
+      <blockquote className="text-[16px] leading-[1.55]">“{item.quote}”</blockquote>
+      <figcaption className="mt-auto flex items-center gap-2.5">
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-brand-purple to-brand-blue text-[14px] font-semibold text-white">
+          {item.initials}
+        </span>
+        <span>
+          <b className="block text-[14px]">{item.name}</b>
+          <span className="text-[12.5px] text-[#6A667E]">{item.role}</span>
+        </span>
+      </figcaption>
+    </figure>
   )
 }
 
@@ -70,11 +69,13 @@ export function Reviews({ t, rows, lang = "es" }: ReviewsProps) {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
-          {items.map((item, i) => (
-            <ReviewCard key={item.name + i} item={item} delay={60 + i * 60} />
-          ))}
-        </div>
+        <AnimatedSection animation="fadeInUp" delay={60}>
+          <AutoCarousel label={t.reviews.eyebrow} lang={lang} interval={3000}>
+            {items.map((item, i) => (
+              <ReviewCard key={item.name + i} item={item} />
+            ))}
+          </AutoCarousel>
+        </AnimatedSection>
       </div>
     </section>
   )
