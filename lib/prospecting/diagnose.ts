@@ -4,14 +4,14 @@ import type { Diagnostico, NegocioCrudo, Senales } from "./types"
 /**
  * Diagnóstico comercial de cada negocio.
  *
- * Con `ANTHROPIC_API_KEY` lo escribe Claude; sin ella, un motor de reglas. El
+ * Con `OPENAI_API_KEY` lo escribe el modelo; sin ella, un motor de reglas. El
  * respaldo no es un placeholder: el diagnóstico de reglas es correcto y
  * utilizable, solo menos afinado. Así el motor nunca se detiene por falta de
  * una clave ni por una caída del proveedor, que es lo que importa cuando esto
- * corre solo todas las madrugadas.
+ * corre solo todas las mañanas.
  */
 
-const MODELO = process.env.ANTHROPIC_MODEL || "claude-opus-5"
+const MODELO = process.env.OPENAI_MODEL || "gpt-4o-mini"
 
 /** Servicio que corresponde según lo que le falta al negocio. */
 function servicioPara(s: Senales): string {
@@ -47,9 +47,9 @@ interface RespuestaIa {
   servicio?: string
 }
 
-/** Llama a Claude. Si algo falla devuelve null y el llamador usa las reglas. */
+/** Llama a OpenAI. Si algo falla devuelve null y el llamador usa las reglas. */
 async function diagnosticoPorIa(n: NegocioCrudo, s: Senales): Promise<Diagnostico | null> {
-  const key = process.env.ANTHROPIC_API_KEY
+  const key = process.env.OPENAI_API_KEY
   if (!key) return null
 
   const ficha = [
@@ -76,25 +76,29 @@ Analiza este prospecto y responde SOLO con un JSON de esta forma, sin texto alre
 ${ficha}`
 
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        "x-api-key": key,
-        "anthropic-version": "2023-06-01",
+        authorization: `Bearer ${key}`,
         "content-type": "application/json",
       },
       body: JSON.stringify({
         model: MODELO,
         max_tokens: 300,
+        // Obliga a que la respuesta sea JSON válido, en vez de confiar en que
+        // el modelo no adorne el objeto con texto alrededor.
+        response_format: { type: "json_object" },
         messages: [{ role: "user", content: prompt }],
       }),
+      // Una corrida diagnostica hasta veinte negocios seguidos. Sin tope, un
+      // proveedor lento se lleva por delante el tiempo de la función entera.
+      signal: AbortSignal.timeout(20000),
     })
     if (!res.ok) return null
 
-    const data = (await res.json()) as { content?: { text?: string }[] }
-    const texto = data.content?.[0]?.text ?? ""
-    const json = texto.slice(texto.indexOf("{"), texto.lastIndexOf("}") + 1)
-    const parsed = JSON.parse(json) as RespuestaIa
+    const data = (await res.json()) as { choices?: { message?: { content?: string } }[] }
+    const texto = data.choices?.[0]?.message?.content ?? ""
+    const parsed = JSON.parse(texto) as RespuestaIa
     if (!parsed.resumen) return null
 
     return {
