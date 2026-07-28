@@ -9,9 +9,23 @@ import type { Diagnostico, NegocioCrudo, Senales } from "./types"
  * utilizable, solo menos afinado. Así el motor nunca se detiene por falta de
  * una clave ni por una caída del proveedor, que es lo que importa cuando esto
  * corre solo todas las mañanas.
+ *
+ * La URL base es configurable porque el formato de OpenAI lo hablan varios
+ * proveedores (Groq, Together, OpenRouter). Cambiar de uno a otro es mover dos
+ * variables, no tocar este archivo.
  */
 
+const BASE = (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, "")
 const MODELO = process.env.OPENAI_MODEL || "gpt-4o-mini"
+
+/** Host real del proveedor, para que los avisos no mientan sobre quién falló. */
+const PROVEEDOR = (() => {
+  try {
+    return new URL(BASE).hostname
+  } catch {
+    return BASE
+  }
+})()
 
 /** Servicio que corresponde según lo que le falta al negocio. */
 function servicioPara(s: Senales): string {
@@ -100,7 +114,7 @@ Analiza este prospecto y responde SOLO con un JSON de esta forma, sin texto alre
 ${ficha}`
 
   try {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    const res = await fetch(`${BASE}/chat/completions`, {
       method: "POST",
       headers: {
         authorization: `Bearer ${key}`,
@@ -121,7 +135,7 @@ ${ficha}`
     if (!res.ok) {
       // Un respaldo silencioso esconde la causa: la corrida sigue, pero nadie
       // sabe si la IA está caída, la clave es inválida o el modelo no existe.
-      avisar(`OpenAI respondió ${res.status}: ${(await res.text()).slice(0, 180)}`)
+      avisar(`${PROVEEDOR} respondió ${res.status}: ${(await res.text()).slice(0, 180)}`)
       return null
     }
 
@@ -129,7 +143,7 @@ ${ficha}`
     const texto = data.choices?.[0]?.message?.content ?? ""
     const parsed = JSON.parse(texto) as RespuestaIa
     if (!parsed.resumen) {
-      avisar(`OpenAI devolvió una respuesta sin resumen: ${texto.slice(0, 180)}`)
+      avisar(`${PROVEEDOR} devolvió una respuesta sin resumen: ${texto.slice(0, 180)}`)
       return null
     }
 
@@ -139,7 +153,7 @@ ${ficha}`
       porIa: true,
     }
   } catch (e) {
-    avisar(`Falló la llamada a OpenAI: ${e instanceof Error ? e.message : String(e)}`)
+    avisar(`Falló la llamada a ${PROVEEDOR}: ${e instanceof Error ? e.message : String(e)}`)
     return null
   }
 }
