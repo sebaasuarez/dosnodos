@@ -16,6 +16,7 @@ import {
   Sparkles,
   TrendingUp,
   Workflow,
+  Rocket,
   type LucideIcon,
 } from "lucide-react"
 
@@ -36,6 +37,7 @@ const SERVICE_ICONS: Record<ServiceId, LucideIcon> = {
   automation: Workflow,
   seo: TrendingUp,
   branding: Palette,
+  "landing-express": Rocket,
 }
 
 function Chip({ children, featured = false }: { children: React.ReactNode; featured?: boolean }) {
@@ -58,7 +60,10 @@ function ServiceCard({ item, delay, lang }: { item: ServiceItemT; delay: number;
   const Icon = SERVICE_ICONS[item.id]
   const featured = Boolean(item.badge)
   const content = findServiceById(item.id)
-  const href = content ? servicePath(lang, content) : undefined
+  // El enlace externo manda: la landing de ventas vive en otro dominio y no
+  // tiene página de servicio en este sitio.
+  const external = item.externalHref
+  const href = external ?? (content ? servicePath(lang, content) : undefined)
 
   const card = (
       <article
@@ -81,7 +86,23 @@ function ServiceCard({ item, delay, lang }: { item: ServiceItemT; delay: number;
         >
           <Icon className="h-6 w-6 text-brand-cta" strokeWidth={1.8} aria-hidden />
         </div>
-        <h4 className="max-w-[22ch] text-[19px] font-semibold leading-snug tracking-[-0.01em]">{item.title}</h4>
+        <h4 className="flex max-w-[22ch] items-start gap-1.5 text-[19px] font-semibold leading-snug tracking-[-0.01em]">
+          {item.title}
+          {external && (
+            <svg
+              className="mt-[5px] h-[15px] w-[15px] shrink-0 text-brand-cta"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <path d="M13 5h6v6M19 5l-9 9M17 14v5H5V7h5" />
+            </svg>
+          )}
+        </h4>
         <p className={`text-[14.5px] leading-[1.5] ${featured ? "text-[#3A3550]" : "text-[#5A5570]"}`}>
           {item.description}
         </p>
@@ -102,6 +123,9 @@ function ServiceCard({ item, delay, lang }: { item: ServiceItemT; delay: number;
       {href ? (
         <Link
           href={href}
+          {...(external
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
           onClick={() =>
             trackServiceCardClick({
               id: item.id,
@@ -110,7 +134,8 @@ function ServiceCard({ item, delay, lang }: { item: ServiceItemT; delay: number;
               language: lang,
             })
           }
-          className="block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/50 focus-visible:ring-offset-2 rounded-[20px]">
+          className="block h-full rounded-[20px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/50 focus-visible:ring-offset-2"
+        >
           {card}
         </Link>
       ) : (

@@ -108,6 +108,16 @@ export interface PageSeo {
   updated_at: string
 }
 
+/** Landings que envían leads. Coincide con la lista blanca de /api/contact. */
+export type LeadSource = "landing" | "ventas"
+
+export const LEAD_SOURCES: LeadSource[] = ["landing", "ventas"]
+
+export const LEAD_SOURCE_LABEL: Record<LeadSource, string> = {
+  landing: "Sitio principal",
+  ventas: "Landing de ventas",
+}
+
 export const LEAD_STATUSES: LeadStatus[] = [
   "nuevo",
   "contactado",

@@ -30,6 +30,9 @@ export type ServiceId =
   | "automation"
   | "seo"
   | "branding"
+  // No tiene página de servicio propia: la card enlaza a la landing de
+  // ventas.dosnodos.com.co, que es un sitio aparte.
+  | "landing-express"
 
 interface ServiceItem {
   id: ServiceId
@@ -38,6 +41,12 @@ interface ServiceItem {
   chips: string[]
   /** Si viene, la card se muestra destacada. */
   badge?: string
+  /**
+   * URL externa. Si viene, la card enlaza ahí en una pestaña nueva en vez de
+   * a su página de servicio. Se usa para la landing de ventas, que vive en
+   * otro dominio.
+   */
+  externalHref?: string
 }
 
 interface ServiceCategory {
@@ -256,6 +265,14 @@ export const translations: Record<Language, Translation> = {
               title: "Desarrollo de Shopify",
               description: "Tiendas Shopify sólidas, fáciles de operar y listas para crecer sin rehacerlas.",
               chips: ["Shopify", "Temas a medida"],
+            },
+            {
+              id: "landing-express",
+              title: "Landing Express para negocios locales",
+              description: "Una página lista en 3 a 5 días, conectada a WhatsApp, pensada para negocios de barrio que venden por chat.",
+              chips: ["3–5 días", "WhatsApp", "Desde $700k"],
+              badge: "SITIO APARTE",
+              externalHref: "https://ventas.dosnodos.com.co",
             },
           ],
         },
@@ -551,6 +568,14 @@ export const translations: Record<Language, Translation> = {
               description: "Robust Shopify stores that are easy to run and ready to grow.",
               chips: ["Shopify", "Custom themes"],
             },
+            {
+              id: "landing-express",
+              title: "Express landing for local businesses",
+              description: "A page live in 3 to 5 days, wired to WhatsApp, built for neighbourhood businesses that sell over chat.",
+              chips: ["3–5 days", "WhatsApp", "From $700k COP"],
+              badge: "SEPARATE SITE",
+              externalHref: "https://ventas.dosnodos.com.co",
+            },
           ],
         },
         {
@@ -843,6 +868,14 @@ export const translations: Record<Language, Translation> = {
               title: "Desenvolvimento Shopify",
               description: "Lojas Shopify robustas, fáceis de operar e prontas para crescer.",
               chips: ["Shopify", "Temas sob medida"],
+            },
+            {
+              id: "landing-express",
+              title: "Landing Express para negócios locais",
+              description: "Uma página pronta em 3 a 5 dias, conectada ao WhatsApp, pensada para negócios de bairro que vendem por chat.",
+              chips: ["3–5 dias", "WhatsApp", "A partir de $700k COP"],
+              badge: "SITE À PARTE",
+              externalHref: "https://ventas.dosnodos.com.co",
             },
           ],
         },

@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { requireUser } from "@/lib/supabase/auth"
 import { createServerSupabase } from "@/lib/supabase/server"
-import type { Illustration, LeadStatus } from "@/lib/types"
+import { LEAD_STATUSES, type Illustration, type LeadStatus } from "@/lib/types"
 
 function str(fd: FormData, key: string): string {
   return (fd.get(key) as string | null)?.trim() ?? ""
@@ -47,6 +47,19 @@ export async function updateLead(fd: FormData) {
     .eq("id", id)
   revalidatePath("/admin/leads")
   revalidatePath(`/admin/leads/${id}`)
+  revalidatePath("/admin")
+}
+
+/** Cambia solo la etapa. Se usa desde las tarjetas del pipeline. */
+export async function moveLeadStage(fd: FormData) {
+  const { supabase } = await requireUser()
+  const id = str(fd, "id")
+  const status = str(fd, "status")
+  if (!id || !LEAD_STATUSES.includes(status as LeadStatus)) return
+
+  await supabase.from("leads").update({ status }).eq("id", id)
+  revalidatePath("/admin/pipeline")
+  revalidatePath("/admin/leads")
   revalidatePath("/admin")
 }
 

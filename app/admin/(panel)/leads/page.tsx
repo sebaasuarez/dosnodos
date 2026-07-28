@@ -1,7 +1,14 @@
 import Link from "next/link"
 import { requireUser } from "@/lib/supabase/auth"
 import { PageHeader, Card, StatusBadge } from "@/components/admin/ui"
-import { LEAD_STATUSES, LEAD_STATUS_LABEL, type Lead, type LeadStatus } from "@/lib/types"
+import {
+  LEAD_SOURCES,
+  LEAD_SOURCE_LABEL,
+  LEAD_STATUSES,
+  LEAD_STATUS_LABEL,
+  type Lead,
+  type LeadStatus,
+} from "@/lib/types"
 import { cn } from "@/lib/utils"
 
 export const dynamic = "force-dynamic"
@@ -13,17 +20,40 @@ function fmtDate(iso: string) {
 export default async function LeadsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string }>
+  searchParams: Promise<{ status?: string; source?: string }>
 }) {
   const { supabase } = await requireUser()
-  const { status } = await searchParams
+  const { status, source } = await searchParams
 
   let query = supabase.from("leads").select("*").order("created_at", { ascending: false })
   if (status && (LEAD_STATUSES as string[]).includes(status)) {
     query = query.eq("status", status)
   }
+  if (source && (LEAD_SOURCES as string[]).includes(source)) {
+    query = query.eq("source", source)
+  }
   const { data } = await query
   const leads = (data ?? []) as Lead[]
+
+  // Conteo por origen sobre el total, no sobre lo filtrado: sirve para saber
+  // qué landing trae más clientes sin tener que quitar el filtro de estado.
+  const { data: todos } = await supabase.from("leads").select("source")
+  const porOrigen = new Map<string, number>()
+  for (const row of (todos ?? []) as { source: string | null }[]) {
+    const key = row.source === "ventas" ? "ventas" : "landing"
+    porOrigen.set(key, (porOrigen.get(key) ?? 0) + 1)
+  }
+
+  /** Conserva el otro filtro al cambiar uno. */
+  const hrefCon = (params: { status?: string; source?: string }) => {
+    const sp = new URLSearchParams()
+    const st = params.status !== undefined ? params.status : status
+    const so = params.source !== undefined ? params.source : source
+    if (st) sp.set("status", st)
+    if (so) sp.set("source", so)
+    const q = sp.toString()
+    return q ? `/admin/leads?${q}` : "/admin/leads"
+  }
 
   return (
     <>
@@ -31,7 +61,7 @@ export default async function LeadsPage({
 
       <div className="mb-4 flex flex-wrap gap-2">
         <Link
-          href="/admin/leads"
+          href={hrefCon({ status: "" })}
           className={cn(
             "rounded-full px-3 py-1.5 text-[13px] transition-colors",
             !status ? "bg-ink text-white" : "border border-[#E4E1F0] text-[#5A5570] hover:bg-white",
@@ -42,13 +72,41 @@ export default async function LeadsPage({
         {LEAD_STATUSES.map((s) => (
           <Link
             key={s}
-            href={`/admin/leads?status=${s}`}
+            href={hrefCon({ status: s })}
             className={cn(
               "rounded-full px-3 py-1.5 text-[13px] transition-colors",
               status === s ? "bg-ink text-white" : "border border-[#E4E1F0] text-[#5A5570] hover:bg-white",
             )}
           >
             {LEAD_STATUS_LABEL[s]}
+          </Link>
+        ))}
+      </div>
+
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        <span className="mr-1 font-mono text-[11px] uppercase tracking-[.1em] text-[#6A667E]">
+          Origen
+        </span>
+        <Link
+          href={hrefCon({ source: "" })}
+          className={cn(
+            "rounded-full px-3 py-1.5 text-[13px] transition-colors",
+            !source ? "bg-ink text-white" : "border border-[#E4E1F0] text-[#5A5570] hover:bg-white",
+          )}
+        >
+          Todos
+        </Link>
+        {LEAD_SOURCES.map((so) => (
+          <Link
+            key={so}
+            href={hrefCon({ source: so })}
+            className={cn(
+              "rounded-full px-3 py-1.5 text-[13px] transition-colors",
+              source === so ? "bg-ink text-white" : "border border-[#E4E1F0] text-[#5A5570] hover:bg-white",
+            )}
+          >
+            {LEAD_SOURCE_LABEL[so]}
+            <span className="ml-1.5 font-mono text-[11px] opacity-70">{porOrigen.get(so) ?? 0}</span>
           </Link>
         ))}
       </div>

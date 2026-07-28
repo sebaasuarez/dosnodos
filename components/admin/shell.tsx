@@ -10,6 +10,8 @@ import { signOut } from "@/app/admin/actions"
 const NAV = [
   { href: "/admin", label: "Inicio", exact: true },
   { href: "/admin/leads", label: "Leads · CRM" },
+  { href: "/admin/pipeline", label: "Pipeline" },
+  { href: "/admin/reports", label: "Reportes" },
   { href: "/admin/projects", label: "Proyectos" },
   { href: "/admin/reviews", label: "Reseñas" },
   { href: "/admin/seo", label: "SEO" },
