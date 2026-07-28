@@ -108,7 +108,7 @@ async function diagnosticoPorIa(n: NegocioCrudo, s: Senales): Promise<Diagnostic
 Analiza este prospecto y responde SOLO con un JSON de esta forma, sin texto alrededor:
 {"resumen": "...", "servicio": "..."}
 
-- "resumen": dos frases máximo, en español de Colombia, tuteando. Di qué le falta digitalmente y por dónde entra la venta. Concreto, sin relleno ni adjetivos de folleto.
+- "resumen": dos frases máximo, en español de Colombia, tuteando. Empieza citando el dato duro que tengas (número de reseñas, calificación) porque eso es lo que prueba que el negocio ya tiene demanda; después di qué le falta y por dónde entra la venta. Concreto, sin relleno ni adjetivos de folleto. Nada de "presencia digital fuerte" ni frases que sirvan para cualquier negocio.
 - "servicio": UNO de estos exactamente: "Diseño de Páginas Web", "Landing Express con WhatsApp", "Desarrollo de e-Commerce", "Marketing Digital & SEO", "Automatización de Procesos", "Asistentes Virtuales Inteligentes".
 
 ${ficha}`
