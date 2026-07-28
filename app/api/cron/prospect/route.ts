@@ -11,6 +11,9 @@ import {
  * Vercel Cron la llama con la cabecera `Authorization: Bearer $CRON_SECRET`.
  * Sin ese secreto la ruta responde 401: si quedara abierta, cualquiera podría
  * disparar corridas y quemar la cuota de Apify.
+ *
+ * El horario vive en vercel.json y está en UTC: `0 14 * * 1-6` son las 9:00 de
+ * Bogotá. Escrito como 9 se ejecutaba a las 4 de la madrugada.
  */
 
 export const dynamic = "force-dynamic"
