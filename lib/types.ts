@@ -1,10 +1,4 @@
-export type LeadStatus =
-  | "nuevo"
-  | "contactado"
-  | "calificado"
-  | "propuesta"
-  | "ganado"
-  | "perdido"
+export type LeadStatus = "nuevo" | "contactado" | "calificado" | "propuesta" | "ganado" | "perdido"
 
 export interface Lead {
   id: string
@@ -19,6 +13,35 @@ export interface Lead {
   source: string | null
   status: LeadStatus
   notes: string | null
+  /* --- Prospección: datos del negocio --- */
+  city: string | null
+  address: string | null
+  category: string | null
+  website: string | null
+  google_maps_url: string | null
+  google_place_id: string | null
+  rating: number | null
+  reviews_count: number | null
+  /* --- Señales digitales y puntaje --- */
+  has_website: boolean
+  has_whatsapp: boolean
+  has_social: boolean
+  score: number
+  score_breakdown: Record<string, number>
+  diagnosis: string | null
+  recommended_service: string | null
+  enriched_at: string | null
+  /* --- Consentimiento (Habeas Data) --- */
+  consent: ConsentStatus
+  consent_source: string | null
+  opt_in_at: string | null
+  opt_out_at: string | null
+  purge_after: string | null
+  /* --- Seguimiento --- */
+  next_follow_up_at: string | null
+  next_step: string | null
+  lost_reason: string | null
+  last_interaction: string | null
 }
 
 export type Illustration = "quote" | "store" | "schedule"
@@ -108,14 +131,42 @@ export interface PageSeo {
   updated_at: string
 }
 
-/** Landings que envían leads. Coincide con la lista blanca de /api/contact. */
-export type LeadSource = "landing" | "ventas"
+/** De dónde salió el lead. Las dos primeras son la lista blanca de /api/contact. */
+export type LeadSource = "landing" | "ventas" | "prospeccion"
 
-export const LEAD_SOURCES: LeadSource[] = ["landing", "ventas"]
+export const LEAD_SOURCES: LeadSource[] = ["landing", "ventas", "prospeccion"]
 
 export const LEAD_SOURCE_LABEL: Record<LeadSource, string> = {
   landing: "Sitio principal",
   ventas: "Landing de ventas",
+  prospeccion: "Prospección",
+}
+
+/** Estado de consentimiento — Ley 1581 de 2012. */
+export type ConsentStatus = "sin_consentimiento" | "pendiente" | "opt_in" | "opt_out"
+
+export const CONSENT_LABEL: Record<ConsentStatus, string> = {
+  sin_consentimiento: "Sin consentimiento",
+  pendiente: "Pendiente",
+  opt_in: "Autorizado",
+  opt_out: "Revocado",
+}
+
+export interface ProspectRun {
+  id: string
+  created_at: string
+  finished_at: string | null
+  status: "corriendo" | "ok" | "error"
+  trigger: string
+  query: string | null
+  city: string | null
+  found: number
+  inserted: number
+  duplicated: number
+  enriched: number
+  discarded: number
+  error: string | null
+  mode: string
 }
 
 export const LEAD_STATUSES: LeadStatus[] = [

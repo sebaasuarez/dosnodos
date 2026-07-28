@@ -71,6 +71,30 @@ export async function deleteLead(fd: FormData) {
   redirect("/admin/leads")
 }
 
+// ---------------- Prospección ----------------
+
+/** Lanza una búsqueda puntual desde el panel. */
+export async function lanzarProspeccion(fd: FormData): Promise<{ mensaje: string }> {
+  await requireUser()
+  const consulta = str(fd, "consulta") || "barbería"
+  const ciudad = str(fd, "ciudad") || "Medellín, Colombia"
+
+  try {
+    const { correrProspeccion } = await import("@/lib/prospecting/engine")
+    const r = await correrProspeccion({ consulta, ciudad, limite: 20, trigger: "manual" })
+    revalidatePath("/admin/prospeccion")
+    revalidatePath("/admin/leads")
+    return {
+      mensaje:
+        `${r.encontrados} encontrados · ${r.insertados} nuevos · ${r.duplicados} repetidos` +
+        (r.descartados > 0 ? ` · ${r.descartados} rechazados por la base` : "") +
+        (r.modo === "simulado" ? " · modo simulado, falta APIFY_TOKEN" : ""),
+    }
+  } catch (e) {
+    return { mensaje: `No se pudo completar: ${e instanceof Error ? e.message : String(e)}` }
+  }
+}
+
 // ---------------- Proyectos ----------------
 export async function upsertProject(fd: FormData) {
   const { supabase } = await requireUser()

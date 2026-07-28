@@ -1,0 +1,112 @@
+import "server-only"
+import type { Diagnostico, NegocioCrudo, Senales } from "./types"
+
+/**
+ * Diagnóstico comercial de cada negocio.
+ *
+ * Con `ANTHROPIC_API_KEY` lo escribe Claude; sin ella, un motor de reglas. El
+ * respaldo no es un placeholder: el diagnóstico de reglas es correcto y
+ * utilizable, solo menos afinado. Así el motor nunca se detiene por falta de
+ * una clave ni por una caída del proveedor, que es lo que importa cuando esto
+ * corre solo todas las madrugadas.
+ */
+
+const MODELO = process.env.ANTHROPIC_MODEL || "claude-opus-5"
+
+/** Servicio que corresponde según lo que le falta al negocio. */
+function servicioPara(s: Senales): string {
+  if (!s.tieneSitioWeb && !s.tieneWhatsapp) return "Diseño de Páginas Web"
+  if (!s.tieneSitioWeb) return "Landing Express con WhatsApp"
+  if (!s.tieneRedes) return "Marketing Digital & SEO"
+  return "Automatización de Procesos"
+}
+
+export function diagnosticoPorReglas(n: NegocioCrudo, s: Senales): Diagnostico {
+  const faltas: string[] = []
+  if (!s.tieneSitioWeb) faltas.push("no tiene página web")
+  if (!s.tieneWhatsapp) faltas.push("no publica un número de WhatsApp")
+  if (!s.tieneRedes) faltas.push("no se le ven redes sociales")
+
+  const demanda =
+    (n.resenas ?? 0) >= 80
+      ? `Tiene ${n.resenas} reseñas${n.calificacion ? ` y ${n.calificacion} de calificación` : ""}, o sea demanda comprobada`
+      : (n.resenas ?? 0) >= 20
+        ? `Tiene ${n.resenas} reseñas, con clientes recurrentes`
+        : "Aún con poca huella en reseñas"
+
+  const resumen =
+    faltas.length > 0
+      ? `${demanda}, pero ${faltas.join(" y ")}. La venta entra por ahí: ordenar el canal digital sin cambiarle la operación.`
+      : `${demanda} y ya tiene presencia digital armada. La oportunidad está en automatizar la atención, no en construir de cero.`
+
+  return { resumen, servicioRecomendado: servicioPara(s), porIa: false }
+}
+
+interface RespuestaIa {
+  resumen?: string
+  servicio?: string
+}
+
+/** Llama a Claude. Si algo falla devuelve null y el llamador usa las reglas. */
+async function diagnosticoPorIa(n: NegocioCrudo, s: Senales): Promise<Diagnostico | null> {
+  const key = process.env.ANTHROPIC_API_KEY
+  if (!key) return null
+
+  const ficha = [
+    `Negocio: ${n.nombre}`,
+    n.categoria && `Categoría: ${n.categoria}`,
+    n.ciudad && `Ciudad: ${n.ciudad}`,
+    `Sitio web: ${s.tieneSitioWeb ? n.sitioWeb : "NO TIENE"}`,
+    `WhatsApp visible: ${s.tieneWhatsapp ? "sí" : "no"}`,
+    `Redes sociales: ${s.tieneRedes ? "sí" : "no"}`,
+    n.resenas != null && `Reseñas: ${n.resenas}`,
+    n.calificacion != null && `Calificación: ${n.calificacion}`,
+  ]
+    .filter(Boolean)
+    .join("\n")
+
+  const prompt = `Eres analista comercial de Dos Nodos, empresa de tecnología en Medellín que vende sitios web, e-commerce, automatización y asistentes con IA a negocios locales.
+
+Analiza este prospecto y responde SOLO con un JSON de esta forma, sin texto alrededor:
+{"resumen": "...", "servicio": "..."}
+
+- "resumen": dos frases máximo, en español de Colombia, tuteando. Di qué le falta digitalmente y por dónde entra la venta. Concreto, sin relleno ni adjetivos de folleto.
+- "servicio": UNO de estos exactamente: "Diseño de Páginas Web", "Landing Express con WhatsApp", "Desarrollo de e-Commerce", "Marketing Digital & SEO", "Automatización de Procesos", "Asistentes Virtuales Inteligentes".
+
+${ficha}`
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "x-api-key": key,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        model: MODELO,
+        max_tokens: 300,
+        messages: [{ role: "user", content: prompt }],
+      }),
+    })
+    if (!res.ok) return null
+
+    const data = (await res.json()) as { content?: { text?: string }[] }
+    const texto = data.content?.[0]?.text ?? ""
+    const json = texto.slice(texto.indexOf("{"), texto.lastIndexOf("}") + 1)
+    const parsed = JSON.parse(json) as RespuestaIa
+    if (!parsed.resumen) return null
+
+    return {
+      resumen: parsed.resumen.trim(),
+      servicioRecomendado: parsed.servicio?.trim() || servicioPara(s),
+      porIa: true,
+    }
+  } catch {
+    return null
+  }
+}
+
+export async function diagnosticar(n: NegocioCrudo, s: Senales): Promise<Diagnostico> {
+  return (await diagnosticoPorIa(n, s)) ?? diagnosticoPorReglas(n, s)
+}
