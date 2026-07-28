@@ -2,7 +2,7 @@ import "server-only"
 import { createAdminSupabase } from "@/lib/supabase/admin"
 import { buscarNegocios, hayApify } from "./apify"
 import { detectarSenales, puntuar } from "./score"
-import { diagnosticar } from "./diagnose"
+import { diagnosticar, motivoIaFallida, reiniciarMotivoIa } from "./diagnose"
 import type { ResultadoCorrida } from "./types"
 
 /**
@@ -65,6 +65,7 @@ export async function correrProspeccion(op: OpcionesCorrida): Promise<ResultadoC
   const runId = (corrida as { id: string } | null)?.id
 
   try {
+    reiniciarMotivoIa()
     const { negocios, modo } = await buscarNegocios(op.consulta, ciudad, limite)
 
     // Deduplicación contra lo que ya existe. Se hace en una sola consulta y no
@@ -145,6 +146,11 @@ export async function correrProspeccion(op: OpcionesCorrida): Promise<ResultadoC
       }
     }
 
+    // Los dos avisos van al mismo campo porque los dos significan lo mismo
+    // para quien mira el panel: la corrida salió, pero algo no funcionó como
+    // debía. El descarte manda, que es pérdida de prospectos.
+    const aviso = primerFallo ?? (enriquecidos === 0 ? motivoIaFallida() : null)
+
     const resultado: ResultadoCorrida = {
       modo,
       consulta: op.consulta,
@@ -154,6 +160,7 @@ export async function correrProspeccion(op: OpcionesCorrida): Promise<ResultadoC
       duplicados,
       enriquecidos,
       descartados,
+      motivoIa: motivoIaFallida(),
     }
 
     if (runId) {
@@ -169,7 +176,7 @@ export async function correrProspeccion(op: OpcionesCorrida): Promise<ResultadoC
           discarded: descartados,
           // La corrida terminó, pero si algo se cayó queda escrito con nombre
           // propio en vez de desaparecer entre los números.
-          error: primerFallo ? primerFallo.slice(0, 500) : null,
+          error: aviso ? aviso.slice(0, 500) : null,
           mode: modo,
         })
         .eq("id", runId)

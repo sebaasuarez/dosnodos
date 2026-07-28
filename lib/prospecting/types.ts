@@ -44,4 +44,6 @@ export interface ResultadoCorrida {
   enriquecidos: number
   /** Rechazados por la base. Debería ser 0. */
   descartados: number
+  /** Por qué la IA no diagnosticó, si no lo hizo. null cuando funcionó. */
+  motivoIa: string | null
 }

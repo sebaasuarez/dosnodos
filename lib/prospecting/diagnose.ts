@@ -47,10 +47,34 @@ interface RespuestaIa {
   servicio?: string
 }
 
+/**
+ * Primer motivo por el que la IA no pudo diagnosticar en esta corrida. Se
+ * guarda para que el motor lo escriba en la bitácora: sin esto, `enriquecidos:
+ * 0` no distingue entre "no hay clave", "la clave no sirve" y "el proveedor se
+ * cayó", y las tres se arreglan distinto.
+ */
+let ultimoMotivo: string | null = null
+
+export function motivoIaFallida(): string | null {
+  return ultimoMotivo
+}
+
+export function reiniciarMotivoIa(): void {
+  ultimoMotivo = null
+}
+
+function avisar(motivo: string): void {
+  ultimoMotivo ??= motivo
+  console.error("Prospección · IA:", motivo)
+}
+
 /** Llama a OpenAI. Si algo falla devuelve null y el llamador usa las reglas. */
 async function diagnosticoPorIa(n: NegocioCrudo, s: Senales): Promise<Diagnostico | null> {
   const key = process.env.OPENAI_API_KEY
-  if (!key) return null
+  if (!key) {
+    avisar("falta OPENAI_API_KEY; se usa el motor de reglas")
+    return null
+  }
 
   const ficha = [
     `Negocio: ${n.nombre}`,
@@ -94,19 +118,28 @@ ${ficha}`
       // proveedor lento se lleva por delante el tiempo de la función entera.
       signal: AbortSignal.timeout(20000),
     })
-    if (!res.ok) return null
+    if (!res.ok) {
+      // Un respaldo silencioso esconde la causa: la corrida sigue, pero nadie
+      // sabe si la IA está caída, la clave es inválida o el modelo no existe.
+      avisar(`OpenAI respondió ${res.status}: ${(await res.text()).slice(0, 180)}`)
+      return null
+    }
 
     const data = (await res.json()) as { choices?: { message?: { content?: string } }[] }
     const texto = data.choices?.[0]?.message?.content ?? ""
     const parsed = JSON.parse(texto) as RespuestaIa
-    if (!parsed.resumen) return null
+    if (!parsed.resumen) {
+      avisar(`OpenAI devolvió una respuesta sin resumen: ${texto.slice(0, 180)}`)
+      return null
+    }
 
     return {
       resumen: parsed.resumen.trim(),
       servicioRecomendado: parsed.servicio?.trim() || servicioPara(s),
       porIa: true,
     }
-  } catch {
+  } catch (e) {
+    avisar(`Falló la llamada a OpenAI: ${e instanceof Error ? e.message : String(e)}`)
     return null
   }
 }

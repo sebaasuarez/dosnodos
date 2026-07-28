@@ -221,6 +221,7 @@ export default async function ProspeccionPage() {
                   <p className="mt-0.5 text-[12px] text-[#5A5570]">
                     {c.found} encontrados · {c.inserted} nuevos · {c.duplicated} repetidos
                     {c.discarded > 0 && ` · ${c.discarded} rechazados`}
+                    {` · ${c.enriched} con IA`}
                   </p>
                   {c.error && (
                     <p className="mt-1 text-[11.5px] text-[#B91C1C]">{c.error.slice(0, 120)}</p>
