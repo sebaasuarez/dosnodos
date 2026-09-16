@@ -174,8 +174,12 @@ export function FormularioHostinger({
       <label className="flex items-start gap-2.5 text-[13px] leading-[1.5] text-[#5A5570]">
         <input name="autoriza" type="checkbox" className="mt-0.5 h-4 w-4 accent-[#7C22CE]" />
         <span>
-          Autorizo a Dos Nodos a tratar mis datos de contacto con la única finalidad de responder
-          esta solicitud. Puedo pedir que los eliminen escribiendo a{" "}
+          Autorizo a Dos Nodos a tratar mis datos de contacto para responder esta solicitud,
+          conforme a la{" "}
+          <a href="/privacidad" className="underline">
+            política de tratamiento de datos
+          </a>
+          . Puedo pedir que los eliminen escribiendo a{" "}
           <a href={`mailto:${contactEmail}`} className="underline">
             {contactEmail}
           </a>

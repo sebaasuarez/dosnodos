@@ -49,6 +49,12 @@ export function PieHostinger({
               >
                 Páginas desde $650k
               </a>
+              <Link
+                href="/privacidad"
+                className="text-[#C9C6DE] transition-colors hover:text-white"
+              >
+                Tratamiento de datos
+              </Link>
             </div>
 
             <div className="flex flex-col gap-2.5 text-[14px]">

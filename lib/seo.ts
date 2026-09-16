@@ -154,5 +154,8 @@ export function allUrls(): { path: string; priority: number }[] {
     urls.push({ path: servicesIndexPath(l), priority: 0.8 })
     for (const s of SERVICES) urls.push({ path: servicePath(l, s), priority: 0.7 })
   }
+  // Páginas únicas en español (no tienen variante por idioma).
+  urls.push({ path: "/hostinger", priority: 0.7 })
+  urls.push({ path: "/privacidad", priority: 0.3 })
   return urls
 }

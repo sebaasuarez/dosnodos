@@ -125,7 +125,9 @@ export default function ContactForm({ language }: ContactFormProps) {
         <input
           id="cf-name"
           type="text"
-          placeholder={language === "es" ? "Tu nombre" : language === "en" ? "Your name" : "Seu nome"}
+          placeholder={
+            language === "es" ? "Tu nombre" : language === "en" ? "Your name" : "Seu nome"
+          }
           autoComplete="name"
           disabled={isSubmitting}
           aria-invalid={!!errors.name}
@@ -236,7 +238,12 @@ export default function ContactForm({ language }: ContactFormProps) {
         </div>
       </div>
 
-      <span className="text-center font-mono text-[11px] text-[#807CA0]">{f.confirmationNote}</span>
+      <span className="text-center font-mono text-[11px] text-[#807CA0]">
+        {f.confirmationNote} ·{" "}
+        <a href="/privacidad" className="underline underline-offset-2 hover:text-brand-cta">
+          {f.privacyLink}
+        </a>
+      </span>
     </form>
   )
 }

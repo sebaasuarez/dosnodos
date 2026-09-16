@@ -71,7 +71,15 @@ export function Footer({ t, currentLanguage, alternates }: FooterProps) {
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3.5 border-t border-[#1A1630] pt-5">
-          <span className="font-mono text-[11.5px] text-[#807CA0]">{t.footer.copyright}</span>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
+            <span className="font-mono text-[11.5px] text-[#807CA0]">{t.footer.copyright}</span>
+            <Link
+              href="/privacidad"
+              className="font-mono text-[11.5px] text-[#807CA0] underline-offset-2 transition-colors hover:text-[#C9C6DE]"
+            >
+              {t.footer.privacyLabel}
+            </Link>
+          </div>
           <LanguageSelector
             currentLanguage={currentLanguage}
             alternates={alternates}

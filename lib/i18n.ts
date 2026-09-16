@@ -183,6 +183,7 @@ export interface Translation {
         tryAgain: string
       }
       confirmationNote: string
+      privacyLink: string
     }
   }
   footer: {
@@ -193,6 +194,7 @@ export interface Translation {
     email: string
     location: string
     copyright: string
+    privacyLabel: string
   }
 }
 
@@ -245,31 +247,36 @@ export const translations: Record<Language, Translation> = {
         {
           eyebrow: "Sitios web & e‑Commerce",
           title: "Presencia digital que vende",
-          description: "Sitios de alto impacto visual y tiendas listas para facturar desde el primer día.",
+          description:
+            "Sitios de alto impacto visual y tiendas listas para facturar desde el primer día.",
           items: [
             {
               id: "web-design",
               title: "Diseño de Páginas Web",
-              description: "Sitios de alto impacto visual, memorables y construidos para convertir visitas en clientes.",
+              description:
+                "Sitios de alto impacto visual, memorables y construidos para convertir visitas en clientes.",
               chips: ["Alto impacto visual", "Responsive"],
             },
             {
               id: "ecommerce",
               title: "Desarrollo de e‑Commerce",
-              description: "Tiendas completas con checkout optimizado, pagos y post‑venta automatizada.",
+              description:
+                "Tiendas completas con checkout optimizado, pagos y post‑venta automatizada.",
               chips: ["Checkout", "Pagos", "Wompi"],
               badge: "MÁS SOLICITADO",
             },
             {
               id: "shopify",
               title: "Desarrollo de Shopify",
-              description: "Tiendas Shopify sólidas, fáciles de operar y listas para crecer sin rehacerlas.",
+              description:
+                "Tiendas Shopify sólidas, fáciles de operar y listas para crecer sin rehacerlas.",
               chips: ["Shopify", "Temas a medida"],
             },
             {
               id: "landing-express",
               title: "Landing Express para negocios locales",
-              description: "Una página lista en 3 a 5 días, conectada a WhatsApp, pensada para negocios de barrio que venden por chat.",
+              description:
+                "Una página lista en 3 a 5 días, conectada a WhatsApp, pensada para negocios de barrio que venden por chat.",
               chips: ["3–5 días", "WhatsApp", "Desde $650k"],
               badge: "SITIO APARTE",
               externalHref: "https://ventas.dosnodos.com.co",
@@ -284,7 +291,8 @@ export const translations: Record<Language, Translation> = {
             {
               id: "web-app",
               title: "Aplicaciones Web",
-              description: "Productos digitales veloces y seguros, accesibles desde cualquier lugar.",
+              description:
+                "Productos digitales veloces y seguros, accesibles desde cualquier lugar.",
               chips: ["Next.js", "Dashboards"],
             },
             {
@@ -309,7 +317,8 @@ export const translations: Record<Language, Translation> = {
             {
               id: "ai-assistant",
               title: "Asistentes Virtuales Inteligentes",
-              description: "Atienden, cotizan y agendan por WhatsApp y correo, 24/7, con la información de tu negocio.",
+              description:
+                "Atienden, cotizan y agendan por WhatsApp y correo, 24/7, con la información de tu negocio.",
               chips: ["WhatsApp API", "24/7"],
               badge: "ESTRELLA",
             },
@@ -342,7 +351,8 @@ export const translations: Record<Language, Translation> = {
         distribuidora: {
           tag: "Asistente IA + ERP",
           title: "Distribuidora de repuestos",
-          description: "Cotizaciones por WhatsApp en menos de un minuto, con inventario en tiempo real.",
+          description:
+            "Cotizaciones por WhatsApp en menos de un minuto, con inventario en tiempo real.",
           resultLabel: "Resultado",
           result: "3× cotizaciones/día",
         },
@@ -367,7 +377,8 @@ export const translations: Record<Language, Translation> = {
       average: "4.9 promedio",
       items: {
         diana: {
-          quote: "Antes el equipo pasaba las tardes digitando pedidos. Hoy ese tiempo es para los clientes.",
+          quote:
+            "Antes el equipo pasaba las tardes digitando pedidos. Hoy ese tiempo es para los clientes.",
           name: "Diana R.",
           role: "Gerente general · Distribuidora",
           initials: "DR",
@@ -379,7 +390,8 @@ export const translations: Record<Language, Translation> = {
           initials: "MP",
         },
         laura: {
-          quote: "Entendieron el problema real y no nos vendieron humo. El agendamiento cambió la clínica.",
+          quote:
+            "Entendieron el problema real y no nos vendieron humo. El agendamiento cambió la clínica.",
           name: "Laura C.",
           role: "Directora · Clínica",
           initials: "LC",
@@ -485,7 +497,8 @@ export const translations: Record<Language, Translation> = {
           submitError: "Error al enviar. Por favor intenta nuevamente.",
           tryAgain: "Inténtalo de nuevo",
         },
-        confirmationNote: "Sin compromiso · Tus datos no se comparten",
+        confirmationNote: "Sin compromiso · Tratamos tus datos según nuestra política",
+        privacyLink: "Política de datos",
       },
     },
     footer: {
@@ -496,6 +509,7 @@ export const translations: Record<Language, Translation> = {
       email: "hola@dosnodos.com.co",
       location: "Medellín, Colombia",
       copyright: "© 2026 Dos Nodos · dosnodos.com.co",
+      privacyLabel: "Tratamiento de datos",
     },
   },
 
@@ -552,13 +566,15 @@ export const translations: Record<Language, Translation> = {
             {
               id: "web-design",
               title: "Website Design",
-              description: "Visually striking, memorable sites built to turn visits into customers.",
+              description:
+                "Visually striking, memorable sites built to turn visits into customers.",
               chips: ["High visual impact", "Responsive"],
             },
             {
               id: "ecommerce",
               title: "e‑Commerce Development",
-              description: "Complete stores with optimized checkout, payments and automated post-sale.",
+              description:
+                "Complete stores with optimized checkout, payments and automated post-sale.",
               chips: ["Checkout", "Payments"],
               badge: "MOST REQUESTED",
             },
@@ -571,7 +587,8 @@ export const translations: Record<Language, Translation> = {
             {
               id: "landing-express",
               title: "Express landing for local businesses",
-              description: "A page live in 3 to 5 days, wired to WhatsApp, built for neighbourhood businesses that sell over chat.",
+              description:
+                "A page live in 3 to 5 days, wired to WhatsApp, built for neighbourhood businesses that sell over chat.",
               chips: ["3–5 days", "WhatsApp", "From $650k COP"],
               badge: "SEPARATE SITE",
               externalHref: "https://ventas.dosnodos.com.co",
@@ -611,7 +628,8 @@ export const translations: Record<Language, Translation> = {
             {
               id: "ai-assistant",
               title: "Intelligent Virtual Assistants",
-              description: "They answer, quote and schedule over WhatsApp and email, 24/7, trained on your business.",
+              description:
+                "They answer, quote and schedule over WhatsApp and email, 24/7, trained on your business.",
               chips: ["WhatsApp API", "24/7"],
               badge: "FLAGSHIP",
             },
@@ -669,7 +687,8 @@ export const translations: Record<Language, Translation> = {
       average: "4.9 average",
       items: {
         diana: {
-          quote: "Our team used to spend afternoons keying in orders. Now that time goes to customers.",
+          quote:
+            "Our team used to spend afternoons keying in orders. Now that time goes to customers.",
           name: "Diana R.",
           role: "General Manager · Distributor",
           initials: "DR",
@@ -681,7 +700,8 @@ export const translations: Record<Language, Translation> = {
           initials: "MP",
         },
         laura: {
-          quote: "They understood the real problem and didn't sell us smoke. Scheduling changed the clinic.",
+          quote:
+            "They understood the real problem and didn't sell us smoke. Scheduling changed the clinic.",
           name: "Laura C.",
           role: "Director · Clinic",
           initials: "LC",
@@ -786,7 +806,8 @@ export const translations: Record<Language, Translation> = {
           submitError: "Error sending. Please try again.",
           tryAgain: "Try again",
         },
-        confirmationNote: "No commitment · Your data isn't shared",
+        confirmationNote: "No commitment · We handle your data per our policy",
+        privacyLink: "Data policy",
       },
     },
     footer: {
@@ -797,6 +818,7 @@ export const translations: Record<Language, Translation> = {
       email: "hola@dosnodos.com.co",
       location: "Medellín, Colombia",
       copyright: "© 2026 Dos Nodos · dosnodos.com.co",
+      privacyLabel: "Data policy",
     },
   },
 
@@ -848,18 +870,21 @@ export const translations: Record<Language, Translation> = {
         {
           eyebrow: "Sites & e‑Commerce",
           title: "Presença digital que vende",
-          description: "Sites de alto impacto visual e lojas prontas para vender desde o primeiro dia.",
+          description:
+            "Sites de alto impacto visual e lojas prontas para vender desde o primeiro dia.",
           items: [
             {
               id: "web-design",
               title: "Design de Sites",
-              description: "Sites de alto impacto visual, memoráveis e construídos para converter visitas em clientes.",
+              description:
+                "Sites de alto impacto visual, memoráveis e construídos para converter visitas em clientes.",
               chips: ["Alto impacto visual", "Responsivo"],
             },
             {
               id: "ecommerce",
               title: "Desenvolvimento de e‑Commerce",
-              description: "Lojas completas com checkout otimizado, pagamentos e pós‑venda automatizado.",
+              description:
+                "Lojas completas com checkout otimizado, pagamentos e pós‑venda automatizado.",
               chips: ["Checkout", "Pagamentos"],
               badge: "MAIS PROCURADO",
             },
@@ -872,7 +897,8 @@ export const translations: Record<Language, Translation> = {
             {
               id: "landing-express",
               title: "Landing Express para negócios locais",
-              description: "Uma página pronta em 3 a 5 dias, conectada ao WhatsApp, pensada para negócios de bairro que vendem por chat.",
+              description:
+                "Uma página pronta em 3 a 5 dias, conectada ao WhatsApp, pensada para negócios de bairro que vendem por chat.",
               chips: ["3–5 dias", "WhatsApp", "A partir de $650k COP"],
               badge: "SITE À PARTE",
               externalHref: "https://ventas.dosnodos.com.co",
@@ -912,14 +938,16 @@ export const translations: Record<Language, Translation> = {
             {
               id: "ai-assistant",
               title: "Assistentes Virtuais Inteligentes",
-              description: "Atendem, cotam e agendam por WhatsApp e e-mail, 24/7, treinados com seu negócio.",
+              description:
+                "Atendem, cotam e agendam por WhatsApp e e-mail, 24/7, treinados com seu negócio.",
               chips: ["WhatsApp API", "24/7"],
               badge: "DESTAQUE",
             },
             {
               id: "automation",
               title: "Automação de Processos",
-              description: "Conectamos suas plataformas para que o trabalho repetitivo rode sozinho.",
+              description:
+                "Conectamos suas plataformas para que o trabalho repetitivo rode sozinho.",
               chips: ["n8n", "APIs", "ERP · CRM"],
             },
             {
@@ -970,7 +998,8 @@ export const translations: Record<Language, Translation> = {
       average: "4.9 média",
       items: {
         diana: {
-          quote: "Antes a equipe passava as tardes digitando pedidos. Hoje esse tempo é para os clientes.",
+          quote:
+            "Antes a equipe passava as tardes digitando pedidos. Hoje esse tempo é para os clientes.",
           name: "Diana R.",
           role: "Gerente geral · Distribuidora",
           initials: "DR",
@@ -1040,7 +1069,8 @@ export const translations: Record<Language, Translation> = {
       benefitsTitle: "O que inclui",
       faqTitle: "Perguntas frequentes",
       ctaTitle: "Vamos falar do seu projeto?",
-      ctaSubtitle: "30 minutos, sem custo. Você sai com um diagnóstico concreto e um próximo passo claro.",
+      ctaSubtitle:
+        "30 minutos, sem custo. Você sai com um diagnóstico concreto e um próximo passo claro.",
       ctaButton: "Agendar reunião",
       otherServices: "Outros serviços",
       seeService: "Ver serviço",
@@ -1087,7 +1117,8 @@ export const translations: Record<Language, Translation> = {
           submitError: "Erro ao enviar. Por favor tente novamente.",
           tryAgain: "Tente novamente",
         },
-        confirmationNote: "Sem compromisso · Seus dados não são compartilhados",
+        confirmationNote: "Sem compromisso · Tratamos seus dados conforme nossa política",
+        privacyLink: "Política de dados",
       },
     },
     footer: {
@@ -1098,6 +1129,7 @@ export const translations: Record<Language, Translation> = {
       email: "hola@dosnodos.com.co",
       location: "Medellín, Colômbia",
       copyright: "© 2026 Dos Nodos · dosnodos.com.co",
+      privacyLabel: "Tratamento de dados",
     },
   },
 }
