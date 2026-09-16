@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { gtmEvent } from "@/lib/gtm"
 
 export interface OpcionSelector {
@@ -22,17 +21,19 @@ export interface OpcionSelector {
  */
 export function SelectorNecesidad({
   opciones,
+  seleccionada,
   onSeleccion,
 }: {
   opciones: OpcionSelector[]
-  onSeleccion?: (id: string) => void
+  /** El estado vive en la sección. Si este componente guardara el suyo, cambiar
+   *  la necesidad en el formulario dejaría la tarjeta de arriba marcando otra. */
+  seleccionada: string
+  onSeleccion: (id: string) => void
 }) {
-  const [activa, setActiva] = useState<string | null>(null)
-  const elegida = opciones.find((o) => o.id === activa)
+  const elegida = opciones.find((o) => o.id === seleccionada)
 
   function elegir(id: string) {
-    setActiva(id)
-    onSeleccion?.(id)
+    onSeleccion(id)
     gtmEvent("solution_selected", { necesidad: id })
   }
 
@@ -44,7 +45,7 @@ export function SelectorNecesidad({
         className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3"
       >
         {opciones.map((o) => {
-          const activo = o.id === activa
+          const activo = o.id === seleccionada
           return (
             <button
               key={o.id}

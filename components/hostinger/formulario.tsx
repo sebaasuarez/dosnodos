@@ -21,12 +21,16 @@ const ESTADOS = [
 export function FormularioHostinger({
   whatsapp,
   contactEmail,
-  necesidadInicial,
+  necesidad,
+  onNecesidadChange,
   necesidades,
 }: {
   whatsapp: string
   contactEmail: string
-  necesidadInicial?: string | null
+  /** Lo dueño del estado es la sección, para que el selector y este campo
+   *  no puedan decir cosas distintas. */
+  necesidad: string
+  onNecesidadChange: (id: string) => void
   necesidades: { id: string; titulo: string }[]
 }) {
   const [enviando, setEnviando] = useState(false)
@@ -139,7 +143,12 @@ export function FormularioHostinger({
 
       <label className={etiqueta}>
         ¿Qué necesitas?
-        <select name="necesidad" defaultValue={necesidadInicial ?? ""} className={campo}>
+        <select
+          name="necesidad"
+          value={necesidad}
+          onChange={(e) => onNecesidadChange(e.target.value)}
+          className={campo}
+        >
           <option value="">Elige una opción</option>
           {necesidades.map((n) => (
             <option key={n.id} value={n.id}>

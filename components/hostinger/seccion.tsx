@@ -24,7 +24,7 @@ export function SeccionHostinger({
   contactEmail: string
   cupon: string | null
 }) {
-  const [necesidad, setNecesidad] = useState<string | null>(null)
+  const [necesidad, setNecesidad] = useState("")
 
   return (
     <>
@@ -38,7 +38,11 @@ export function SeccionHostinger({
               Cuéntanos qué necesitas y te orientamos.
             </h2>
           </div>
-          <SelectorNecesidad opciones={opciones} onSeleccion={setNecesidad} />
+          <SelectorNecesidad
+            opciones={opciones}
+            seleccionada={necesidad}
+            onSeleccion={setNecesidad}
+          />
         </div>
       </section>
 
@@ -76,7 +80,8 @@ export function SeccionHostinger({
             <FormularioHostinger
               whatsapp={whatsapp}
               contactEmail={contactEmail}
-              necesidadInicial={necesidad}
+              necesidad={necesidad}
+              onNecesidadChange={setNecesidad}
               necesidades={necesidades}
             />
           </div>
