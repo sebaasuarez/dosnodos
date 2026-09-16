@@ -90,6 +90,10 @@ export default function PrivacidadPage() {
           las demás normas colombianas sobre protección de datos personales. La autoridad de control
           es la Superintendencia de Industria y Comercio (SIC).
         </P>
+        <P>
+          Nuestro tratamiento se rige por los principios de la ley: legalidad, finalidad, libertad,
+          veracidad, transparencia, acceso y circulación restringida, seguridad y confidencialidad.
+        </P>
 
         <H n="03">Qué datos recolectamos</H>
         <P>
