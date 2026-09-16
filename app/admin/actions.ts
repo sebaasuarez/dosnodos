@@ -194,8 +194,12 @@ export async function updateSettings(fd: FormData) {
     whatsapp_number: str(fd, "whatsapp_number") || null,
     contact_email: str(fd, "contact_email") || null,
     extra_head_html: str(fd, "extra_head_html") || null,
+    hostinger_referral_url: str(fd, "hostinger_referral_url") || null,
+    hostinger_coupon_code: str(fd, "hostinger_coupon_code") || null,
+    hostinger_partner_approved: bool(fd, "hostinger_partner_approved"),
   })
   revalidatePath("/admin/tracking")
+  revalidatePath("/hostinger")
   revalidatePath("/", "layout")
 }
 

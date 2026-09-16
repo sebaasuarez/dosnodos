@@ -21,6 +21,9 @@ const DEFAULT_SETTINGS: SiteSettings = {
   whatsapp_position: "right",
   whatsapp_icon: "whatsapp",
   whatsapp_delay_ms: 0,
+  hostinger_referral_url: null,
+  hostinger_coupon_code: null,
+  hostinger_partner_approved: false,
 }
 
 /** Configuración global del sitio (tracking + contacto). Siempre devuelve algo. */

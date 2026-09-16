@@ -1,5 +1,12 @@
 import { requireUser } from "@/lib/supabase/auth"
-import { PageHeader, Card, Field, TextareaField, SubmitButton } from "@/components/admin/ui"
+import {
+  PageHeader,
+  Card,
+  Field,
+  TextareaField,
+  CheckboxField,
+  SubmitButton,
+} from "@/components/admin/ui"
 import { updateSettings } from "@/app/admin/actions"
 import type { SiteSettings } from "@/lib/types"
 
@@ -21,28 +28,97 @@ export default async function TrackingAdmin() {
         <Card>
           <h2 className="mb-4 font-semibold">Medición</h2>
           <div className="grid gap-4">
-            <Field label="Google Tag Manager ID" name="gtm_id" defaultValue={s?.gtm_id} placeholder="GTM-XXXXXXX" />
-            <Field label="Google Analytics 4 (Measurement ID)" name="ga4_id" defaultValue={s?.ga4_id} placeholder="G-XXXXXXXXXX" />
-            <Field label="Google Ads (Conversion ID)" name="google_ads_id" defaultValue={s?.google_ads_id} placeholder="AW-XXXXXXXXX" />
-            <Field label="Meta / Facebook Pixel ID" name="meta_pixel_id" defaultValue={s?.meta_pixel_id} placeholder="1234567890" />
-            <Field label="TikTok Pixel ID" name="tiktok_pixel_id" defaultValue={s?.tiktok_pixel_id} placeholder="XXXXXXXXXXXX" />
+            <Field
+              label="Google Tag Manager ID"
+              name="gtm_id"
+              defaultValue={s?.gtm_id}
+              placeholder="GTM-XXXXXXX"
+            />
+            <Field
+              label="Google Analytics 4 (Measurement ID)"
+              name="ga4_id"
+              defaultValue={s?.ga4_id}
+              placeholder="G-XXXXXXXXXX"
+            />
+            <Field
+              label="Google Ads (Conversion ID)"
+              name="google_ads_id"
+              defaultValue={s?.google_ads_id}
+              placeholder="AW-XXXXXXXXX"
+            />
+            <Field
+              label="Meta / Facebook Pixel ID"
+              name="meta_pixel_id"
+              defaultValue={s?.meta_pixel_id}
+              placeholder="1234567890"
+            />
+            <Field
+              label="TikTok Pixel ID"
+              name="tiktok_pixel_id"
+              defaultValue={s?.tiktok_pixel_id}
+              placeholder="XXXXXXXXXXXX"
+            />
           </div>
         </Card>
 
         <Card>
           <h2 className="mb-4 font-semibold">Contacto</h2>
           <div className="grid gap-4 md:grid-cols-2">
-            <Field label="WhatsApp (solo dígitos, con país)" name="whatsapp_number" defaultValue={s?.whatsapp_number} placeholder="573127344026" />
-            <Field label="Correo de contacto" name="contact_email" defaultValue={s?.contact_email} placeholder="hola@dosnodos.com.co" />
+            <Field
+              label="WhatsApp (solo dígitos, con país)"
+              name="whatsapp_number"
+              defaultValue={s?.whatsapp_number}
+              placeholder="573127344026"
+            />
+            <Field
+              label="Correo de contacto"
+              name="contact_email"
+              defaultValue={s?.contact_email}
+              placeholder="hola@dosnodos.com.co"
+            />
           </div>
         </Card>
 
         <Card>
           <h2 className="mb-2 font-semibold">Scripts adicionales (avanzado)</h2>
           <p className="mb-3 text-[13px] text-[#6A667E]">
-            HTML/JS inyectado en el &lt;head&gt;. Úsalo solo para etiquetas confiables (verificaciones, otros píxeles).
+            HTML/JS inyectado en el &lt;head&gt;. Úsalo solo para etiquetas confiables
+            (verificaciones, otros píxeles).
           </p>
-          <TextareaField label="HTML del head" name="extra_head_html" defaultValue={s?.extra_head_html} rows={4} />
+          <TextareaField
+            label="HTML del head"
+            name="extra_head_html"
+            defaultValue={s?.extra_head_html}
+            rows={4}
+          />
+        </Card>
+
+        <Card>
+          <h2 className="mb-2 font-semibold">Landing de Hostinger</h2>
+          <p className="mb-3 text-[13px] text-[#6A667E]">
+            Alimenta <code className="font-mono text-[12px]">/hostinger</code>. Si el enlace queda
+            vacío, la página deja de mostrar los botones hacia Hostinger en vez de enlazar a la
+            nada.
+          </p>
+          <div className="grid gap-4">
+            <Field
+              label="Enlace de referido de socio"
+              name="hostinger_referral_url"
+              defaultValue={s?.hostinger_referral_url}
+              placeholder="https://www.hostinger.com/co?REFERRALCODE=..."
+            />
+            <Field
+              label="Código de cupón (opcional)"
+              name="hostinger_coupon_code"
+              defaultValue={s?.hostinger_coupon_code}
+              placeholder="Vacío = no se muestra en ninguna parte"
+            />
+            <CheckboxField
+              label="Programa de socios activo (habilita la insignia y el término «Socio de Hostinger»)"
+              name="hostinger_partner_approved"
+              defaultChecked={s?.hostinger_partner_approved ?? false}
+            />
+          </div>
         </Card>
 
         <div>

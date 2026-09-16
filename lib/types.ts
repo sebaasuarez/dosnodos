@@ -119,6 +119,10 @@ export interface SiteSettings {
   whatsapp_position: WhatsAppPosition
   whatsapp_icon: WhatsAppIcon
   whatsapp_delay_ms: number
+  /** Landing de soluciones Hostinger. */
+  hostinger_referral_url: string | null
+  hostinger_coupon_code: string | null
+  hostinger_partner_approved: boolean
 }
 
 export interface PageSeo {
@@ -131,15 +135,17 @@ export interface PageSeo {
   updated_at: string
 }
 
-/** De dónde salió el lead. Las dos primeras son la lista blanca de /api/contact. */
-export type LeadSource = "landing" | "ventas" | "prospeccion"
+/** De dónde salió el lead. Todas menos `prospeccion` entran por /api/contact;
+ *  esa la escribe el motor con la clave de servicio. */
+export type LeadSource = "landing" | "ventas" | "prospeccion" | "hostinger"
 
-export const LEAD_SOURCES: LeadSource[] = ["landing", "ventas", "prospeccion"]
+export const LEAD_SOURCES: LeadSource[] = ["landing", "ventas", "prospeccion", "hostinger"]
 
 export const LEAD_SOURCE_LABEL: Record<LeadSource, string> = {
   landing: "Sitio principal",
   ventas: "Landing de ventas",
   prospeccion: "Prospección",
+  hostinger: "Landing Hostinger",
 }
 
 /** Estado de consentimiento — Ley 1581 de 2012. */

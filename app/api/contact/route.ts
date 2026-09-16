@@ -1,5 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getEmailSubject, getEmailTemplate, getInternalNotificationTemplate } from "@/lib/email-templates"
+import {
+  getEmailSubject,
+  getEmailTemplate,
+  getInternalNotificationTemplate,
+} from "@/lib/email-templates"
 import { createAdminSupabase, createReadSupabase } from "@/lib/supabase/admin"
 
 interface ContactFormData {
@@ -19,16 +23,13 @@ const RESEND_URL = "https://api.resend.com/emails"
  * llega del cliente y sin esto cualquiera podría ensuciar el CRM con orígenes
  * inventados.
  */
-const SOURCES = new Set(["landing", "ventas"])
+const SOURCES = new Set(["landing", "ventas", "hostinger"])
 
 /**
  * Orígenes autorizados a llamar este endpoint desde otro dominio. La landing
  * de ventas es un sitio estático aparte, así que su envío es cross-origin.
  */
-const ALLOWED_ORIGINS = new Set([
-  "https://ventas.dosnodos.com.co",
-  "https://dosnodos.com.co",
-])
+const ALLOWED_ORIGINS = new Set(["https://ventas.dosnodos.com.co", "https://dosnodos.com.co"])
 
 function corsHeaders(origin: string | null): Record<string, string> {
   if (!origin || !ALLOWED_ORIGINS.has(origin)) return {}
@@ -43,7 +44,10 @@ function corsHeaders(origin: string | null): Record<string, string> {
 
 /** Preflight del navegador antes del POST cross-origin. */
 export function OPTIONS(request: NextRequest) {
-  return new NextResponse(null, { status: 204, headers: corsHeaders(request.headers.get("origin")) })
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders(request.headers.get("origin")),
+  })
 }
 
 async function sendEmail(payload: Record<string, unknown>) {
@@ -117,7 +121,6 @@ export async function POST(request: NextRequest) {
       console.error("CRM Lead Error:", e)
     }
 
-
     // 1. Google Sheets es opcional e independiente de las notificaciones.
     if (process.env.GOOGLE_SHEETS_WEBHOOK_URL) {
       try {
@@ -142,7 +145,8 @@ export async function POST(request: NextRequest) {
       console.error("Email notifications skipped: RESEND_API_KEY is not configured")
       // Sin correo del lead no hay confirmación que enviar, así que el lead ya
       // está completo con solo haberse guardado en el CRM.
-      if (!email) return NextResponse.json({ success: saved }, { status: saved ? 200 : 502, headers: cors })
+      if (!email)
+        return NextResponse.json({ success: saved }, { status: saved ? 200 : 502, headers: cors })
       return NextResponse.json(
         { error: "Email service is not configured" },
         { status: 503, headers: cors },
