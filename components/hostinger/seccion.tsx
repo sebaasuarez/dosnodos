@@ -17,12 +17,17 @@ export function SeccionHostinger({
   whatsapp,
   contactEmail,
   cupon,
+  children,
 }: {
   opciones: OpcionSelector[]
   necesidades: { id: string; titulo: string }[]
   whatsapp: string
   contactEmail: string
   cupon: string | null
+  /** Las secciones narrativas van acá. Llegan ya renderizadas desde el
+   *  servidor, así que separar el selector del formulario no le cuesta
+   *  JavaScript a nadie. */
+  children?: React.ReactNode
 }) {
   const [necesidad, setNecesidad] = useState("")
 
@@ -45,6 +50,8 @@ export function SeccionHostinger({
           />
         </div>
       </section>
+
+      {children}
 
       <section id="contacto" className="border-t border-[#EDEAF6] bg-[#F9F8FD] px-6 py-16 md:py-24">
         <div className="mx-auto grid max-w-[1180px] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)]">

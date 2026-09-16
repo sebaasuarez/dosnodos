@@ -30,6 +30,10 @@ const config: Config = {
           purple: "#9333EA",
           blue: "#2563EB",
           cta: "#7C22CE",
+          // El morado de marca da 3.64 sobre `ink` y falla WCAG 1.4.3 en las
+          // secciones oscuras. Este tono da 7.41 sobre el mismo fondo y sigue
+          // leyéndose como el mismo morado.
+          "purple-soft": "#C084FC",
         },
         ink: {
           DEFAULT: "#0C0A18",

@@ -225,3 +225,177 @@ export function enlaceProducto(referralUrl: string | null, producto?: ProductoId
   url.searchParams.forEach((valor, clave) => base.searchParams.set(clave, valor))
   return base.toString()
 }
+
+// ---------------------------------------------------------------------------
+// Contenido de la landing
+// ---------------------------------------------------------------------------
+
+/** Lo que de verdad le pasa a quien contrata hosting sin acompañamiento. */
+export const TROPIEZOS = [
+  "Contratan un plan sin saber si les queda grande o pequeño",
+  "El dominio queda comprado pero nunca apunta al sitio",
+  "Publican a medias y el sitio se queda en «próximamente»",
+  "Pierden correos durante la migración",
+  "Nadie configuró respaldos hasta que hizo falta uno",
+  "Compran un VPS y no saben por dónde entrar",
+  "Tienen cinco herramientas que no se hablan entre sí",
+  "Pagan cada mes por capacidad que no usan",
+]
+
+export interface Solucion {
+  titulo: string
+  /** El problema en las palabras del cliente. */
+  problema: string
+  resultado: string
+  producto: ProductoId
+}
+
+export const SOLUCIONES: Solucion[] = [
+  {
+    titulo: "Sitios web y landing pages",
+    problema: "Tienes el hosting pero no hay sitio, o el que hay no convence a nadie.",
+    resultado: "Un sitio publicado, medible y que sí lleva a una conversación.",
+    producto: "hosting-web",
+  },
+  {
+    titulo: "Tiendas en línea",
+    problema: "Quieres vender en línea y no sabes por dónde empezar con catálogo y pagos.",
+    resultado: "Una tienda cobrando, con analítica para saber qué se vende.",
+    producto: "hosting-web",
+  },
+  {
+    titulo: "Migraciones",
+    problema: "Quieres mover tu sitio y te da miedo perder correos o posicionamiento.",
+    resultado: "Todo movido y verificado, sin caídas ni mensajes perdidos.",
+    producto: "cloud-hosting",
+  },
+  {
+    titulo: "Velocidad y capacidad",
+    problema: "El sitio se pone lento justo cuando llega gente.",
+    resultado: "Capacidad adecuada, tiempos medidos y monitoreo para no repetirlo.",
+    producto: "cloud-hosting",
+  },
+  {
+    titulo: "Correo empresarial",
+    problema: "Sigues escribiéndoles a tus clientes desde una cuenta personal.",
+    resultado: "Correo con tu dominio, andando en todos los dispositivos del equipo.",
+    producto: "correo-corporativo",
+  },
+  {
+    titulo: "VPS y aplicaciones",
+    problema: "Necesitas correr algo propio y el servidor está en blanco.",
+    resultado: "Servidor configurado, asegurado, documentado y con respaldos.",
+    producto: "vps-servidor-web",
+  },
+  {
+    titulo: "Automatización e IA",
+    problema: "Tu equipo repite a mano tareas que podría hacer un flujo.",
+    resultado: "Procesos que corren solos y te avisan cuando algo necesita a una persona.",
+    producto: "hostinger-agent",
+  },
+  {
+    titulo: "Dominios y DNS",
+    problema: "Compraste el dominio y no sabes cómo conectarlo con lo demás.",
+    resultado: "Dominio, subdominios, SSL y correo apuntando a donde deben.",
+    producto: "comprar-dominio",
+  },
+]
+
+/** El reparto de responsabilidades, que es el argumento central de la página. */
+export const REPARTO = {
+  hostinger: [
+    "La infraestructura y el panel",
+    "Hosting, cloud y VPS",
+    "El dominio y el correo",
+    "Sus propias herramientas",
+    "El precio y la renovación",
+  ],
+  dosnodos: [
+    "Entender qué necesitas de verdad",
+    "Elegir el plan que corresponde",
+    "Configurar, diseñar y desarrollar",
+    "Migrar sin perder nada por el camino",
+    "Conectar medición y automatizaciones",
+    "Acompañarte después de publicar",
+  ],
+}
+
+export const PASOS = [
+  {
+    n: "01",
+    titulo: "Nos cuentas qué necesitas",
+    texto: "Por WhatsApp o por el formulario. Sin costo.",
+  },
+  { n: "02", titulo: "Revisamos tu situación", texto: "Qué tienes hoy, qué falta y qué sobra." },
+  {
+    n: "03",
+    titulo: "Te recomendamos la solución",
+    texto: "Con argumentos, no con el plan más caro.",
+  },
+  {
+    n: "04",
+    titulo: "Contratas directamente",
+    texto: "El producto queda a tu nombre, no al nuestro.",
+  },
+  {
+    n: "05",
+    titulo: "Lo implementamos",
+    texto: "Configuración, desarrollo, migración e integraciones.",
+  },
+  {
+    n: "06",
+    titulo: "Validamos y acompañamos",
+    texto: "Probamos, publicamos y seguimos disponibles.",
+  },
+]
+
+export const PREGUNTAS: { q: string; a: string }[] = [
+  {
+    q: "¿Dos Nodos vende los planes de Hostinger?",
+    a: "No. El producto lo contratas y lo pagas directamente con Hostinger, y queda a tu nombre. Nosotros somos socios del programa, así que podemos orientarte y llevarte al producto correcto, pero la relación comercial del hosting es tuya con ellos.",
+  },
+  {
+    q: "¿El precio de Hostinger incluye la implementación?",
+    a: "No. El precio de Hostinger cubre la infraestructura. El diagnóstico, la configuración, el diseño, el desarrollo, la migración y el acompañamiento son servicios de Dos Nodos y se cotizan aparte.",
+  },
+  {
+    q: "¿Me pueden ayudar a elegir el plan?",
+    a: "Es justo para lo que sirve esta página. Revisamos qué vas a publicar, cuánta gente esperas y qué necesitas integrar, y te decimos qué te sirve — incluso si es la opción más barata.",
+  },
+  {
+    q: "Ya compré Hostinger y quedé a medias, ¿sirve igual?",
+    a: "Sí, y es de los casos más comunes. Revisamos qué quedó sin terminar, completamos dominio, SSL y correo, publicamos lo que falte y te explicamos cómo administrarlo.",
+  },
+  {
+    q: "¿Pueden migrar mi sitio actual?",
+    a: "Sí. Movemos archivos, base de datos, DNS, SSL y correos, y validamos que el posicionamiento no se caiga. Probamos todo antes de apuntar el dominio, para que no haya ventana de caída.",
+  },
+  {
+    q: "¿También configuran los correos?",
+    a: "Sí. Dominio, registros DNS, cuentas del equipo y la migración del correo viejo para no perder el historial. Lo dejamos andando en computador y celular.",
+  },
+  {
+    q: "¿Pueden administrar un VPS?",
+    a: "Sí. Configuración del servidor, seguridad, Docker, Nginx, SSL, despliegues, respaldos y documentación para que no dependas de nosotros para entender tu propia infraestructura.",
+  },
+  {
+    q: "¿Pueden instalar n8n u otra aplicación?",
+    a: "Sí. n8n es de lo que más montamos, junto con los flujos que conectan formularios, CRM y WhatsApp. También desplegamos aplicaciones propias sobre el VPS.",
+  },
+  {
+    q: "¿Trabajan solo con WordPress?",
+    a: "No. Trabajamos con WordPress y WooCommerce, pero también con Shopify y con desarrollos a la medida. Elegimos según el caso, no según lo que nos quede más cómodo.",
+  },
+  {
+    q: "¿Y después de publicar?",
+    a: "Puedes seguir con acompañamiento mensual: mantenimiento, respaldos, monitoreo, métricas y ajustes. Es opcional y se contrata aparte del proyecto.",
+  },
+  {
+    q: "¿Trabajan con empresas fuera de Colombia?",
+    a: "Sí. Atendemos en español, inglés y portugués, y trabajamos de forma remota. Los productos de Hostinger cambian de precio según el país donde contrates.",
+  },
+  {
+    q: "¿Cómo cobran los servicios de Dos Nodos?",
+    a: "Por alcance y entregables, con precio cerrado después de una reunión de diagnóstico sin costo. Nada de bolsas de horas abiertas.",
+  },
+]
