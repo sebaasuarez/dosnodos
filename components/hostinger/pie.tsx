@@ -55,6 +55,12 @@ export function PieHostinger({
               >
                 Tratamiento de datos
               </Link>
+              <Link
+                href="/terminos"
+                className="text-[#C9C6DE] transition-colors hover:text-white"
+              >
+                Términos y condiciones
+              </Link>
             </div>
 
             <div className="flex flex-col gap-2.5 text-[14px]">
