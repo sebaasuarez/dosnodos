@@ -157,5 +157,6 @@ export function allUrls(): { path: string; priority: number }[] {
   // Páginas únicas en español (no tienen variante por idioma).
   urls.push({ path: "/hostinger", priority: 0.7 })
   urls.push({ path: "/privacidad", priority: 0.3 })
+  urls.push({ path: "/terminos", priority: 0.3 })
   return urls
 }

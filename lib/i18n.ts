@@ -195,6 +195,7 @@ export interface Translation {
     location: string
     copyright: string
     privacyLabel: string
+    termsLabel: string
   }
 }
 
@@ -510,6 +511,7 @@ export const translations: Record<Language, Translation> = {
       location: "Medellín, Colombia",
       copyright: "© 2026 Dos Nodos · dosnodos.com.co",
       privacyLabel: "Tratamiento de datos",
+      termsLabel: "Términos y condiciones",
     },
   },
 
@@ -819,6 +821,7 @@ export const translations: Record<Language, Translation> = {
       location: "Medellín, Colombia",
       copyright: "© 2026 Dos Nodos · dosnodos.com.co",
       privacyLabel: "Data policy",
+      termsLabel: "Terms",
     },
   },
 
@@ -1130,6 +1133,7 @@ export const translations: Record<Language, Translation> = {
       location: "Medellín, Colômbia",
       copyright: "© 2026 Dos Nodos · dosnodos.com.co",
       privacyLabel: "Tratamento de dados",
+      termsLabel: "Termos e condições",
     },
   },
 }

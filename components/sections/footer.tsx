@@ -79,6 +79,12 @@ export function Footer({ t, currentLanguage, alternates }: FooterProps) {
             >
               {t.footer.privacyLabel}
             </Link>
+            <Link
+              href="/terminos"
+              className="font-mono text-[11.5px] text-[#807CA0] underline-offset-2 transition-colors hover:text-[#C9C6DE]"
+            >
+              {t.footer.termsLabel}
+            </Link>
           </div>
           <LanguageSelector
             currentLanguage={currentLanguage}
